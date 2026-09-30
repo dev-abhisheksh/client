@@ -62,13 +62,13 @@ export default function AboutPage({ onNavigate }) {
         </div>
       </section>
 
-      {/* 3. Our Journey Section */}
+      {/* 3. Our Journey Section - Compact, Minimal & Modern */}
       <section className="sec soft">
         <div className="w">
-          <div className="ln mb-6">
+          <div className="ln mb-8 items-center">
             <div>
               <h2 style={{ margin: 0 }}>{journey.title}</h2>
-              <h3 className="text-[15px] sm:text-[16px] text-[var(--nv)] font-semibold mt-1">
+              <h3 className="text-[15px] sm:text-[17px] text-[var(--nv)] font-semibold mt-1">
                 {journey.subtitle}
               </h3>
             </div>
@@ -85,40 +85,58 @@ export default function AboutPage({ onNavigate }) {
             </p>
           </div>
 
-          <div className="g7">
+          {/* Compact, Minimal, Modern Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
             {journey.projects.map((p, i) => {
               const colorBg = COLOR_MAP[p.color] || 'var(--bl)';
               return (
                 <div
                   key={i}
-                  className="cd cursor-pointer transition-transform duration-300 hover:-translate-y-1.5"
+                  className="bg-[var(--card)] border border-[var(--ln)] rounded-2xl p-5 hover:shadow-xl hover:border-transparent hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group cursor-pointer relative overflow-hidden"
                   onClick={(e) => handleNavClick(e, `pj${i}`)}
                 >
-                  <div className="ph select-none">{p.icon}</div>
-                  <div className="bd">
-                    <span
-                      className="ic select-none"
-                      style={{ backgroundColor: colorBg }}
-                    >
-                      {p.icon}
-                    </span>
-                    <small className="block text-[11px] text-[var(--mu)] font-bold mb-1">
-                      0{i + 1}
-                    </small>
+                  {/* Top Bar: Icon Pill + Step Badge */}
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span
+                        className="w-11 h-11 rounded-xl flex items-center justify-center text-xl text-white shadow-xs group-hover:scale-105 transition-transform"
+                        style={{ backgroundColor: colorBg }}
+                      >
+                        {p.icon}
+                      </span>
+                      <span className="text-[11px] font-mono font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-[var(--soft)] text-[var(--mu)] group-hover:bg-[var(--bl)] group-hover:text-white transition-colors">
+                        0{i + 1}
+                      </span>
+                    </div>
+
+                    {/* Title & Description */}
                     <h4
-                      style={{ color: colorBg }}
-                      className="font-bold text-[14px] leading-snug mb-1"
+                      style={{ color: 'var(--nv)' }}
+                      className="font-bold text-[16px] leading-snug mb-1.5 group-hover:text-[var(--bl)] transition-colors"
                     >
                       {p.title}
                     </h4>
-                    <p className="text-[12px] leading-relaxed line-clamp-3 mb-2">
+                    <p className="text-[13px] text-[var(--mu)] leading-relaxed mb-4">
                       {p.desc}
                     </p>
-                    <p className="text-[11px] leading-tight m-0">
-                      <b>Our goal:</b>
-                      <br />
-                      <i className="text-[var(--tx)]">{p.goal}</i>
-                    </p>
+                  </div>
+
+                  {/* Bottom: Minimal Goal Accent & Learn More Link */}
+                  <div className="pt-3 border-t border-[var(--ln)]/60 flex flex-col gap-2.5">
+                    <div
+                      className="bg-[var(--soft)]/70 border-l-[3px] rounded-r-lg px-2.5 py-1.5 text-[11.5px] leading-snug text-[var(--tx)]/90"
+                      style={{ borderLeftColor: colorBg }}
+                    >
+                      <span className="font-bold mr-1 text-[var(--nv)]">Our Goal:</span>
+                      <i>{p.goal}</i>
+                    </div>
+
+                    <div className="flex items-center justify-between text-[12px] font-semibold text-[var(--bl)] pt-1">
+                      <span>View Project</span>
+                      <span className="transform group-hover:translate-x-1 transition-transform">
+                        →
+                      </span>
+                    </div>
                   </div>
                 </div>
               );
