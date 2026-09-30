@@ -335,7 +335,7 @@ export const aboutContent = {
 
 export const projectsContent = {
   hero: {
-    eyebrow: 'Our Projects',
+    eyebrow: 'Our Projects —',
     title: 'Seven Areas of Service',
     description:
       'Since 2009, each project has developed from a desire to respond practically and compassionately to those who need support.',
@@ -343,7 +343,7 @@ export const projectsContent = {
     action: {
       label: 'Get Involved →',
       target: 'involved',
-      variant: 'default',
+      variant: 'gold',
     },
   },
   projects: [

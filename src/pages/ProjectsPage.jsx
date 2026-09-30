@@ -1,6 +1,7 @@
 import React from 'react';
 import Hero from '../components/Hero';
 import Button from '../components/Button';
+import ImpactStrip from '../components/ImpactStrip';
 import { projectsContent, COLOR_MAP } from '../data/siteData';
 
 export default function ProjectsPage({ onNavigate }) {
@@ -17,9 +18,9 @@ export default function ProjectsPage({ onNavigate }) {
 
   return (
     <div className="projects-page">
-      {/* 1. Hero Section (Light variant matching reference) */}
+      {/* 1. Hero Section (Matching Dark Variant of other pages) */}
       <Hero
-        variant="lt"
+        variant="dk"
         eyebrow={hero.eyebrow}
         title={hero.title}
         description={hero.description}
@@ -28,7 +29,7 @@ export default function ProjectsPage({ onNavigate }) {
       />
 
       {/* 2. Seven Areas of Service Showcase Grid */}
-      <section className="sec">
+      <section className="sec soft">
         <div className="w">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="c">Our Service Initiatives</h2>
@@ -97,6 +98,9 @@ export default function ProjectsPage({ onNavigate }) {
           </div>
         </div>
       </section>
+
+      {/* 3. Impact Strip Section */}
+      <ImpactStrip />
     </div>
   );
 }
