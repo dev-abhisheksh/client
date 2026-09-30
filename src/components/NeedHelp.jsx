@@ -31,13 +31,14 @@ export default function NeedHelp() {
               {description}
             </p>
 
-            <div className="chips flex flex-wrap gap-2 my-4">
+            {/* Symmetrical, perfectly aligned grid on smaller screens */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:flex lg:flex-wrap gap-2 sm:gap-2.5 my-4 sm:my-5 w-full">
               {topics.map((topic, index) => (
                 <button
                   key={index}
                   type="button"
-                  className={`chip text-xs sm:text-[13px] py-2 px-3.5 transition-all ${
-                    selectedTopic === topic ? 'on' : ''
+                  className={`chip w-full lg:w-auto text-center flex items-center justify-center text-[12px] sm:text-[13px] py-2.5 px-2.5 sm:px-4 transition-all duration-200 ${
+                    selectedTopic === topic ? 'on shadow-sm' : ''
                   }`}
                   onClick={() => setSelectedTopic(topic)}
                 >
