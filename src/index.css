@@ -596,15 +596,15 @@ nav a.on {
 
 /* Footer */
 footer {
-  background: #0b1f45;
+  background: #153a78;
   color: #dbe6fb;
-  padding: 60px 0;
+  padding: 36px 0;
   font-size: 13px;
 }
 
-footer .w {
+footer .w:not(.fb) {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1.4fr auto;
+  grid-template-columns: 1.4fr 1fr 1fr 1.4fr;
   gap: 24px;
 }
 
@@ -623,6 +623,63 @@ footer a {
 
 footer a:hover {
   color: #fff;
+}
+
+footer .w.fb {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 30px auto 0;
+  padding-top: 20px;
+  border-top: 1px solid #ffffff22;
+}
+
+.cr {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: right;
+  margin-left: auto;
+}
+
+.cr b {
+  color: #fff;
+  font-size: 13px;
+  margin: 0;
+}
+
+.cr span {
+  color: #9fb3d6;
+  font-size: 12px;
+}
+
+.cr a {
+  display: inline;
+  color: #e9cf85;
+  font-weight: 600;
+  margin: 3px 0 0;
+}
+
+.cr a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+  footer .w:not(.fb) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  footer .w:not(.fb) {
+    grid-template-columns: 1fr;
+  }
+  .cr {
+    text-align: left;
+    margin-left: 0;
+  }
 }
 
 /* Intro Screen */

@@ -148,4 +148,9 @@ export const footerContent = {
     { label: 'Healthcare', target: 'projects' },
   ],
   copyright: '© 2026 Bethesda Charitable Trust. All Rights Reserved.',
+  credit: {
+    title: 'Designed & developed by Nexora Technologies',
+    subtitle: 'Websites • Apps • Digital Solutions',
+    email: 'nexoratech05@gmail.com',
+  },
 };
