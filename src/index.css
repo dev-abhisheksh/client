@@ -440,18 +440,47 @@ header {
 .hd {
   display: flex;
   align-items: center;
-  gap: 20px;
-  height: 88px;
+  justify-content: space-between;
+  gap: 16px;
+  height: 64px;
+}
+
+@media (min-width: 640px) {
+  .hd {
+    height: 72px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hd {
+    height: 84px;
+    gap: 20px;
+  }
 }
 
 .brand {
-  height: 66px;
+  height: 36px;
   width: auto;
   display: block;
   background: #fff;
-  border-radius: 10px;
-  padding: 2px 6px;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 8px;
+  padding: 3px 6px;
+  box-shadow: 0 1px 4px rgba(11, 31, 69, 0.08);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@media (min-width: 640px) {
+  .brand {
+    height: 42px;
+    border-radius: 9px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .brand {
+    height: 52px;
+    border-radius: 10px;
+  }
 }
 
 .logo:hover .brand {
@@ -475,6 +504,12 @@ nav a.on {
 .so {
   display: flex;
   gap: 8px;
+}
+
+@media (max-width: 1023px) {
+  header .so {
+    display: none !important;
+  }
 }
 
 .so i {

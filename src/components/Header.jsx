@@ -55,17 +55,17 @@ export default function Header({ currentPage, onNavigate }) {
 
   return (
     <>
-      <header className="sticky top-0 z-50 transition-all duration-300">
-        <div className="w flex items-center justify-between h-[72px] sm:h-[80px] lg:h-[88px]">
-          {/* Brand Logo */}
+      <header className="sticky top-0 z-40 transition-all duration-300">
+        <div className="w hd">
+          {/* Brand Logo - clean & proportional */}
           <a
             href="#home"
-            className="logo flex items-center gap-2.5 z-10"
+            className="logo flex items-center shrink-0 z-10"
             onClick={(e) => handleNavClick(e, 'home')}
             aria-label="Bethesda Charitable Trust – Home"
           >
             <img
-              className="brand h-[46px] sm:h-[56px] lg:h-[66px] w-auto transition-transform duration-300"
+              className="brand"
               alt="Bethesda Charitable Trust – Empowering Lives, Transforming Communities"
               src="/logo.png"
             />
@@ -92,41 +92,57 @@ export default function Header({ currentPage, onNavigate }) {
             })}
           </nav>
 
-          {/* Desktop Social Icons */}
-          <div className="hidden lg:flex items-center gap-2 ml-6 so">
+          {/* Desktop Social Icons (Strictly hidden on mobile devices) */}
+          <div className="hidden lg:flex items-center gap-2 ml-6">
             {social.map((s, idx) => (
               <i
                 key={idx}
                 style={{ backgroundColor: s.bg }}
                 title={s.name}
+                className="w-7 h-7 rounded-full grid place-items-center text-white font-bold text-xs not-italic cursor-pointer"
               >
                 {s.letter}
               </i>
             ))}
           </div>
 
-          {/* Mobile Hamburger Button */}
-          <div className="flex lg:hidden items-center gap-3">
+          {/* Mobile Right Controls: Compact Donate Pill + Hamburger Button */}
+          <div className="flex lg:hidden items-center gap-2 sm:gap-3">
+            {/* Quick Donate CTA Pill on mobile */}
+            <a
+              href="#donate"
+              onClick={(e) => handleNavClick(e, 'donate')}
+              className="btn g text-xs font-bold rounded-full shadow-xs"
+              style={{
+                padding: '6px 14px',
+                fontSize: '12px',
+                minHeight: '34px',
+              }}
+            >
+              Donate
+            </a>
+
+            {/* Tactile Hamburger Button */}
             <button
               type="button"
-              className="w-11 h-11 rounded-xl flex flex-col justify-center items-center gap-[5px] bg-[var(--soft)] border border-[var(--ln)] text-[var(--nv)] transition-all hover:brightness-95 active:scale-95 z-50 cursor-pointer"
+              className="w-10 h-10 rounded-xl flex flex-col justify-center items-center gap-[4.5px] bg-[var(--soft)] border border-[var(--ln)] text-[var(--nv)] transition-all hover:bg-[var(--soft)]/80 active:scale-95 cursor-pointer z-50"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
               aria-expanded={mobileMenuOpen}
             >
               <span
-                className={`w-5 h-[2px] bg-current rounded-full transition-all duration-300 transform origin-center ${
-                  mobileMenuOpen ? 'rotate-45 translate-y-[7px]' : ''
+                className={`w-[18px] h-[2px] bg-current rounded-full transition-all duration-300 transform origin-center ${
+                  mobileMenuOpen ? 'rotate-45 translate-y-[6.5px]' : ''
                 }`}
               />
               <span
-                className={`w-5 h-[2px] bg-current rounded-full transition-all duration-300 ${
+                className={`w-[18px] h-[2px] bg-current rounded-full transition-all duration-300 ${
                   mobileMenuOpen ? 'opacity-0 scale-x-0' : ''
                 }`}
               />
               <span
-                className={`w-5 h-[2px] bg-current rounded-full transition-all duration-300 transform origin-center ${
-                  mobileMenuOpen ? '-rotate-45 -translate-y-[7px]' : ''
+                className={`w-[18px] h-[2px] bg-current rounded-full transition-all duration-300 transform origin-center ${
+                  mobileMenuOpen ? '-rotate-45 -translate-y-[6.5px]' : ''
                 }`}
               />
             </button>
@@ -134,7 +150,7 @@ export default function Header({ currentPage, onNavigate }) {
         </div>
       </header>
 
-      {/* Mobile Drawer / Backdrop */}
+      {/* Mobile Drawer Backdrop */}
       <div
         className={`fixed inset-0 z-40 bg-[#071634]/60 backdrop-blur-md transition-opacity duration-300 lg:hidden ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -145,7 +161,7 @@ export default function Header({ currentPage, onNavigate }) {
 
       {/* Mobile Drawer Panel */}
       <div
-        className={`fixed top-0 right-0 bottom-0 w-[84%] max-w-[340px] z-50 bg-[var(--card)] shadow-2xl border-l border-[var(--ln)] flex flex-col justify-between transition-all duration-300 ease-out lg:hidden ${
+        className={`fixed top-0 right-0 bottom-0 w-[82%] max-w-[320px] z-50 bg-[var(--card)] shadow-2xl border-l border-[var(--ln)] flex flex-col justify-between transition-all duration-300 ease-out lg:hidden ${
           mobileMenuOpen
             ? 'translate-x-0 opacity-100 visible pointer-events-auto'
             : 'translate-x-full opacity-0 invisible pointer-events-none'
@@ -154,19 +170,17 @@ export default function Header({ currentPage, onNavigate }) {
           visibility: mobileMenuOpen ? 'visible' : 'hidden',
         }}
       >
-        <div className="p-6 overflow-y-auto">
+        <div className="p-5 sm:p-6 overflow-y-auto">
           {/* Drawer Top Header */}
-          <div className="flex items-center justify-between pb-4 border-b border-[var(--ln)] mb-6">
-            <div className="flex items-center gap-2">
-              <img
-                src="/logo.png"
-                alt="BCT Logo"
-                className="h-10 w-auto"
-              />
-            </div>
+          <div className="flex items-center justify-between pb-3.5 border-b border-[var(--ln)] mb-5">
+            <img
+              src="/logo.png"
+              alt="BCT Logo"
+              className="h-8 w-auto bg-white rounded-md p-1 shadow-xs"
+            />
             <button
               type="button"
-              className="w-9 h-9 rounded-lg flex items-center justify-center text-[var(--mu)] hover:text-[var(--nv)] hover:bg-[var(--soft)] text-lg cursor-pointer"
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-[var(--mu)] hover:text-[var(--nv)] hover:bg-[var(--soft)] text-base cursor-pointer"
               onClick={() => setMobileMenuOpen(false)}
               aria-label="Close menu"
             >
@@ -175,7 +189,7 @@ export default function Header({ currentPage, onNavigate }) {
           </div>
 
           {/* Navigation Links */}
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-1">
             {navLinks.map((link) => {
               const isActive =
                 currentPage === link.id ||
@@ -187,25 +201,25 @@ export default function Header({ currentPage, onNavigate }) {
                   key={link.id}
                   href={`#${link.id}`}
                   onClick={(e) => handleNavClick(e, link.id)}
-                  className={`flex items-center justify-between px-4 py-3 rounded-xl font-semibold text-[15px] transition-all ${
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-[14px] transition-all ${
                     isActive
                       ? 'bg-[var(--soft)] text-[var(--bl)] font-bold'
-                      : 'text-[var(--tx)] hover:bg-[var(--soft)]/50'
+                      : 'text-[var(--tx)] hover:bg-[var(--soft)]/60'
                   }`}
                 >
                   <span>{link.label}</span>
-                  {isActive && <span className="w-2 h-2 rounded-full bg-[var(--bl)]" />}
+                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[var(--bl)]" />}
                 </a>
               );
             })}
           </div>
 
           {/* Quick Donate CTA inside mobile menu */}
-          <div className="mt-6 pt-6 border-t border-[var(--ln)]">
+          <div className="mt-5 pt-5 border-t border-[var(--ln)]">
             <Button
               target="donate"
               variant="gold"
-              className="w-full text-center py-3 shadow-md"
+              className="w-full text-center py-2.5 text-xs shadow-md"
               onClick={() => setMobileMenuOpen(false)}
             >
               Donate Now
@@ -214,11 +228,11 @@ export default function Header({ currentPage, onNavigate }) {
         </div>
 
         {/* Drawer Footer Social and Info */}
-        <div className="p-6 bg-[var(--soft)] border-t border-[var(--ln)]">
-          <small className="block text-xs font-semibold text-[var(--mu)] uppercase tracking-wider mb-3">
+        <div className="p-5 bg-[var(--soft)] border-t border-[var(--ln)]">
+          <small className="block text-[11px] font-bold text-[var(--mu)] uppercase tracking-wider mb-2.5">
             Connect With Us
           </small>
-          <div className="flex items-center gap-3 mb-4 so">
+          <div className="flex items-center gap-2.5 mb-3 so">
             {social.map((s, idx) => (
               <i
                 key={idx}
@@ -229,7 +243,7 @@ export default function Header({ currentPage, onNavigate }) {
               </i>
             ))}
           </div>
-          <p className="text-xs text-[var(--mu)] m-0 leading-relaxed">
+          <p className="text-[11px] text-[var(--mu)] m-0 leading-relaxed">
             Bethesda Charitable Trust<br />
             Valsao Pale, South Goa
           </p>
