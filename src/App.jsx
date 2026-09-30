@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import IntroScreen from './components/IntroScreen';
@@ -6,6 +8,8 @@ import HomePage from './pages/HomePage';
 import Button from './components/Button';
 
 export default function App() {
+  const lenisRef = useRef(null);
+
   const getInitialPage = () => {
     const hash = window.location.hash.replace('#', '');
     return hash || 'home';
@@ -13,11 +17,41 @@ export default function App() {
 
   const [currentPage, setCurrentPage] = useState(getInitialPage);
 
+  // Initialize Lenis Smooth Scrolling
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 2,
+    });
+
+    lenisRef.current = lenis;
+    window.lenis = lenis;
+
+    let rafId;
+    function raf(time) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+      window.lenis = null;
+    };
+  }, []);
+
   useEffect(() => {
     const handleHashChange = () => {
       const page = window.location.hash.replace('#', '') || 'home';
       setCurrentPage(page);
-      window.scrollTo(0, 0);
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(0, { immediate: true });
+      } else {
+        window.scrollTo(0, 0);
+      }
     };
 
     window.addEventListener('hashchange', handleHashChange);
@@ -27,7 +61,11 @@ export default function App() {
   const navigateTo = (page) => {
     window.location.hash = page;
     setCurrentPage(page);
-    window.scrollTo(0, 0);
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
   };
 
   // Setup scroll reveal animation observer

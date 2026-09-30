@@ -14,6 +14,7 @@ export default function IntroScreen() {
     if (!seen) {
       setVisible(true);
       document.body.style.overflow = 'hidden';
+      if (window.lenis) window.lenis.stop();
 
       const timer = setTimeout(() => {
         handleClose();
@@ -31,6 +32,7 @@ export default function IntroScreen() {
         clearTimeout(timer);
         window.removeEventListener('keydown', handleKey);
         document.body.style.overflow = '';
+        if (window.lenis) window.lenis.start();
       };
     }
   }, []);
@@ -50,6 +52,7 @@ export default function IntroScreen() {
       sessionStorage.setItem('bctIntro', '1');
     } catch (_) {}
     document.body.style.overflow = '';
+    if (window.lenis) window.lenis.start();
 
     setTimeout(() => {
       setVisible(false);
