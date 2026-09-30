@@ -145,9 +145,14 @@ export default function Header({ currentPage, onNavigate }) {
 
       {/* Mobile Drawer Panel */}
       <div
-        className={`fixed top-0 right-0 bottom-0 w-[84%] max-w-[340px] z-50 bg-[var(--card)] shadow-2xl border-l border-[var(--ln)] flex flex-col justify-between transition-transform duration-300 ease-out lg:hidden ${
-          mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed top-0 right-0 bottom-0 w-[84%] max-w-[340px] z-50 bg-[var(--card)] shadow-2xl border-l border-[var(--ln)] flex flex-col justify-between transition-all duration-300 ease-out lg:hidden ${
+          mobileMenuOpen
+            ? 'translate-x-0 opacity-100 visible pointer-events-auto'
+            : 'translate-x-full opacity-0 invisible pointer-events-none'
         }`}
+        style={{
+          visibility: mobileMenuOpen ? 'visible' : 'hidden',
+        }}
       >
         <div className="p-6 overflow-y-auto">
           {/* Drawer Top Header */}
