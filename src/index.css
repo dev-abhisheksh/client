@@ -282,6 +282,160 @@ a.c:hover .ic {
   transform: scale(1.12) rotate(-6deg);
 }
 
+.cd .ph {
+  height: 120px;
+  display: grid;
+  place-items: center;
+  font-size: 48px;
+  background: linear-gradient(135deg, var(--soft), var(--card)) !important;
+}
+
+.cd .bd {
+  padding: 0 18px 18px;
+  position: relative;
+}
+
+.cd h4 {
+  margin: 0 0 6px;
+  font-size: 14px;
+}
+
+.cd p {
+  margin: 6px 0;
+  color: var(--mu);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.q {
+  background: var(--soft);
+  border-left: 4px solid var(--go);
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-style: italic;
+  color: var(--nv);
+  margin-top: 14px;
+  line-height: 1.6;
+}
+
+.ln {
+  display: grid;
+  grid-template-columns: 1.3fr 2fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.cm {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.cm div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cm .ic {
+  margin: 0 0 4px;
+  width: 46px;
+  height: 46px;
+  font-size: 20px;
+}
+
+.cm b {
+  font-family: 'Merriweather', serif;
+  font-size: 14px;
+}
+
+.cm span {
+  font-size: 13px;
+  color: var(--mu);
+}
+
+.g7 {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+
+.g5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.g2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.tr {
+  text-align: center;
+  padding: 12px;
+}
+
+.tr .av {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--soft);
+  display: grid;
+  place-items: center;
+  font-size: 36px;
+  margin: 0 auto 6px;
+  box-shadow: 0 0 0 3px var(--go), 0 8px 18px #0002;
+}
+
+.tr b {
+  font-size: 12px;
+  display: block;
+}
+
+.tr small {
+  display: block;
+  font-size: 11px;
+  color: var(--mu);
+}
+
+@media (max-width: 1024px) {
+  .g7 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .g5 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .cm {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .g7 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ln {
+    grid-template-columns: 1fr;
+  }
+  .g2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .g7 {
+    grid-template-columns: 1fr;
+  }
+  .g5 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cm {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Hero Section */
 .hero {
   padding: 92px 0;
