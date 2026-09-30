@@ -23,17 +23,22 @@ export default function NeedHelp() {
   return (
     <section className="sec" id="help">
       <div className="w">
-        <div className="hp">
-          <div style={{ maxWidth: '540px' }}>
-            <h2>{title}</h2>
-            <p>{description}</p>
+        <div className="hp flex-col lg:flex-row items-stretch lg:items-center p-5 sm:p-8">
+          {/* Left Content & Topic Chips */}
+          <div className="w-full lg:max-w-[540px]">
+            <h2 className="text-[22px] sm:text-[26px]">{title}</h2>
+            <p className="text-[14px] sm:text-[15px] leading-relaxed text-[var(--mu)]">
+              {description}
+            </p>
 
-            <div className="chips">
+            <div className="chips flex flex-wrap gap-2 my-4">
               {topics.map((topic, index) => (
                 <button
                   key={index}
                   type="button"
-                  className={`chip ${selectedTopic === topic ? 'on' : ''}`}
+                  className={`chip text-xs sm:text-[13px] py-2 px-3.5 transition-all ${
+                    selectedTopic === topic ? 'on' : ''
+                  }`}
                   onClick={() => setSelectedTopic(topic)}
                 >
                   {topic}
@@ -42,20 +47,19 @@ export default function NeedHelp() {
             </div>
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px',
-              minWidth: '260px',
-            }}
-          >
-            <Button href={emailHref} variant="default">
+          {/* Right Action Buttons */}
+          <div className="flex flex-col gap-3 w-full lg:w-auto min-w-full sm:min-w-[260px] mt-2 lg:mt-0">
+            <Button
+              href={emailHref}
+              variant="default"
+              className="w-full text-center justify-center py-3"
+            >
               {emailButtonText}
             </Button>
             <Button
               href={whatsappHref}
               variant="green"
+              className="w-full text-center justify-center py-3"
               style={{
                 backgroundColor: 'var(--gr)',
                 borderColor: 'var(--gr)',
