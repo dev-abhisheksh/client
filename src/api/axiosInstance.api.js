@@ -1,7 +1,14 @@
 import axios from "axios";
 
+// Use VITE_API_BASE_URL, falling back directly to live Render backend in production
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.PROD
+    ? "https://bethesda-backend.onrender.com/api"
+    : "http://localhost:3000/api");
+
 const API = axios.create({
-  baseURL: import.meta.env.API_BASE_URL,
+  baseURL: API_BASE_URL,
   withCredentials: true, // CRITICAL: Allows browser to send & receive HTTP-only cookies across origins
   headers: {
     "Content-Type": "application/json",
