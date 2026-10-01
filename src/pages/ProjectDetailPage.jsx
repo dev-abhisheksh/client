@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
 import Button from '../components/Button';
+import ProjectMediaViewer from '../components/ProjectMediaViewer';
 import { projectsContent } from '../data/siteData';
 import {
   useProjects,
@@ -163,7 +164,20 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
           { label: '← All Projects', target: 'projects', variant: 'white-outline' },
           { label: 'Support This Project', target: 'contact', variant: 'gold' },
         ]}
-        face={project.icon}
+        media={
+          <ProjectMediaViewer
+            photos={project.photos}
+            icon={project.icon}
+            title={project.title}
+            isAdmin={isAdmin}
+            onUploadPhoto={(file) => {
+              if (project._id) {
+                uploadPhotoMutation.mutate({ id: project._id, file });
+              }
+            }}
+            isUploading={uploadPhotoMutation.isPending}
+          />
+        }
       />
 
       {/* 2. About The Project */}

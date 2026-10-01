@@ -1872,3 +1872,43 @@ footer .w.fb {
     transform: none;
   }
 }
+
+/* Swiper Custom Styles for Project Showcase */
+.project-swiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.7);
+  opacity: 0.6;
+  width: 8px;
+  height: 8px;
+  transition: all 0.3s ease;
+}
+
+.project-swiper .swiper-pagination-bullet-active {
+  background: var(--gold, #d4a373);
+  opacity: 1;
+  width: 22px;
+  border-radius: 9999px;
+}
+
+.project-swiper .swiper-button-next,
+.project-swiper .swiper-button-prev {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  width: 34px;
+  height: 34px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.project-swiper .swiper-button-next:hover,
+.project-swiper .swiper-button-prev:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: scale(1.08);
+}
+
+.project-swiper .swiper-button-next::after,
+.project-swiper .swiper-button-prev::after {
+  font-size: 13px;
+  font-weight: bold;
+}

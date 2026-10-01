@@ -9,11 +9,12 @@ export default function Hero({
   description,
   actions = [],
   face = '🧒',
+  media,
   children,
 }) {
   return (
     <section className={`hero ${variant}`}>
-      <div className="w grid grid-cols-1 md:grid-cols-[1.3fr_1fr] gap-6 sm:gap-8 items-center relative z-10">
+      <div className="w grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-6 sm:gap-8 items-center relative z-10">
         <div className="hero-animate">
           {eyebrow && <div className="eb mb-1 sm:mb-2">{eyebrow}</div>}
           {title && <h1 className="tracking-tight">{title}</h1>}
@@ -44,11 +45,13 @@ export default function Hero({
           {children}
         </div>
 
-        {face && (
+        {media ? (
+          <div className="hero-media relative z-10 w-full flex justify-center">{media}</div>
+        ) : face ? (
           <div className="face" aria-hidden="true">
             {face}
           </div>
-        )}
+        ) : null}
       </div>
     </section>
   );

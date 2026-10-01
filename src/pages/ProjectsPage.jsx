@@ -63,10 +63,18 @@ export default function ProjectsPage({ onNavigate }) {
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <span
-                        className="w-11 h-11 rounded-xl flex items-center justify-center text-xl text-white shadow-xs group-hover:scale-105 transition-transform"
+                        className="w-12 h-12 rounded-xl flex items-center justify-center text-xl text-white shadow-xs group-hover:scale-105 transition-transform overflow-hidden relative"
                         style={{ backgroundColor: colorBg }}
                       >
-                        {p.icon}
+                        {p.photos && p.photos.length > 0 ? (
+                          <img
+                            src={typeof p.photos[0] === 'string' ? p.photos[0] : p.photos[0]?.url}
+                            alt={p.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          p.icon
+                        )}
                       </span>
                       <span className="text-[11px] font-mono font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-[var(--soft)] text-[var(--mu)] group-hover:bg-[var(--bl)] group-hover:text-white transition-colors">
                         0{index + 1}
