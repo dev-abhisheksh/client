@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from '../components/Hero';
 import Button from '../components/Button';
 import ImpactStrip from '../components/ImpactStrip';
+import ImageWithLoader from '../components/ImageWithLoader';
 import { projectsContent, COLOR_MAP } from '../data/siteData';
 import { useProjects } from '../hooks';
 
@@ -67,9 +68,10 @@ export default function ProjectsPage({ onNavigate }) {
                         style={{ backgroundColor: colorBg }}
                       >
                         {p.photos && p.photos.length > 0 ? (
-                          <img
+                          <ImageWithLoader
                             src={typeof p.photos[0] === 'string' ? p.photos[0] : p.photos[0]?.url}
                             alt={p.title}
+                            containerClassName="w-full h-full"
                             className="w-full h-full object-cover"
                           />
                         ) : (

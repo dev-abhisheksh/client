@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 
@@ -15,6 +15,8 @@ export function ProjectHeroBackground({
   activeIndex = 0,
   title = 'Project',
 }) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const normalizedPhotos = photos
     .map((item) => (typeof item === 'string' ? item : item?.url))
     .filter(Boolean);
@@ -22,7 +24,17 @@ export function ProjectHeroBackground({
   if (normalizedPhotos.length === 0) return null;
 
   return (
-    <div className="w-full h-full absolute inset-0">
+    <div className="w-full h-full absolute inset-0 bg-[#071430] overflow-hidden">
+      {/* Loading Shimmer Placeholder until hero image loads */}
+      {!isLoaded && (
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-gradient-to-r from-[#071430] via-[#0e275c] to-[#071430] animate-pulse">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white/70 text-xs font-mono">
+            <span className="w-3.5 h-3.5 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
+            <span>Loading visual...</span>
+          </div>
+        </div>
+      )}
+
       {viewMode === 'carousel' ? (
         <Swiper
           modules={[Autoplay, EffectFade]}
@@ -42,7 +54,12 @@ export function ProjectHeroBackground({
               <img
                 src={url}
                 alt={`${title} slide ${idx + 1}`}
-                className="w-full h-full object-cover"
+                onLoad={() => {
+                  if (idx === 0) setIsLoaded(true);
+                }}
+                className={`w-full h-full object-cover transition-opacity duration-700 ${
+                  isLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
               />
             </SwiperSlide>
           ))}
@@ -51,7 +68,10 @@ export function ProjectHeroBackground({
         <img
           src={normalizedPhotos[activeIndex] || normalizedPhotos[0]}
           alt={`${title} full width cover`}
-          className="w-full h-full object-cover transition-opacity duration-700"
+          onLoad={() => setIsLoaded(true)}
+          className={`w-full h-full object-cover transition-opacity duration-700 ${
+            isLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
         />
       )}
     </div>

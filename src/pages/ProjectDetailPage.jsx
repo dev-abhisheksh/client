@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
 import Button from '../components/Button';
+import ImageWithLoader from '../components/ImageWithLoader';
 import {
   ProjectHeroBackground,
   ProjectHeroControls,
@@ -269,10 +270,10 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
                       key={photoId || idx}
                       className="cd gi shadow-md relative group overflow-hidden rounded-xl bg-black/5"
                     >
-                      <img
+                      <ImageWithLoader
                         src={url}
                         alt={`${project.title} photo ${idx + 1}`}
-                        loading="lazy"
+                        containerClassName="w-full h-56"
                         className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                       {/* Delete Overlay for Admin */}
