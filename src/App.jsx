@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
+import InvolvedPage from './pages/InvolvedPage';
 import Button from './components/Button';
 
 export default function App() {
@@ -126,6 +127,8 @@ export default function App() {
         return <AboutPage onNavigate={navigateTo} />;
       case 'projects':
         return <ProjectsPage onNavigate={navigateTo} />;
+      case 'involved':
+        return <InvolvedPage onNavigate={navigateTo} />;
       default:
         // Placeholder for upcoming pages as we go page by page
         return (
