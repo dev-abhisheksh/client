@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import Hero from '../components/Hero';
 import Button from '../components/Button';
-import ProjectMediaViewer from '../components/ProjectMediaViewer';
+import {
+  ProjectHeroBackground,
+  ProjectHeroControls,
+} from '../components/ProjectMediaViewer';
 import { projectsContent } from '../data/siteData';
 import {
   useProjects,
@@ -45,6 +48,10 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
     dbProjects && dbProjects[nextIndex]
       ? { ...fallbackProjects[nextIndex], ...dbProjects[nextIndex] }
       : fallbackProjects[nextIndex];
+
+  // Hero media view mode (Static Image vs Smooth Swiper Carousel)
+  const [mediaMode, setMediaMode] = useState('carousel'); // 'static' | 'carousel'
+  const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
   // Admin edit modal state
   const [isEditing, setIsEditing] = useState(false);
@@ -164,20 +171,35 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
           { label: '← All Projects', target: 'projects', variant: 'white-outline' },
           { label: 'Support This Project', target: 'contact', variant: 'gold' },
         ]}
-        media={
-          <ProjectMediaViewer
-            photos={project.photos}
-            icon={project.icon}
-            title={project.title}
-            isAdmin={isAdmin}
-            onUploadPhoto={(file) => {
-              if (project._id) {
-                uploadPhotoMutation.mutate({ id: project._id, file });
-              }
-            }}
-            isUploading={uploadPhotoMutation.isPending}
-          />
+        bgMedia={
+          photos.length > 0 ? (
+            <ProjectHeroBackground
+              photos={project.photos}
+              viewMode={mediaMode}
+              activeIndex={activePhotoIndex}
+              title={project.title}
+            />
+          ) : null
         }
+        media={
+          photos.length > 0 ? (
+            <ProjectHeroControls
+              photos={project.photos}
+              viewMode={mediaMode}
+              setViewMode={setMediaMode}
+              activeIndex={activePhotoIndex}
+              setActiveIndex={setActivePhotoIndex}
+              isAdmin={isAdmin}
+              onUploadPhoto={(file) => {
+                if (project._id) {
+                  uploadPhotoMutation.mutate({ id: project._id, file });
+                }
+              }}
+              isUploading={uploadPhotoMutation.isPending}
+            />
+          ) : null
+        }
+        face={project.icon}
       />
 
       {/* 2. About The Project */}
