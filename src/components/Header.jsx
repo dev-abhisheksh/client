@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { siteConfig } from '../data/siteData';
 import Button from './Button';
-import { useAuth } from '../context/AuthContext';
 
 export default function Header({ currentPage, onNavigate }) {
   const { navLinks, social } = siteConfig;
-  const { isAdmin, user, openLoginModal } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 
@@ -93,22 +91,6 @@ export default function Header({ currentPage, onNavigate }) {
                 </a>
               );
             })}
-
-            {/* Desktop Admin Portal Button */}
-            <button
-              type="button"
-              onClick={openLoginModal}
-              className={`ml-2 px-3 py-1.5 rounded-full text-[12px] font-bold border transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
-                isAdmin
-                  ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30 hover:bg-amber-500/20'
-                  : 'bg-[var(--soft)] text-[var(--nv)] border-[var(--ln)] hover:border-[var(--bl)] hover:text-[var(--bl)]'
-              }`}
-              title={isAdmin ? `Logged in as Admin (${user?.username || user?.email})` : 'Admin Portal Login'}
-              aria-label="Admin Portal"
-            >
-              <span className="text-[12px]">{isAdmin ? '⚡' : '🔒'}</span>
-              <span>{isAdmin ? 'Admin' : 'Admin'}</span>
-            </button>
           </nav>
 
 
@@ -232,26 +214,6 @@ export default function Header({ currentPage, onNavigate }) {
                 </a>
               );
             })}
-
-            {/* Mobile Admin Portal Button */}
-            <button
-              type="button"
-              onClick={() => {
-                setMobileMenuOpen(false);
-                openLoginModal();
-              }}
-              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-[14px] transition-all mt-1 text-[var(--mu)] hover:text-[var(--tx)] hover:bg-[var(--soft)]/60 cursor-pointer"
-            >
-              <span className="flex items-center gap-2">
-                <span>{isAdmin ? '⚡' : '🔒'}</span>
-                <span>{isAdmin ? 'Admin Session (Active)' : 'Admin Portal'}</span>
-              </span>
-              {isAdmin && (
-                <span className="px-2 py-0.5 text-[10px] rounded-full bg-emerald-500/20 text-emerald-600 font-bold uppercase">
-                  Admin
-                </span>
-              )}
-            </button>
           </div>
 
 

@@ -1,9 +1,11 @@
 import React from 'react';
 import { footerContent, siteConfig } from '../data/siteData';
+import { useAuth } from '../context/AuthContext';
 
 export default function Footer({ onNavigate }) {
   const { organization, quickLinks, ourWork, copyright, credit } = footerContent;
   const { contact } = siteConfig;
+  const { isAdmin, user, openLoginModal } = useAuth();
 
   const handleLinkClick = (e, target) => {
     e.preventDefault();
@@ -101,6 +103,24 @@ export default function Footer({ onNavigate }) {
             <b>{credit.title}</b>
             <span>{credit.subtitle}</span>
             <a href={`mailto:${credit.email}`}>{credit.email}</a>
+
+            {/* Admin Login Button below Nexora Technologies credit */}
+            <div className="mt-2.5 flex justify-end max-[600px]:justify-start">
+              <button
+                type="button"
+                onClick={openLoginModal}
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono font-bold tracking-wide border transition-all duration-200 cursor-pointer ${
+                  isAdmin
+                    ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 hover:bg-amber-500/30 shadow-xs'
+                    : 'bg-white/5 text-white/50 border-white/10 hover:text-white/90 hover:bg-white/10 hover:border-white/20'
+                }`}
+                title={isAdmin ? `Logged in as Admin (${user?.username || user?.email})` : 'Admin Portal Login'}
+                aria-label="Admin Portal"
+              >
+                <span className="text-[10px]">{isAdmin ? '⚡' : '🔒'}</span>
+                <span>{isAdmin ? 'Admin (Active)' : 'Admin Login'}</span>
+              </button>
+            </div>
           </div>
         )}
       </div>
