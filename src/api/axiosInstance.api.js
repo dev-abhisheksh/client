@@ -8,6 +8,15 @@ const API = axios.create({
   },
 });
 
+// Request interceptor: attach token from localStorage if available (backup for cross-site cookie restrictions)
+API.interceptors.request.use((config) => {
+  const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 // Response interceptor for consistent error handling
 API.interceptors.response.use(
   (response) => response,

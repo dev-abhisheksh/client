@@ -15,11 +15,18 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     const res = await loginMutation.mutateAsync(credentials);
+    if (res?.data?.accessToken) {
+      localStorage.setItem('accessToken', res.data.accessToken);
+    }
     return res.data;
   };
 
   const logout = async () => {
-    await logoutMutation.mutateAsync();
+    try {
+      await logoutMutation.mutateAsync();
+    } finally {
+      localStorage.removeItem('accessToken');
+    }
   };
 
   return (
