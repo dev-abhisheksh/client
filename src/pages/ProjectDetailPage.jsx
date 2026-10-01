@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Hero from '../components/Hero';
 import Button from '../components/Button';
 import ImageWithLoader from '../components/ImageWithLoader';
@@ -53,6 +53,55 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
   // Hero media view mode (Static Image vs Smooth Swiper Carousel)
   const [mediaMode, setMediaMode] = useState(project.mediaMode || 'carousel');
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
+
+  // Sync state whenever project updates from server
+  useEffect(() => {
+    if (project?.mediaMode) {
+      setMediaMode(project.mediaMode);
+    }
+  }, [project?.mediaMode]);
+
+  // Persist mediaMode ("static" | "carousel") change to MongoDB across the entire website
+  const handleToggleMediaMode = (newMode) => {
+    setMediaMode(newMode);
+    if (!project?._id || !isAdmin) return;
+
+    updateProjectMutation.mutate(
+      {
+        id: project._id,
+        data: { mediaMode: newMode },
+      },
+      {
+        onError: (err) => {
+          alert('Failed to save display mode: ' + (err.message || 'Error occurred'));
+          setMediaMode(project.mediaMode || 'carousel');
+        },
+      }
+    );
+  };
+
+  // Reorder photos to set selected thumbnail as primary cover photo across the site
+  const handleSelectCoverPhoto = (idx) => {
+    setActivePhotoIndex(0);
+    if (!project?._id || !isAdmin || !project.photos || project.photos.length <= idx) return;
+    if (idx === 0) return;
+
+    const selected = project.photos[idx];
+    const remaining = project.photos.filter((_, i) => i !== idx);
+    const updatedPhotos = [selected, ...remaining];
+
+    updateProjectMutation.mutate(
+      {
+        id: project._id,
+        data: { photos: updatedPhotos },
+      },
+      {
+        onError: (err) => {
+          alert('Failed to save cover image: ' + (err.message || 'Error occurred'));
+        },
+      }
+    );
+  };
 
   // Admin edit modal state
   const [isEditing, setIsEditing] = useState(false);
@@ -189,10 +238,12 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
             <ProjectHeroControls
               photos={project.photos}
               viewMode={mediaMode}
-              setViewMode={setMediaMode}
+              setViewMode={handleToggleMediaMode}
               activeIndex={activePhotoIndex}
               setActiveIndex={setActivePhotoIndex}
+              onSelectCoverPhoto={handleSelectCoverPhoto}
               isAdmin={isAdmin}
+              isSaving={updateProjectMutation.isPending}
               onUploadPhoto={(file) => {
                 if (project._id) {
                   uploadPhotoMutation.mutate({ id: project._id, file });

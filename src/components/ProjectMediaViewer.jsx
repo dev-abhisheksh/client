@@ -88,7 +88,9 @@ export function ProjectHeroControls({
   setViewMode,
   activeIndex = 0,
   setActiveIndex,
+  onSelectCoverPhoto,
   isAdmin = false,
+  isSaving = false,
   onUploadPhoto,
   isUploading = false,
 }) {
@@ -104,8 +106,16 @@ export function ProjectHeroControls({
       {/* 1. Header Bar: Status Indicator & Photo Count */}
       <div className="flex items-center justify-between mb-2.5 pb-2 border-b border-white/10 text-[11px]">
         <div className="flex items-center gap-1.5 font-mono text-white/70 tracking-wider uppercase text-[10px]">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-bold">Display Mode</span>
+          <span
+            className={`w-2 h-2 rounded-full ${
+              isSaving
+                ? 'bg-amber-400 animate-spin'
+                : 'bg-emerald-400 animate-pulse'
+            }`}
+          />
+          <span className="font-bold">
+            {isSaving ? 'Saving Changes...' : 'Display Mode'}
+          </span>
         </div>
         <span className="text-[10.5px] font-mono text-white/50 bg-white/5 px-2 py-0.5 rounded-full border border-white/10">
           {normalizedPhotos.length} {normalizedPhotos.length === 1 ? 'photo' : 'photos'}
@@ -116,12 +126,13 @@ export function ProjectHeroControls({
       <div className="grid grid-cols-2 gap-1 bg-black/50 p-1 rounded-xl border border-white/10 shadow-inner">
         <button
           type="button"
-          onClick={() => setViewMode('static')}
+          disabled={isSaving}
+          onClick={() => setViewMode && setViewMode('static')}
           className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
             viewMode === 'static'
               ? 'bg-amber-400 text-slate-950 shadow-md font-bold'
               : 'text-white/70 hover:text-white hover:bg-white/5'
-          }`}
+          } ${isSaving ? 'opacity-70 cursor-not-allowed' : ''}`}
         >
           <svg
             className="w-3.5 h-3.5 shrink-0"
@@ -141,12 +152,13 @@ export function ProjectHeroControls({
 
         <button
           type="button"
-          onClick={() => setViewMode('carousel')}
+          disabled={isSaving}
+          onClick={() => setViewMode && setViewMode('carousel')}
           className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
             viewMode === 'carousel'
               ? 'bg-amber-400 text-slate-950 shadow-md font-bold'
               : 'text-white/70 hover:text-white hover:bg-white/5'
-          }`}
+          } ${isSaving ? 'opacity-70 cursor-not-allowed' : ''}`}
         >
           <svg
             className="w-3.5 h-3.5 shrink-0"
@@ -170,25 +182,41 @@ export function ProjectHeroControls({
       {/* 3. Thumbnail Switcher (when in static mode with multiple photos) */}
       {viewMode === 'static' && normalizedPhotos.length > 1 && (
         <div className="mt-2.5 pt-2 border-t border-white/10">
-          <div className="text-[10px] text-white/50 mb-1.5 uppercase font-mono tracking-wider">
-            Select Cover Image:
+          <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5 uppercase font-mono tracking-wider">
+            <span>Select Cover Image:</span>
+            {isSaving && <span className="text-amber-400 text-[9px] animate-pulse">Syncing...</span>}
           </div>
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
-            {normalizedPhotos.map((url, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => setActiveIndex(idx)}
-                className={`relative w-10 h-10 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
-                  activeIndex === idx
-                    ? 'border-amber-400 shadow-lg scale-105 ring-2 ring-amber-400/40'
-                    : 'border-white/20 opacity-60 hover:opacity-100 hover:border-white/50'
-                }`}
-                title={`Select Photo ${idx + 1}`}
-              >
-                <img src={url} alt={`thumb ${idx}`} className="w-full h-full object-cover" />
-              </button>
-            ))}
+            {normalizedPhotos.map((url, idx) => {
+              const isSelected = activeIndex === idx;
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  disabled={isSaving}
+                  onClick={() => {
+                    if (onSelectCoverPhoto) {
+                      onSelectCoverPhoto(idx);
+                    } else if (setActiveIndex) {
+                      setActiveIndex(idx);
+                    }
+                  }}
+                  className={`relative w-10 h-10 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
+                    isSelected
+                      ? 'border-amber-400 shadow-lg scale-105 ring-2 ring-amber-400/40'
+                      : 'border-white/20 opacity-60 hover:opacity-100 hover:border-white/50'
+                  }`}
+                  title={idx === 0 ? 'Current Primary Cover' : `Click to set as primary cover`}
+                >
+                  <img src={url} alt={`thumb ${idx}`} className="w-full h-full object-cover" />
+                  {idx === 0 && (
+                    <span className="absolute bottom-0 inset-x-0 bg-amber-400 text-slate-950 font-bold text-[7px] leading-tight text-center py-0.5">
+                      COVER
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
