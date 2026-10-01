@@ -54,65 +54,89 @@ export default function ProjectsPage({ onNavigate }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
             {displayProjects.map((p, index) => {
               const colorBg = COLOR_MAP[p.color] || 'var(--bl)';
+              const photos = p.photos || [];
+              const firstPhoto =
+                photos.length > 0
+                  ? typeof photos[0] === 'string'
+                    ? photos[0]
+                    : photos[0]?.url
+                  : null;
+
               return (
                 <div
                   key={p.id || index}
-                  className="bg-[var(--card)] border border-[var(--ln)] rounded-2xl p-5 hover:shadow-xl hover:border-transparent hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group cursor-pointer relative overflow-hidden"
+                  className="group relative rounded-2xl overflow-hidden h-[480px] sm:h-[490px] flex flex-col justify-between border border-white/10 hover:border-amber-400/50 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer bg-slate-900"
                   onClick={(e) => handleNavClick(e, p.id)}
                 >
-                  {/* Top Bar: Squircle Icon Badge + Step Tag */}
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span
-                        className="w-12 h-12 rounded-xl flex items-center justify-center text-xl text-white shadow-xs group-hover:scale-105 transition-transform overflow-hidden relative"
-                        style={{ backgroundColor: colorBg }}
-                      >
-                        {p.photos && p.photos.length > 0 ? (
-                          <ImageWithLoader
-                            src={typeof p.photos[0] === 'string' ? p.photos[0] : p.photos[0]?.url}
-                            alt={p.title}
-                            containerClassName="w-full h-full"
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          p.icon
-                        )}
-                      </span>
-                      <span className="text-[11px] font-mono font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-[var(--soft)] text-[var(--mu)] group-hover:bg-[var(--bl)] group-hover:text-white transition-colors">
-                        0{index + 1}
+                  {/* 1. Background: First image of project or branded gradient fallback */}
+                  {firstPhoto ? (
+                    <div className="absolute inset-0 w-full h-full overflow-hidden">
+                      <ImageWithLoader
+                        src={firstPhoto}
+                        alt={p.title}
+                        containerClassName="w-full h-full"
+                        skeletonClassName="!bg-gradient-to-r !from-[#071430] !via-[#0e275c] !to-[#071430]"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden"
+                      style={{
+                        background: `linear-gradient(135deg, ${colorBg} 0%, #071430 100%)`,
+                      }}
+                    >
+                      <span className="text-8xl opacity-15 select-none pointer-events-none transform -rotate-12 group-hover:scale-110 transition-transform duration-500">
+                        {p.icon}
                       </span>
                     </div>
+                  )}
 
-                    {/* Title & Description */}
-                    <h3
-                      style={{ color: 'var(--nv)' }}
-                      className="font-bold text-[16px] sm:text-[17px] leading-snug mb-2 group-hover:text-[var(--bl)] transition-colors"
+                  {/* 2. Top Bar: Floating Icon & Initiative Number Badges */}
+                  <div className="p-4 flex items-center justify-between relative z-10 pointer-events-none">
+                    <span
+                      className="w-10 h-10 rounded-xl flex items-center justify-center text-lg text-white shadow-lg backdrop-blur-md border border-white/20 transition-transform group-hover:scale-105"
+                      style={{ backgroundColor: `${colorBg}dd` }}
                     >
-                      {p.title}
-                    </h3>
-                    <p className="text-[13px] text-[var(--mu)] leading-relaxed mb-4">
-                      {p.desc}
-                    </p>
+                      {p.icon}
+                    </span>
+                    <span className="text-[11px] font-mono font-bold tracking-wider px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-amber-300 border border-white/15 shadow-sm">
+                      0{index + 1}
+                    </span>
                   </div>
 
-                  {/* Bottom: Goal Strip & View Gallery Action */}
-                  <div className="pt-3 border-t border-[var(--ln)]/60 flex flex-col gap-3">
-                    <div
-                      className="bg-[var(--soft)]/70 border-l-[3px] rounded-r-lg px-2.5 py-1.5 text-[11.5px] leading-snug text-[var(--tx)]/90"
-                      style={{ borderLeftColor: colorBg }}
-                    >
-                      <span className="font-bold mr-1 text-[var(--nv)]">Our Goal:</span>
-                      <i>{p.goal}</i>
+                  {/* 3. Bottom Text Overlay: Transparent layer taking 50% or more of card height */}
+                  <div className="relative z-10 w-full min-h-[52%] sm:min-h-[55%] p-5 flex flex-col justify-between rounded-b-2xl bg-gradient-to-t from-[#071430]/95 via-[#071430]/85 to-[#071430]/65 backdrop-blur-md border-t border-white/15 shadow-2xl text-white">
+                    <div>
+                      {/* Title */}
+                      <h3 className="font-bold text-[17px] sm:text-[18px] leading-snug mb-2 text-white group-hover:text-amber-300 transition-colors drop-shadow-sm">
+                        {p.title}
+                      </h3>
+                      {/* Description */}
+                      <p className="text-[12.5px] leading-relaxed text-white/80 line-clamp-3 mb-3">
+                        {p.desc}
+                      </p>
                     </div>
 
-                    <Button
-                      target={p.id}
-                      variant="default"
-                      className="w-full text-center justify-center py-2 text-xs shadow-xs"
-                      onClick={(e) => handleNavClick(e, p.id)}
-                    >
-                      View Gallery →
-                    </Button>
+                    {/* Bottom: Goal Strip & View Gallery Action */}
+                    <div className="pt-2 flex flex-col gap-3">
+                      <div
+                        className="bg-white/10 border-l-[3px] rounded-r-lg px-2.5 py-1.5 text-[11px] leading-snug text-white/90 backdrop-blur-sm"
+                        style={{ borderLeftColor: colorBg }}
+                      >
+                        <span className="font-bold mr-1 text-amber-300">Our Goal:</span>
+                        <i className="text-white/85">{p.goal}</i>
+                      </div>
+
+                      <Button
+                        target={p.id}
+                        variant="gold"
+                        className="w-full text-center justify-center py-2 text-xs font-bold shadow-md group-hover:brightness-110 transition-all"
+                        onClick={(e) => handleNavClick(e, p.id)}
+                      >
+                        View Gallery →
+                      </Button>
+                    </div>
                   </div>
                 </div>
               );
