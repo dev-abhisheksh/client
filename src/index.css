@@ -541,6 +541,201 @@ a.c:hover .ic {
   color: var(--mu);
 }
 
+/* ==========================================================================
+   Donate & Payment Page Styles (.bank, .scan, .bf, .cp, .qi, .qr, .st, .rc)
+   ========================================================================== */
+
+/* Bank Transfer Luxury Card */
+.bank {
+  background: linear-gradient(135deg, #17324D, #24493f) !important;
+  color: #fff;
+  border-radius: 22px;
+  padding: 34px;
+  box-shadow: 0 24px 50px -20px rgba(23, 50, 77, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.bank::after {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  right: -80px;
+  top: -80px;
+  pointer-events: none;
+}
+
+.bank .bt {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.15);
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  margin-bottom: 14px;
+}
+
+.bank h2 {
+  color: #fff;
+  margin: 0 0 20px;
+}
+
+.bank hr {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 16px 0;
+}
+
+/* Bank Field Rows (.bf) */
+.bf {
+  margin: 14px 0;
+  text-align: left;
+}
+
+.bf small {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #cfe0ff;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.bf div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.bf b {
+  font-size: 16px;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+/* Copy Button (.cp) */
+.cp {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font: 600 12px 'Open Sans', sans-serif;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.2s;
+  white-space: nowrap;
+}
+
+.cp:hover {
+  transform: scale(1.06);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Scan / QR Code Container (.scan, .qi, .qr) */
+.scan {
+  padding: 34px;
+  text-align: center;
+}
+
+.scan .bf {
+  max-width: 360px;
+  margin: 0 auto 12px;
+}
+
+.scan .bf small {
+  color: var(--mu);
+}
+
+.qi {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--soft);
+  color: var(--bl);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 12px;
+  font-size: 26px;
+}
+
+.qr {
+  width: min(290px, 78vw) !important;
+  height: auto !important;
+  aspect-ratio: 1;
+  margin: 18px auto;
+  padding: 14px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px -12px rgba(11, 31, 69, 0.3), inset 0 0 0 1px var(--ln);
+}
+
+.qr svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Tax Certifications Strip (.st) */
+.st {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.st b {
+  font: 700 24px 'Merriweather', serif;
+  color: var(--nv);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Receipt Request Strip (.rc) */
+.rc {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: linear-gradient(120deg, #e7f5e8, #f4faf2);
+  color: #1d2b45;
+  border-radius: 22px;
+  padding: 34px;
+  border: 1px solid #cfe8d2;
+}
+
+.rc h2 {
+  color: #1d2b45;
+  margin-bottom: 8px;
+}
+
+.rc ol {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  font-size: 13.5px;
+  color: #3b5070;
+  line-height: 1.6;
+}
+
+@media (max-width: 860px) {
+  .bank, .scan {
+    padding: 24px 20px;
+  }
+  .rc {
+    padding: 24px 20px;
+  }
+}
+
 /* Hero Section */
 .hero {
   padding: 92px 0;

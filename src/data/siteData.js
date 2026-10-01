@@ -561,3 +561,49 @@ export const involvedContent = {
   },
 };
 
+export const donateContent = {
+  hero: {
+    eyebrow: 'Donate —',
+    title: 'Support Our Work',
+    subtitle: 'Every gift brings hope.',
+    description:
+      'Your contribution helps provide education, meals, healthcare, skills and care to children, women and families. Give by bank transfer or UPI, then request your receipt in one tap.',
+    avatar: '❤',
+    actions: [
+      { label: 'Donate Now ↓', target: 'give', variant: 'gold' },
+      { label: 'Request a Receipt →', target: 'rcpt', variant: 'white-outline' },
+    ],
+  },
+  bank: {
+    title: 'Bank Transfer',
+    accountName: 'Bethesda Charitable Trust',
+    bank: 'Punjab National Bank',
+    accountNo: '1572050000329',
+    branch: 'Valsao Pale, South Goa',
+    ifsc: 'PUNB0157220',
+  },
+  upi: {
+    upiId: '7507359065m@pnb',
+    payUrl: 'upi://pay?pa=7507359065m@pnb&pn=BETHESDA%20CHARITABLE%20TRUST&mc=5942&cu=INR',
+    orgName: 'Bethesda Charitable Trust',
+  },
+  taxCertificates: [
+    { label: '80G Certificate', value: 'U.R.N. – AABTB7768HE20215' },
+    { label: 'Darpan ID', value: 'GA/2025/0886535' },
+    { label: 'Registration', value: 'Reg. No. 09/2009 | 12A Exempted' },
+  ],
+  receipt: {
+    title: 'Need a Receipt?',
+    desc: 'We hold an 80G certificate. After you donate, tap the button and WhatsApp opens with a ready-made message. Just fill in the blanks and send.',
+    steps: [
+      'Donate by bank transfer or UPI',
+      'Tap “Request Receipt on WhatsApp”',
+      'Add your amount and transaction ID, then send',
+    ],
+    whatsappNumber: '918087772008',
+    whatsappMessage:
+      'Hello Bethesda Charitable Trust,\nI have made a donation and would like to request a receipt.\n\nName: \nAmount: ₹\nDate of donation: \nPayment mode (Bank transfer / UPI): \nTransaction / UTR ID: \nPAN (for 80G receipt): \nEmail: \n\nThank you.',
+  },
+};
+
+
