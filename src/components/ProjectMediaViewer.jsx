@@ -38,7 +38,7 @@ export function ProjectHeroBackground({
           className="w-full h-full"
         >
           {normalizedPhotos.map((url, idx) => (
-            <SwiperSlide key={idx} className="w-full h-full bg-[#071430]">
+            <SwiperSlide key={idx} className="w-full h-full bg-transparent">
               <img
                 src={url}
                 alt={`${title} slide ${idx + 1}`}

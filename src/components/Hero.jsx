@@ -22,12 +22,12 @@ export default function Hero({
         <div className="absolute inset-0 w-full h-full z-0 overflow-hidden pointer-events-auto">
           {bgMedia}
 
-          {/* Left-side Dark Gradient Overlay to ensure crisp, clear text readability */}
+          {/* Left-side Dark Gradient Overlay to ensure crisp, clear text readability while leaving the right side bright and vibrant */}
           <div
             className="absolute inset-0 z-[1] pointer-events-none"
             style={{
               background:
-                'linear-gradient(to right, rgba(7, 20, 48, 0.96) 0%, rgba(7, 20, 48, 0.90) 40%, rgba(7, 20, 48, 0.55) 75%, rgba(7, 20, 48, 0.25) 100%)',
+                'linear-gradient(to right, rgba(7, 20, 48, 0.90) 0%, rgba(7, 20, 48, 0.78) 32%, rgba(7, 20, 48, 0.35) 58%, rgba(7, 20, 48, 0.06) 78%, transparent 100%)',
             }}
           />
 
@@ -36,7 +36,7 @@ export default function Hero({
             className="absolute inset-0 z-[1] pointer-events-none md:hidden"
             style={{
               background:
-                'linear-gradient(to bottom, rgba(7, 20, 48, 0.92) 0%, rgba(7, 20, 48, 0.85) 60%, rgba(7, 20, 48, 0.5) 100%)',
+                'linear-gradient(to bottom, rgba(7, 20, 48, 0.85) 0%, rgba(7, 20, 48, 0.55) 55%, transparent 100%)',
             }}
           />
         </div>
@@ -46,10 +46,10 @@ export default function Hero({
       <div className="w grid grid-cols-1 md:grid-cols-[1.3fr_0.9fr] gap-6 sm:gap-8 items-center relative z-10">
         <div className="hero-animate">
           {eyebrow && <div className="eb mb-1 sm:mb-2">{eyebrow}</div>}
-          {title && <h1 className="tracking-tight">{title}</h1>}
-          {subtitle && <em>{subtitle}</em>}
+          {title && <h1 className="tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">{title}</h1>}
+          {subtitle && <em className="drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">{subtitle}</em>}
           {description && (
-            <p className="text-[14px] sm:text-[15px] leading-relaxed max-w-[560px] text-white/95 drop-shadow-xs">
+            <p className="text-[14px] sm:text-[15px] leading-relaxed max-w-[560px] text-white/95 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
               {description}
             </p>
           )}
