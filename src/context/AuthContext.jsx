@@ -1,34 +1,47 @@
-import { createContext, useContext, useEffect, useState } from 'react'
-import { getMe } from '../api/auth.api';
+import React, { createContext, useContext } from 'react';
+import { useCurrentUser } from '../hooks/auth/useCurrentUser';
+import { useLogin } from '../hooks/auth/useLogin';
+import { useLogout } from '../hooks/auth/useLogout';
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
-const AuthContext = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+export const AuthProvider = ({ children }) => {
+  const { data, isLoading } = useCurrentUser();
+  const loginMutation = useLogin();
+  const logoutMutation = useLogout();
 
-  const verifyUser = async () => {
-    try {
-      const res = await getMe();
-      setUser(res.data.user)
-    } catch (error) {
-      setUser(null)
-    } finally {
-      setLoading(false)
-    }
-  }
+  const user = data?.data?.user || null;
+  const isAdmin = !!(user && (user.role === 'admin' || user.role === 'superadmin'));
 
-  useEffect(() => {
-    verifyUser()
-  }, [])
+  const login = async (credentials) => {
+    const res = await loginMutation.mutateAsync(credentials);
+    return res.data;
+  };
+
+  const logout = async () => {
+    await logoutMutation.mutateAsync();
+  };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, setLoading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        isAdmin,
+        loading: isLoading,
+        isLoggingIn: loginMutation.isPending,
+        login,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};
 
 export const useAuth = () => {
-  return useContext(AuthContext)
-}
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
