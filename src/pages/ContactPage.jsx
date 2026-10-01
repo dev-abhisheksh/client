@@ -123,28 +123,37 @@ export default function ContactPage({ onNavigate }) {
         </div>
       </section>
 
-      {/* 4. How Can We Help? (6 Service Cards in .g6) */}
+      {/* 4. How Can We Help? (6 Service Cards in .help-services-grid) */}
       <section className="sec soft">
         <div className="w">
-          <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-            <h2 className="c text-[22px] sm:text-[26px]">How Can We Help?</h2>
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-[22px] sm:text-[26px]">How Can We Help?</h2>
           </div>
-          <div className="g6">
+          <div className="help-services-grid g6">
             {helpServices.map((h, i) => {
               const colorBg = COLOR_MAP[h.color] || 'var(--bl)';
               return (
-                <div key={i} className="cd sm">
+                <div
+                  key={i}
+                  className="cd sm group"
+                  onClick={() => handleNav(h.target)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleNav(h.target);
+                    }
+                  }}
+                >
                   <span className="ic" style={{ background: colorBg }}>
                     {h.icon}
                   </span>
                   <h4 style={{ color: colorBg }}>{h.title}</h4>
                   <p>{h.desc}</p>
-                  <a
-                    onClick={() => handleNav(h.target)}
-                    className="inline-flex items-center gap-1 cursor-pointer"
-                  >
+                  <span className="lk">
                     Learn More →
-                  </a>
+                  </span>
                 </div>
               );
             })}

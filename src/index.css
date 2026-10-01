@@ -838,56 +838,119 @@ a.c:hover .ic {
 
 /* Service / Small Help Cards (.sm) */
 .sm {
-  padding: 22px 16px;
+  padding: 22px 14px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+  justify-content: flex-start;
+  border-radius: 16px;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s, border-color 0.3s;
   min-width: 0;
-}
-
-@media (max-width: 480px) {
-  .sm {
-    padding: 18px 14px;
-  }
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid var(--ln);
+  background: var(--card);
 }
 
 .sm:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 32px -12px rgba(11, 31, 69, 0.15);
+  border-color: rgba(31, 95, 191, 0.3);
 }
 
 .sm .ic {
   margin: 0 auto 12px;
   border: 0;
+  width: 48px;
+  height: 48px;
+  font-size: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.sm:hover .ic {
+  transform: scale(1.14) rotate(-6deg);
 }
 
 .sm h4 {
   font-size: 15px;
   margin: 0 0 6px;
   font-weight: 700;
+  line-height: 1.35;
 }
 
 .sm p {
-  font-size: 13px;
-  margin: 0 0 12px;
+  font-size: 12.5px;
+  margin: 0 0 14px;
   color: var(--mu);
   line-height: 1.5;
+  flex: 1;
 }
 
+.sm .lk,
 .sm a {
   font-size: 13px;
   font-weight: 700;
   color: var(--bl);
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   cursor: pointer;
 }
 
-.sm a:hover {
+.sm:hover .lk,
+.sm:hover a {
   transform: translateX(3px);
 }
+
+@media (max-width: 480px) {
+  .sm {
+    padding: 18px 12px;
+  }
+  .sm h4 {
+    font-size: 14px;
+  }
+  .sm p {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+}
+
+/* Help Services Grid (.help-services-grid) */
+.help-services-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 1024px) {
+  .help-services-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+}
+
+@media (max-width: 680px) {
+  .help-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .help-services-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
 
 /* Contact Enquiry Grid */
 .contact-enquiry-grid {
@@ -1366,6 +1429,24 @@ nav a.on {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 12px;
+}
+
+@media (max-width: 1024px) {
+  .g6 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .g6 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 440px) {
+  .g6 {
+    grid-template-columns: 1fr;
+  }
 }
 
 .g6 > a.c {
