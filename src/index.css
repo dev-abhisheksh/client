@@ -910,8 +910,9 @@ a.c:hover .ic {
   padding: 18px 22px;
   cursor: pointer;
   border-radius: 16px;
-  transition: all 0.25s ease;
+  transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
   user-select: none;
+  contain: paint;
 }
 
 .fq:hover {
@@ -928,31 +929,58 @@ a.c:hover .ic {
   line-height: 1.4;
 }
 
-.fq span {
+.fq .fq-icon {
   font-size: 20px;
   font-weight: 400;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   color: var(--bl);
   margin-left: 12px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  transform-origin: center center;
 }
 
-.fq.o span {
+.fq.o .fq-icon {
   transform: rotate(45deg);
 }
 
+/* CSS Grid 0fr -> 1fr smooth accordion transition (zero lag, GPU friendly) */
+.fq .fq-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fq.o .fq-body {
+  grid-template-rows: 1fr;
+}
+
+.fq .fq-content {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fq.o .fq-content {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease 0.04s, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1) 0.04s;
+}
+
 .fq p {
-  display: none;
   font-size: 14px;
   color: var(--mu);
-  margin: 12px 0 0;
+  margin: 12px 0 2px;
   line-height: 1.6;
 }
 
-.fq.o p {
-  display: block;
-}
 
 /* Contact Location 3-Column Grid */
 .contact-loc-grid {

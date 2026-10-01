@@ -289,12 +289,25 @@ export default function ContactPage({ onNavigate }) {
                   key={index}
                   className={`cd fq ${isOpen ? 'o' : ''}`}
                   onClick={() => toggleFaq(index)}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isOpen}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleFaq(index);
+                    }
+                  }}
                 >
                   <b>
                     <span>{item.question}</span>
-                    <span>+</span>
+                    <span className="fq-icon">+</span>
                   </b>
-                  <p>{item.answer}</p>
+                  <div className="fq-body">
+                    <div className="fq-content">
+                      <p>{item.answer}</p>
+                    </div>
+                  </div>
                 </div>
               );
             })}
