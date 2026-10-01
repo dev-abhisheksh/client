@@ -85,21 +85,11 @@ export default function ProjectsPage({ onNavigate }) {
                       style={{
                         background: `linear-gradient(135deg, ${colorBg} 0%, #071430 100%)`,
                       }}
-                    >
-                      <span className="text-8xl opacity-15 select-none pointer-events-none transform -rotate-12 group-hover:scale-110 transition-transform duration-500">
-                        {p.icon}
-                      </span>
-                    </div>
+                    />
                   )}
 
-                  {/* 2. Top Bar: Floating Icon & Initiative Number Badges */}
-                  <div className="p-4 flex items-center justify-between relative z-10 pointer-events-none">
-                    <span
-                      className="w-10 h-10 rounded-xl flex items-center justify-center text-lg text-white shadow-lg backdrop-blur-md border border-white/20 transition-transform group-hover:scale-105"
-                      style={{ backgroundColor: `${colorBg}dd` }}
-                    >
-                      {p.icon}
-                    </span>
+                  {/* 2. Top Bar: Floating Initiative Number Badge */}
+                  <div className="p-4 flex items-center justify-end relative z-10 pointer-events-none">
                     <span className="text-[11px] font-mono font-bold tracking-wider px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-amber-300 border border-white/15 shadow-sm">
                       0{index + 1}
                     </span>
