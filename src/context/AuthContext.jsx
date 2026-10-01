@@ -1,7 +1,8 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { useCurrentUser } from '../hooks/auth/useCurrentUser';
 import { useLogin } from '../hooks/auth/useLogin';
 import { useLogout } from '../hooks/auth/useLogout';
+import LoginModal from '../components/LoginModal';
 
 export const AuthContext = createContext(null);
 
@@ -9,6 +10,11 @@ export const AuthProvider = ({ children }) => {
   const { data, isLoading } = useCurrentUser();
   const loginMutation = useLogin();
   const logoutMutation = useLogout();
+
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  const openLoginModal = () => setIsLoginModalOpen(true);
+  const closeLoginModal = () => setIsLoginModalOpen(false);
 
   const user = data?.data?.user || null;
   const isAdmin = !!(user && (user.role === 'admin' || user.role === 'superadmin'));
@@ -38,9 +44,14 @@ export const AuthProvider = ({ children }) => {
         isLoggingIn: loginMutation.isPending,
         login,
         logout,
+        isLoginModalOpen,
+        openLoginModal,
+        closeLoginModal,
       }}
     >
       {children}
+      {/* Global Login Modal accessible from any button or navbar across the site */}
+      <LoginModal isOpen={isLoginModalOpen} onClose={closeLoginModal} />
     </AuthContext.Provider>
   );
 };

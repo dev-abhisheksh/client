@@ -13,18 +13,29 @@ import DonatePage from './pages/DonatePage';
 import PayPage from './pages/PayPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import Button from './components/Button';
 
-export default function App() {
+function AppContent() {
+  const { openLoginModal } = useAuth();
   const lenisRef = useRef(null);
 
   const getInitialPage = () => {
     const hash = window.location.hash.replace('#', '');
+    if (hash === 'login' || hash === 'admin') return 'home';
     return hash || 'home';
   };
 
   const [currentPage, setCurrentPage] = useState(getInitialPage);
+
+  // If page loads with #login or #admin, open the modal and set hash to home
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash === 'login' || hash === 'admin') {
+      openLoginModal();
+      window.history.replaceState(null, '', '#home');
+    }
+  }, [openLoginModal]);
 
   // Initialize Lenis Smooth Scrolling
   useEffect(() => {
@@ -55,6 +66,11 @@ export default function App() {
   useEffect(() => {
     const handleHashChange = () => {
       const page = window.location.hash.replace('#', '') || 'home';
+      if (page === 'login' || page === 'admin') {
+        openLoginModal();
+        window.history.replaceState(null, '', `#${currentPage}`);
+        return;
+      }
       setCurrentPage(page);
       if (lenisRef.current) {
         lenisRef.current.scrollTo(0, { immediate: true });
@@ -65,9 +81,13 @@ export default function App() {
 
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [currentPage, openLoginModal]);
 
   const navigateTo = (page) => {
+    if (page === 'login' || page === 'admin') {
+      openLoginModal();
+      return;
+    }
     window.location.hash = page;
     setCurrentPage(page);
     if (lenisRef.current) {
@@ -144,7 +164,6 @@ export default function App() {
       case 'admin':
         return <LoginPage onNavigate={navigateTo} />;
       default:
-        // Placeholder for upcoming pages as we go page by page
         return (
           <section className="sec" style={{ minHeight: '60vh', display: 'grid', placeItems: 'center' }}>
             <div className="w text-center" style={{ maxWidth: '600px' }}>
@@ -164,23 +183,28 @@ export default function App() {
   };
 
   return (
-    <AuthProvider>
-      <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--tx)]">
-        {/* Welcome Splash Dialog */}
-        <IntroScreen />
+    <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--tx)]">
+      {/* Welcome Splash Dialog */}
+      <IntroScreen />
 
-        {/* Main Sticky Header */}
-        <Header currentPage={currentPage} onNavigate={navigateTo} />
+      {/* Main Sticky Header */}
+      <Header currentPage={currentPage} onNavigate={navigateTo} />
 
-        {/* Page Content Container */}
-        <main id="app" className="flex-1">
-          {renderPage()}
-        </main>
+      {/* Page Content Container */}
+      <main id="app" className="flex-1">
+        {renderPage()}
+      </main>
 
-        {/* Site Footer */}
-        <Footer onNavigate={navigateTo} />
-      </div>
-    </AuthProvider>
+      {/* Site Footer */}
+      <Footer onNavigate={navigateTo} />
+    </div>
   );
 }
 
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+}

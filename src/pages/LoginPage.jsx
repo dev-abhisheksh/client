@@ -32,11 +32,11 @@ export default function LoginPage({ onNavigate }) {
 
     try {
       setSubmitting(true);
-      const res = await login({ email: email.trim().toLowerCase(), password });
-      setSuccessMsg('Authentication successful! Welcome to the admin portal.');
+      await login({ email: email.trim().toLowerCase(), password });
+      setSuccessMsg('Authentication successful! Refreshing admin access...');
       setTimeout(() => {
-        handleNav('home');
-      }, 1000);
+        window.location.reload();
+      }, 500);
     } catch (err) {
       setError(err.message || 'Invalid email or password.');
     } finally {
@@ -47,6 +47,9 @@ export default function LoginPage({ onNavigate }) {
   const handleLogout = async () => {
     await logout();
     setSuccessMsg('You have been logged out.');
+    setTimeout(() => {
+      window.location.reload();
+    }, 400);
   };
 
   return (
