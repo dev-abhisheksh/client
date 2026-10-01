@@ -1,4 +1,9 @@
 import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, EffectFade } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+
 import Hero from '../components/Hero';
 import Button from '../components/Button';
 import ImpactStrip from '../components/ImpactStrip';
@@ -55,12 +60,12 @@ export default function ProjectsPage({ onNavigate }) {
             {displayProjects.map((p, index) => {
               const colorBg = COLOR_MAP[p.color] || 'var(--bl)';
               const photos = p.photos || [];
-              const firstPhoto =
-                photos.length > 0
-                  ? typeof photos[0] === 'string'
-                    ? photos[0]
-                    : photos[0]?.url
-                  : null;
+              const normalizedPhotos = photos
+                .map((item) => (typeof item === 'string' ? item : item?.url))
+                .filter(Boolean);
+              const firstPhoto = normalizedPhotos[0] || null;
+              const isCarouselMode =
+                (p.mediaMode === 'carousel' || !p.mediaMode) && normalizedPhotos.length > 1;
 
               return (
                 <div
@@ -68,16 +73,42 @@ export default function ProjectsPage({ onNavigate }) {
                   className="group relative rounded-2xl overflow-hidden h-[480px] sm:h-[490px] flex flex-col justify-between border border-white/10 hover:border-amber-400/50 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer bg-slate-900"
                   onClick={(e) => handleNavClick(e, p.id)}
                 >
-                  {/* 1. Background: First image of project or branded gradient fallback */}
-                  {firstPhoto ? (
+                  {/* 1. Background: Swiper Carousel if in carousel mode, or Static Cover Image */}
+                  {normalizedPhotos.length > 0 ? (
                     <div className="absolute inset-0 w-full h-full overflow-hidden">
-                      <ImageWithLoader
-                        src={firstPhoto}
-                        alt={p.title}
-                        containerClassName="w-full h-full"
-                        skeletonClassName="!bg-gradient-to-r !from-[#071430] !via-[#0e275c] !to-[#071430]"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
+                      {isCarouselMode ? (
+                        <Swiper
+                          modules={[Autoplay, EffectFade]}
+                          effect="fade"
+                          fadeEffect={{ crossFade: true }}
+                          speed={1200}
+                          slidesPerView={1}
+                          loop={true}
+                          autoplay={{
+                            delay: 4000 + (index * 600),
+                            disableOnInteraction: false,
+                          }}
+                          className="w-full h-full pointer-events-none"
+                        >
+                          {normalizedPhotos.map((url, photoIdx) => (
+                            <SwiperSlide key={photoIdx} className="w-full h-full bg-transparent">
+                              <img
+                                src={url}
+                                alt={`${p.title} slide ${photoIdx + 1}`}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                              />
+                            </SwiperSlide>
+                          ))}
+                        </Swiper>
+                      ) : (
+                        <ImageWithLoader
+                          src={firstPhoto}
+                          alt={p.title}
+                          containerClassName="w-full h-full"
+                          skeletonClassName="!bg-gradient-to-r !from-[#071430] !via-[#0e275c] !to-[#071430]"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                        />
+                      )}
                     </div>
                   ) : (
                     <div

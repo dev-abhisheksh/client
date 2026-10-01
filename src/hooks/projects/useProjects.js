@@ -5,7 +5,8 @@ export const useProjects = () => {
   return useQuery({
     queryKey: ["projects"],
     queryFn: getAllProjects,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 10 * 1000,
+    refetchOnWindowFocus: true,
     retry: 1,
   });
 };

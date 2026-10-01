@@ -6,7 +6,8 @@ export const useProject = (id) => {
     queryKey: ["project", id],
     queryFn: () => getProjectById(id),
     enabled: !!id,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 10 * 1000,
+    refetchOnWindowFocus: true,
     retry: 1,
   });
 };

@@ -24,17 +24,20 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
   const uploadPhotoMutation = useUploadProjectPhoto();
   const deletePhotoMutation = useDeleteProjectPhoto();
 
-  // Find project by id (e.g. 'pj0') or index
-  const currentIndex = fallbackProjects.findIndex((p) => p.id === projectId);
-  const activeIndex = currentIndex !== -1 ? currentIndex : 0;
+  // Find project by id (e.g. 'pj0'), MongoDB _id, or index
+  const dbProjects = dbData?.data?.projects;
+  let activeIndex = fallbackProjects.findIndex((p) => p.id === projectId);
+  if (activeIndex === -1 && dbProjects) {
+    activeIndex = dbProjects.findIndex((p) => p._id === projectId || String(p.order) === projectId);
+  }
+  if (activeIndex === -1) activeIndex = 0;
 
   // Use live data from database with fallback to siteData
-  const dbProjects = dbData?.data?.projects;
-  const baseProject = fallbackProjects[activeIndex];
-  const project =
-    dbProjects && dbProjects[activeIndex]
-      ? { ...baseProject, ...dbProjects[activeIndex] }
-      : baseProject;
+  const baseProject = fallbackProjects[activeIndex] || fallbackProjects[0];
+  const dbProject =
+    dbProjects?.find((p) => p._id === projectId || p.order === activeIndex) ||
+    dbProjects?.[activeIndex];
+  const project = dbProject ? { ...baseProject, ...dbProject } : baseProject;
 
   // Circular previous and next calculation
   const total = fallbackProjects.length;
@@ -54,17 +57,20 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
   const [mediaMode, setMediaMode] = useState(project.mediaMode || 'carousel');
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
-  // Sync state whenever project updates from server
+  // Sync state whenever project updates from server or active project changes
   useEffect(() => {
     if (project?.mediaMode) {
       setMediaMode(project.mediaMode);
     }
-  }, [project?.mediaMode]);
+  }, [project?.mediaMode, project?._id]);
 
   // Persist mediaMode ("static" | "carousel") change to MongoDB across the entire website
   const handleToggleMediaMode = (newMode) => {
     setMediaMode(newMode);
-    if (!project?._id || !isAdmin) return;
+    if (!project?._id) {
+      console.warn('Cannot save mediaMode: Project ID not found');
+      return;
+    }
 
     updateProjectMutation.mutate(
       {
@@ -83,7 +89,7 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
   // Reorder photos to set selected thumbnail as primary cover photo across the site
   const handleSelectCoverPhoto = (idx) => {
     setActivePhotoIndex(0);
-    if (!project?._id || !isAdmin || !project.photos || project.photos.length <= idx) return;
+    if (!project?._id || !project.photos || project.photos.length <= idx) return;
     if (idx === 0) return;
 
     const selected = project.photos[idx];
