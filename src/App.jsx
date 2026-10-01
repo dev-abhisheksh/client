@@ -11,6 +11,7 @@ import ProjectDetailPage from './pages/ProjectDetailPage';
 import InvolvedPage from './pages/InvolvedPage';
 import DonatePage from './pages/DonatePage';
 import PayPage from './pages/PayPage';
+import ContactPage from './pages/ContactPage';
 import Button from './components/Button';
 
 export default function App() {
@@ -135,6 +136,8 @@ export default function App() {
         return <DonatePage onNavigate={navigateTo} />;
       case 'pay':
         return <PayPage onNavigate={navigateTo} />;
+      case 'contact':
+        return <ContactPage onNavigate={navigateTo} />;
       default:
         // Placeholder for upcoming pages as we go page by page
         return (

@@ -606,4 +606,171 @@ export const donateContent = {
   },
 };
 
+export const contactContent = {
+  hero: {
+    eyebrow: 'Contact Bethesda —',
+    title: "We're Here to Listen.",
+    subtitle: '',
+    description:
+      "Let's Connect. Let's Serve. Let's Make a Difference. Whether you want to ask a question, volunteer, partner with us, support a project, or learn more about Bethesda Charitable Trust, we would love to hear from you.",
+    avatar: '👩‍👧',
+    actions: [
+      { label: 'GET IN TOUCH →', target: 'enquiry', variant: 'gold' },
+      { label: 'SUPPORT OUR WORK', target: 'donate', variant: 'white-outline' },
+    ],
+  },
+  channels: [
+    {
+      icon: '📍',
+      color: 'bl',
+      title: 'Visit Us',
+      detail: 'Valsao Pale, South Goa, India',
+      actionText: 'Get Directions',
+      actionType: 'external',
+      href: 'https://share.google/Y9UmIrC5cQf7vxMhg',
+    },
+    {
+      icon: '📞',
+      color: 'gr',
+      title: 'Call Us',
+      detail: '+91 8087772008',
+      actionText: 'Call Now',
+      actionType: 'external',
+      href: 'tel:+918087772008',
+    },
+    {
+      icon: '✉',
+      color: 'bl',
+      title: 'Email Us',
+      detail: 'bethesdatrust2009@gmail.com',
+      actionText: 'Send Email',
+      actionType: 'external',
+      href: 'mailto:bethesdatrust2009@gmail.com',
+    },
+    {
+      icon: '💬',
+      color: 'gr',
+      title: 'WhatsApp',
+      detail: '+91 8087772008',
+      actionText: 'Chat With Us',
+      actionType: 'external',
+      href: 'https://wa.me/918087772008?text=Hello%20Bethesda%20Charitable%20Trust',
+    },
+  ],
+  enquiry: {
+    cardLeft: {
+      title: "We'd Love to Hear From You",
+      points: [
+        'Have a question about our projects?',
+        'Want to volunteer?',
+        'Interested in partnering with Bethesda?',
+        'Need more information about our work?',
+      ],
+      emoji: '🧑‍🤝‍🧑',
+    },
+    cardRight: {
+      title: 'Fill Our Enquiry Form',
+      description:
+        'Volunteering, partnerships, support or any question — share your details with us using our Google Form.',
+      buttonText: 'OPEN THE FORM →',
+      googleFormUrl:
+        'https://docs.google.com/forms/d/e/1FAIpQLSewhEf_xUlaq0HcB6YEZnrDLnW2lSJpSyr7Rxcl2Lh2I6KQRg/viewform?usp=header',
+    },
+  },
+  helpServices: [
+    {
+      icon: '❤',
+      color: 'rd',
+      title: 'Support Our Mission',
+      desc: 'Learn how your contribution can help.',
+      target: 'donate',
+    },
+    {
+      icon: '👥',
+      color: 'bl',
+      title: 'Volunteer With Us',
+      desc: 'Give your time and skills to serve others.',
+      target: 'involved',
+    },
+    {
+      icon: '🎁',
+      color: 'or',
+      title: 'Project SMS',
+      desc: 'Learn about our food-sharing outreach.',
+      target: 'pj3',
+    },
+    {
+      icon: '📖',
+      color: 'pu',
+      title: 'Education & Children',
+      desc: "Support children's education and development.",
+      target: 'pj1',
+    },
+    {
+      icon: '🎗',
+      color: 'mg',
+      title: "Women's Empowerment",
+      desc: 'Explore opportunities to support women.',
+      target: 'pj4',
+    },
+    {
+      icon: '✚',
+      color: 'tl',
+      title: 'Healthcare & Care',
+      desc: 'Learn about our community healthcare initiatives.',
+      target: 'pj5',
+    },
+  ],
+  whatsappBanner: {
+    icon: '💬',
+    title: 'Prefer WhatsApp?',
+    subtitle: "Let's talk directly.",
+    description:
+      'Have a quick question? Send us a WhatsApp message and our team can respond to your enquiry.',
+    buttonText: 'CHAT ON WHATSAPP →',
+    whatsappUrl:
+      'https://wa.me/918623965098?text=Hello%20Bethesda%20Charitable%20Trust,%20I%20would%20like%20to%20know%20more.',
+  },
+  location: {
+    mapEmbedUrl:
+      'https://www.google.com/maps?q=Bethesda+Charitable+Trust,+Valsao+Pale,+Goa&output=embed',
+    title: '📍 Find Us',
+    orgName: 'Bethesda Charitable Trust',
+    address: 'Valsao Pale, South Goa, India',
+    directionsUrl: 'https://share.google/Y9UmIrC5cQf7vxMhg',
+    inspirationalQuote: '✝ Together we can make a difference ♡',
+  },
+  statsStrip: {
+    title: 'Serving With Compassion Since 2009',
+    stats: [
+      { value: '15+', label: 'Years of Service' },
+      { value: '7', label: 'Areas of Service' },
+      { value: '👨‍👩‍👧', label: 'Children & Families Reached' },
+      { value: '🤝', label: 'Community Outreach' },
+    ],
+  },
+  faq: [
+    {
+      question: 'How can I volunteer with Bethesda?',
+      answer:
+        'You can contact us through the form, phone or WhatsApp and tell us how you would like to help.',
+    },
+    {
+      question: 'Can I visit Bethesda?',
+      answer:
+        'Yes. Contact us before visiting so we can provide the appropriate information.',
+    },
+    {
+      question: 'Can I support a specific project?',
+      answer:
+        'Yes. Mention the project in your enquiry and our team can guide you.',
+    },
+    {
+      question: 'How can I partner with Bethesda?',
+      answer:
+        'Send us a message describing your organization, group or partnership idea.',
+    },
+  ],
+};
+
 
