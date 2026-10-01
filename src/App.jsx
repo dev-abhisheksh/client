@@ -12,6 +12,8 @@ import InvolvedPage from './pages/InvolvedPage';
 import DonatePage from './pages/DonatePage';
 import PayPage from './pages/PayPage';
 import ContactPage from './pages/ContactPage';
+import LoginPage from './pages/LoginPage';
+import { AuthProvider } from './context/AuthContext';
 import Button from './components/Button';
 
 export default function App() {
@@ -138,6 +140,9 @@ export default function App() {
         return <PayPage onNavigate={navigateTo} />;
       case 'contact':
         return <ContactPage onNavigate={navigateTo} />;
+      case 'login':
+      case 'admin':
+        return <LoginPage onNavigate={navigateTo} />;
       default:
         // Placeholder for upcoming pages as we go page by page
         return (
@@ -159,20 +164,23 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--tx)]">
-      {/* Welcome Splash Dialog */}
-      <IntroScreen />
+    <AuthProvider>
+      <div className="min-h-screen flex flex-col bg-[var(--bg)] text-[var(--tx)]">
+        {/* Welcome Splash Dialog */}
+        <IntroScreen />
 
-      {/* Main Sticky Header */}
-      <Header currentPage={currentPage} onNavigate={navigateTo} />
+        {/* Main Sticky Header */}
+        <Header currentPage={currentPage} onNavigate={navigateTo} />
 
-      {/* Page Content Container */}
-      <main id="app" className="flex-1">
-        {renderPage()}
-      </main>
+        {/* Page Content Container */}
+        <main id="app" className="flex-1">
+          {renderPage()}
+        </main>
 
-      {/* Site Footer */}
-      <Footer onNavigate={navigateTo} />
-    </div>
+        {/* Site Footer */}
+        <Footer onNavigate={navigateTo} />
+      </div>
+    </AuthProvider>
   );
 }
+
