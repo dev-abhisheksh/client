@@ -50,7 +50,7 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
       : fallbackProjects[nextIndex];
 
   // Hero media view mode (Static Image vs Smooth Swiper Carousel)
-  const [mediaMode, setMediaMode] = useState('carousel'); // 'static' | 'carousel'
+  const [mediaMode, setMediaMode] = useState(project.mediaMode || 'carousel');
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
   // Admin edit modal state
@@ -60,6 +60,7 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
     desc: project.desc || '',
     goal: project.goal || '',
     aboutText: project.aboutText || '',
+    mediaMode: project.mediaMode || 'carousel',
   });
 
   const handleOpenEdit = () => {
@@ -68,6 +69,7 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
       desc: project.desc || '',
       goal: project.goal || '',
       aboutText: project.aboutText || '',
+      mediaMode: project.mediaMode || mediaMode || 'carousel',
     });
     setIsEditing(true);
   };
@@ -182,7 +184,7 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
           ) : null
         }
         media={
-          photos.length > 0 ? (
+          isAdmin && photos.length > 0 ? (
             <ProjectHeroControls
               photos={project.photos}
               viewMode={mediaMode}
@@ -393,6 +395,36 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
                   onChange={(e) => setFormData({ ...formData, aboutText: e.target.value })}
                   className="w-full px-3.5 py-2 text-sm rounded-xl border border-[var(--ln)] bg-[var(--bg)] text-[var(--tx)] focus:outline-none focus:border-[var(--bl)]"
                 />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-[var(--nv)] mb-1">
+                  Header Media Display Mode
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, mediaMode: 'carousel' })}
+                    className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                      formData.mediaMode === 'carousel'
+                        ? 'bg-[var(--bl)] text-white border-[var(--bl)] shadow-xs'
+                        : 'bg-[var(--bg)] text-[var(--tx)] border-[var(--ln)] hover:border-[var(--bl)]'
+                    }`}
+                  >
+                    🎡 Smooth Carousel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, mediaMode: 'static' })}
+                    className={`px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                      formData.mediaMode === 'static'
+                        ? 'bg-[var(--bl)] text-white border-[var(--bl)] shadow-xs'
+                        : 'bg-[var(--bg)] text-[var(--tx)] border-[var(--ln)] hover:border-[var(--bl)]'
+                    }`}
+                  >
+                    🖼️ Static Image
+                  </button>
+                </div>
               </div>
 
               <div className="flex items-center justify-end gap-3 pt-4 border-t border-[var(--ln)] mt-6">

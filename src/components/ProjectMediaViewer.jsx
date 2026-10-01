@@ -76,7 +76,8 @@ export function ProjectHeroControls({
     .map((item) => (typeof item === 'string' ? item : item?.url))
     .filter(Boolean);
 
-  if (normalizedPhotos.length === 0) return null;
+  // Strictly hide controls from normal visitors (Admin only)
+  if (!isAdmin || normalizedPhotos.length === 0) return null;
 
   return (
     <div className="flex flex-col items-center md:items-end gap-3 w-full">
