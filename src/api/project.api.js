@@ -44,3 +44,12 @@ export const uploadProjectPhoto = (id, file) => {
     },
   });
 };
+
+/**
+ * Delete a photo from project gallery via Cloudinary (Admin only)
+ * @param {string} id - Project ID
+ * @param {string} photoId - Photo subdocument ID
+ */
+export const deleteProjectPhoto = (id, photoId) => API.delete(`/projects/${id}/photos/${photoId}`);
+
+

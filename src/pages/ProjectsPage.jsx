@@ -3,9 +3,21 @@ import Hero from '../components/Hero';
 import Button from '../components/Button';
 import ImpactStrip from '../components/ImpactStrip';
 import { projectsContent, COLOR_MAP } from '../data/siteData';
+import { useProjects } from '../hooks';
 
 export default function ProjectsPage({ onNavigate }) {
-  const { hero, projects } = projectsContent;
+  const { hero, projects: fallbackProjects } = projectsContent;
+  const { data: dbData } = useProjects();
+
+  const dbProjects = dbData?.data?.projects;
+
+  // Merge database values into canonical fallback project structure (orders 0..6)
+  const displayProjects = fallbackProjects.map((fallback, index) => {
+    if (dbProjects && dbProjects[index]) {
+      return { ...fallback, ...dbProjects[index] };
+    }
+    return fallback;
+  });
 
   const handleNavClick = (e, target) => {
     e.preventDefault();
@@ -39,11 +51,11 @@ export default function ProjectsPage({ onNavigate }) {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-            {projects.map((p, index) => {
+            {displayProjects.map((p, index) => {
               const colorBg = COLOR_MAP[p.color] || 'var(--bl)';
               return (
                 <div
-                  key={p.id}
+                  key={p.id || index}
                   className="bg-[var(--card)] border border-[var(--ln)] rounded-2xl p-5 hover:shadow-xl hover:border-transparent hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group cursor-pointer relative overflow-hidden"
                   onClick={(e) => handleNavClick(e, p.id)}
                 >

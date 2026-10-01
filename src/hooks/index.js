@@ -5,5 +5,7 @@ export * from "./projects/useProjects";
 export * from "./projects/useProject";
 export * from "./projects/useUpdateProject";
 export * from "./projects/useUploadProjectPhoto";
+export * from "./projects/useDeleteProjectPhoto";
 export * from "./content/useContent";
 export * from "./content/useUpdateContent";
+
