@@ -58,6 +58,156 @@ export const homeContent = {
       { label: 'Donate Now', target: 'donate', variant: 'white-outline' },
     ],
   },
+  statsBar: [
+    {
+      type: 'cal',
+      value: 'Since 2009',
+      label: 'Serving communities',
+    },
+    {
+      type: 'med',
+      value: '50+',
+      label: 'Medical camps',
+    },
+    {
+      type: 'cap',
+      value: '200+',
+      label: 'Children supported through education',
+    },
+    {
+      type: 'ppl',
+      value: '60+',
+      label: 'Women trained',
+    },
+    {
+      type: 'bowl',
+      value: '12+ Years',
+      label: 'Sharing Meals programme',
+    },
+  ],
+  focusAreas: {
+    eyebrow: 'OUR FOCUS AREAS',
+    title: 'Creating Lasting Change',
+    items: [
+      {
+        icon: '📖',
+        color: 'bl',
+        title: 'Education',
+        desc: 'Project Hope & Child Development',
+        target: 'pj1',
+      },
+      {
+        icon: '🍲',
+        color: 'gr',
+        title: 'Meals',
+        desc: 'Project SMS',
+        target: 'pj3',
+      },
+      {
+        icon: '✂',
+        color: 'or',
+        title: 'Skills',
+        desc: 'Project Sakhi',
+        target: 'pj4',
+      },
+      {
+        icon: '✚',
+        color: 'bl',
+        title: 'Healthcare',
+        desc: 'Compassion & Care',
+        target: 'pj5',
+      },
+      {
+        icon: '🧒',
+        color: 'or',
+        title: 'Children',
+        desc: 'Morning Star & Child Development',
+        target: 'pj2',
+      },
+      {
+        icon: '❤',
+        color: 'rd',
+        title: 'Family Support',
+        desc: 'Family Care & Counselling',
+        target: 'pj0',
+      },
+    ],
+  },
+  projectsSection: {
+    eyebrow: 'OUR PROJECTS',
+    title: 'Seven Areas of Service',
+    description:
+      'Since 2009, each project has grown from a desire to respond practically and compassionately to those who need support.',
+    projects: [
+      {
+        id: 'pj0',
+        icon: '👪',
+        color: 'pu',
+        title: 'Family Care & Counselling',
+        desc: 'Support for families affected by HIV/AIDS with groceries, counselling, encouragement and moral support.',
+      },
+      {
+        id: 'pj1',
+        icon: '📖',
+        color: 'bl',
+        title: 'Project Hope',
+        desc: 'Educational assistance and essential school materials for children from disadvantaged families.',
+      },
+      {
+        id: 'pj2',
+        icon: '🧒',
+        color: 'gr',
+        title: 'Morning Star',
+        desc: 'Early childhood education and care in a safe and nurturing environment.',
+      },
+      {
+        id: 'pj3',
+        icon: '🍲',
+        color: 'or',
+        title: 'Project SMS',
+        desc: 'Sharing Meals. Sharing Love. Sharing Hope. Food, friendship and practical care for vulnerable individuals and families.',
+      },
+      {
+        id: 'pj4',
+        icon: '✂',
+        color: 'rd',
+        title: 'Project Sakhi',
+        desc: 'Tailoring skills and livelihood opportunities for women.',
+      },
+      {
+        id: 'pj5',
+        icon: '✚',
+        color: 'tl',
+        title: 'Compassion & Care',
+        desc: 'Medical assistance, counselling and community care.',
+      },
+      {
+        id: 'pj6',
+        icon: '🎓',
+        color: 'bl',
+        title: 'Child Development',
+        desc: 'Holistic development through learning, mentoring, fellowship, encouragement and practical support.',
+      },
+    ],
+    exploreCard: {
+      title: 'Explore every project',
+      description: 'See how each initiative serves children, women, families and communities.',
+      buttonText: 'View All Projects →',
+      target: 'projects',
+    },
+  },
+  getInvolvedSection: {
+    eyebrow: 'GET INVOLVED',
+    title: 'Be Part of the Change',
+    description:
+      "You don't have to do everything. You can simply do something. Whether you give your time, skills, resources, or encouragement, your involvement can help bring hope and practical support to children, women, families and communities.",
+    cards: [
+      { icon: '👥', title: 'Volunteer', desc: 'Give your time', target: 'involved' },
+      { icon: '❤️', title: 'Support a Project', desc: 'Give towards a cause', target: 'involved' },
+      { icon: '🤝', title: 'Partner With Us', desc: 'Work together', target: 'involved' },
+      { icon: '📦', title: 'Give Essentials', desc: 'Donate supplies', target: 'involved' },
+    ],
+  },
   supportAreas: {
     title: 'Where Your Support Can Go',
     items: [

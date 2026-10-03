@@ -1911,4 +1911,470 @@ footer .w.fb {
 .project-swiper .swiper-button-prev::after {
   font-size: 13px;
   font-weight: bold;
-}
+}
+
+
+/* ==========================================================================
+   Home Page Specific Styles (Palette: Navy, Forest, Gold, Off-white, Charcoal)
+   ========================================================================== */
+
+body.pg-home {
+  --bg: #F8F6F1;
+  --soft: #F1EDE3;
+  --card: #FFFFFF;
+  --tx: #263238;
+  --mu: #5E6B72;
+  --nv: #17324D;
+  --bl: #17324D;
+  --gr: #3F6B50;
+  --go: #D6A84F;
+  --or: #D6A84F;
+  --rd: #A4543F;
+  --pu: #4F6178;
+  --ln: #E4DFD3;
+  --btn: rgba(23, 50, 77, 0.92);
+  --sw: #FFFFFF;
+  --siv: #F1EDE2;
+  background: var(--bg);
+  color: var(--tx);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body.pg-home {
+    --bg: #0F1C29;
+    --soft: #14263A;
+    --card: #1A2E44;
+    --tx: #E8EDF0;
+    --mu: #A9B7C0;
+    --nv: #E6C27A;
+    --bl: #7FB095;
+    --ln: #2A3F55;
+    --gr: #4F8A66;
+    --btn: rgba(63, 107, 80, 0.92);
+    --sw: #1A2E44;
+    --siv: #14263A;
+  }
+}
+
+:root[data-theme="dark"] body.pg-home {
+  --bg: #0F1C29;
+  --soft: #14263A;
+  --card: #1A2E44;
+  --tx: #E8EDF0;
+  --mu: #A9B7C0;
+  --nv: #E6C27A;
+  --bl: #7FB095;
+  --ln: #2A3F55;
+  --gr: #4F8A66;
+  --btn: rgba(63, 107, 80, 0.92);
+  --sw: #1A2E44;
+  --siv: #14263A;
+}
+
+body.pg-home .btn {
+  background-color: var(--btn);
+  border-color: #ffffff59;
+}
+
+body.pg-home .btn.g {
+  background-color: rgba(214, 168, 79, 0.96);
+  color: #1c2733;
+  text-shadow: 0 1px 0 #fff6;
+}
+
+body.pg-home .btn.wo {
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+body.pg-home .btn.o {
+  background-color: rgba(255, 255, 255, 0.5);
+  color: var(--nv);
+}
+
+body.pg-home .hero.dk {
+  background: radial-gradient(1100px 500px at 85% -10%, #D6A84F40, transparent 60%),
+              radial-gradient(800px 420px at 0 110%, #3F6B5070, transparent 60%),
+              linear-gradient(115deg, #0f2438, #17324D 60%, #244a45);
+  box-shadow: inset 0 -1px 0 #D6A84F66;
+}
+
+body.pg-home .hero.dk h1 {
+  font-size: clamp(38px, 5.6vw, 66px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #fff 35%, #e8dfc6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+body.pg-home .hero::before {
+  background: #D6A84F55;
+}
+
+body.pg-home .hero::after {
+  background: #3F6B5066;
+}
+
+body.pg-home .strip {
+  background: linear-gradient(115deg, #12283d, #17324D 55%, #2c5440);
+}
+
+body.pg-home footer {
+  background: #17324D;
+}
+
+/* Home Section Eyebrows & Layout */
+.eb2 {
+  letter-spacing: .14em;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--nv);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.eb2::before {
+  content: "";
+  width: 34px;
+  height: 2px;
+  background: var(--go);
+}
+
+.hero .eb {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero .eb::before {
+  content: "";
+  width: 40px;
+  height: 1px;
+  background: var(--go);
+}
+
+.fa {
+  margin-bottom: 30px;
+}
+
+.fa h2 {
+  font-size: clamp(28px, 4vw, 38px);
+  margin: 0;
+}
+
+.fa h2:after {
+  display: none;
+}
+
+/* 5-Column Stats Bar */
+.sbar {
+  background: var(--bg);
+  border-bottom: 1px solid var(--ln);
+  padding: 22px 0;
+}
+
+.sg {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+}
+
+.si {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 20px;
+  border-left: 1px solid var(--ln);
+}
+
+.si:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.sv {
+  width: 40px;
+  height: 40px;
+  color: var(--gr);
+  flex: none;
+}
+
+.sv svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.si b {
+  display: block;
+  color: var(--nv);
+  font-size: 20px;
+  line-height: 1.2;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.si small {
+  display: block;
+  color: var(--mu);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+@media (max-width: 1024px) {
+  .sg {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 18px;
+  }
+  .si:nth-child(3n+1) {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .sg {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .si {
+    padding: 6px 10px;
+    border-left: 1px solid var(--ln);
+  }
+  .si:nth-child(odd) {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .sv {
+    width: 32px;
+    height: 32px;
+  }
+  .si b {
+    font-size: 17px;
+  }
+}
+
+.bw {
+  background: var(--sw, var(--bg));
+}
+
+.bi {
+  background: var(--siv, var(--soft));
+}
+
+/* Home Projects Cards */
+.pc {
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+}
+
+.pc::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  top: 0;
+  height: 3px;
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(90deg, var(--go), transparent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.pc:hover::after {
+  opacity: 1;
+}
+
+.pc p {
+  font-size: 14px;
+  color: var(--mu);
+  margin: 0 0 12px;
+  flex: 1;
+}
+
+.pc .ic {
+  width: 48px;
+  height: 48px;
+}
+
+.lk {
+  font-weight: 700;
+  color: var(--gr);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.lk:hover {
+  text-decoration: underline;
+}
+
+/* Get Involved Showcase Split (.gis) */
+.gis {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px -34px #17324D66;
+  border: 1px solid var(--ln);
+}
+
+.gil {
+  background: var(--sw, var(--card));
+  padding: 46px;
+}
+
+.gil h2 {
+  margin-bottom: 12px;
+}
+
+.gil p {
+  color: var(--mu);
+}
+
+.gir {
+  background: linear-gradient(150deg, #3F6B50, #2a4f3d);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+
+.gw {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #ffffff1f;
+  border: 1px solid #ffffff33;
+  color: #fff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform .4s cubic-bezier(.34, 1.56, .64, 1), background .3s;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.gw:hover {
+  background: #ffffff33;
+  transform: translateX(6px);
+  color: #fff;
+}
+
+.gw span {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff26;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  flex: none;
+}
+
+.gw b {
+  display: block;
+}
+
+.gw small {
+  opacity: .85;
+}
+
+.gw i {
+  margin-left: auto;
+  font-style: normal;
+  color: #D6A84F;
+  font-size: 20px;
+}
+
+@media (max-width: 860px) {
+  .gis {
+    grid-template-columns: 1fr;
+  }
+  .gil {
+    padding: 30px 24px;
+  }
+}
+
+@media (hover: none) {
+  .gw:hover {
+    transform: none;
+  }
+}
+
+/* Glass Card Badge in Hero */
+.face:has(.gc) {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  display: block;
+  font-size: inherit;
+  margin: 0;
+  animation: fl 8s ease-in-out infinite;
+}
+
+.gc {
+  margin-left: auto;
+  max-width: 340px;
+  padding: 34px 34px 28px;
+  border-radius: 28px;
+  background: linear-gradient(145deg, #ffffff2b, #ffffff0b);
+  border: 1px solid #ffffff4d;
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow: inset 0 1px 1px #ffffff80, 0 40px 80px -30px #000a;
+  text-align: left;
+  font-size: 15px;
+}
+
+.gc > small {
+  display: block;
+  letter-spacing: .32em;
+  color: #D6A84F;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.gc > b {
+  display: block;
+  font: 700 78px/1 'Playfair Display', Georgia, serif;
+  color: #fff;
+  margin: 6px 0 12px;
+}
+
+.gc > span {
+  display: block;
+  color: #dbe6fb;
+  line-height: 1.55;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ffffff33;
+}
+
+.gm {
+  display: flex;
+  gap: 34px;
+  margin-top: 20px;
+}
+
+.gm b {
+  display: block;
+  font: 700 30px 'Playfair Display', Georgia, serif;
+  color: #D6A84F;
+}
+
+.gm small {
+  color: #c7d4ec;
+  font-size: 12px;
+}
