@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { siteConfig } from '../data/siteData';
 import Button from './Button';
+import ThemeToggle from './ThemeToggle';
 
 export default function Header({ currentPage, onNavigate }) {
   const { navLinks, social } = siteConfig;
@@ -94,7 +95,7 @@ export default function Header({ currentPage, onNavigate }) {
           </nav>
 
 
-          {/* Desktop Social Icons (Strictly hidden on mobile devices) */}
+          {/* Desktop Social Icons & Theme Toggle */}
           <div className="hidden lg:flex items-center gap-2 ml-6">
             {social.map((s, idx) => (
               <i
@@ -106,10 +107,12 @@ export default function Header({ currentPage, onNavigate }) {
                 {s.letter}
               </i>
             ))}
+            <ThemeToggle className="ml-2" />
           </div>
 
-          {/* Mobile Right Controls: Compact Donate Pill + Hamburger Button */}
+          {/* Mobile Right Controls: Theme Toggle + Compact Donate Pill + Hamburger Button */}
           <div className="flex lg:hidden items-center gap-2 sm:gap-3">
+            <ThemeToggle />
             {/* Quick Donate CTA Pill on mobile */}
             <a
               href="#donate"

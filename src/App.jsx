@@ -14,6 +14,7 @@ import PayPage from './pages/PayPage';
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Button from './components/Button';
 
 function AppContent() {
@@ -203,8 +204,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }

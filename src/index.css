@@ -16,7 +16,9 @@
   --ln: #e3e9f3;
   --tl: #1f8a8a;
   --mg: #b03a7c;
-  box-sizing: border-box;
+  --h1: #f4f8ff;
+  --h2: #dbe8f8;
+  --h3: #ece9dc;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -28,6 +30,9 @@
     --mu: #a9b6cf;
     --nv: #8fb4ff;
     --ln: #2a3b5e;
+    --h1: #0f1f3d;
+    --h2: #142a52;
+    --h3: #1b3558;
   }
 }
 
@@ -39,6 +44,46 @@
   --mu: #a9b6cf;
   --nv: #8fb4ff;
   --ln: #2a3b5e;
+  --h1: #0f1f3d;
+  --h2: #142a52;
+  --h3: #1b3558;
+}
+
+/* Reference.html: exact toggle button & smooth transition */
+.th {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--ln);
+  background: var(--soft);
+  color: var(--nv);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  flex: none;
+  margin-left: 6px;
+  box-shadow: inset 0 1px 1px #ffffff99, 0 6px 16px -8px #0b1f4560;
+  transition: transform .5s cubic-bezier(.34, 1.56, .64, 1), background .3s;
+}
+
+.th:hover {
+  transform: rotate(25deg) scale(1.1);
+}
+
+html.tx *, html.tx *::before, html.tx *::after {
+  transition: background-color .45s, color .45s, border-color .45s, box-shadow .45s !important;
+}
+
+@media (max-width: 1024px) {
+  .th {
+    margin-left: auto;
+  }
+}
+
+.hero.lt {
+  background: radial-gradient(900px 400px at 90% 0, #c9a24a33, transparent 60%), linear-gradient(115deg, var(--h1), var(--h2) 65%, var(--h3));
 }
 
 * {
@@ -2057,6 +2102,81 @@ body.pg-home .strip {
 
 body.pg-home footer {
   background: #17324D;
+}
+
+/* ===== Reference.html: Explicit light theme and dark theme exact rules ===== */
+:root[data-theme="light"] body {
+  --bg: #F8F6F1;
+  --soft: #F1EDE2;
+  --card: #FFFFFF;
+  --tx: #263238;
+  --mu: #5F6C73;
+  --nv: #17324D;
+  --bl: #17324D;
+  --gr: #3F6B50;
+  --go: #D6A84F;
+  --or: #D6A84F;
+  --rd: #3F6B50;
+  --pu: #17324D;
+  --ln: #E5DFD0;
+  --sw: #FFFFFF;
+  --siv: #F6F1E4;
+  --h1: #F8F6F1;
+  --h2: #F1EDE2;
+  --h3: #E4EEE6;
+}
+:root[data-theme="light"] body .hero.dk {
+  background: radial-gradient(1100px 500px at 85% -10%, #D6A84F45, transparent 60%), linear-gradient(115deg, #12283d 0%, #17324D 40%, #2f5a4c 78%, #3F6B50 100%);
+}
+:root[data-theme="light"] body .hero::before { background: #D6A84F55; }
+:root[data-theme="light"] body .hero::after { background: #3F6B5099; }
+:root[data-theme="light"] body .btn {
+  background-color: rgba(23, 50, 77, 0.9);
+  box-shadow: inset 0 1.5px 1px #ffffffcc, inset 0 -2px 4px #0003, inset 0 0 0 1px #ffffff26, 0 10px 24px -8px #17324D80;
+}
+:root[data-theme="light"] body .btn.g { background-color: rgba(214, 168, 79, 0.95); color: #17324D; }
+:root[data-theme="light"] body .btn.o { background-color: rgba(255, 255, 255, 0.6); color: #17324D; border-color: #17324D55; }
+:root[data-theme="light"] body .btn.wo { background-color: rgba(255, 255, 255, 0.14); color: #fff; }
+:root[data-theme="light"] body .btn.w2 { background-color: rgba(255, 255, 255, 0.85); color: #17324D; }
+:root[data-theme="light"] body .strip { background: linear-gradient(115deg, #17324D, #1f4a46 60%, #3F6B50); }
+:root[data-theme="light"] body .ic { box-shadow: 0 8px 18px #17324D40; }
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) body {
+    --bg: #F8F6F1;
+    --soft: #F1EDE2;
+    --card: #FFFFFF;
+    --tx: #263238;
+    --mu: #5F6C73;
+    --nv: #17324D;
+    --bl: #17324D;
+    --gr: #3F6B50;
+    --go: #D6A84F;
+    --or: #D6A84F;
+    --rd: #3F6B50;
+    --pu: #17324D;
+    --ln: #E5DFD0;
+    --sw: #FFFFFF;
+    --siv: #F6F1E4;
+    --h1: #F8F6F1;
+    --h2: #F1EDE2;
+    --h3: #E4EEE6;
+  }
+  :root:not([data-theme="dark"]) body .hero.dk {
+    background: radial-gradient(1100px 500px at 85% -10%, #D6A84F45, transparent 60%), linear-gradient(115deg, #12283d 0%, #17324D 40%, #2f5a4c 78%, #3F6B50 100%);
+  }
+  :root:not([data-theme="dark"]) body .hero::before { background: #D6A84F55; }
+  :root:not([data-theme="dark"]) body .hero::after { background: #3F6B5099; }
+  :root:not([data-theme="dark"]) body .btn {
+    background-color: rgba(23, 50, 77, 0.9);
+    box-shadow: inset 0 1.5px 1px #ffffffcc, inset 0 -2px 4px #0003, inset 0 0 0 1px #ffffff26, 0 10px 24px -8px #17324D80;
+  }
+  :root:not([data-theme="dark"]) body .btn.g { background-color: rgba(214, 168, 79, 0.95); color: #17324D; }
+  :root:not([data-theme="dark"]) body .btn.o { background-color: rgba(255, 255, 255, 0.6); color: #17324D; border-color: #17324D55; }
+  :root:not([data-theme="dark"]) body .btn.wo { background-color: rgba(255, 255, 255, 0.14); color: #fff; }
+  :root:not([data-theme="dark"]) body .btn.w2 { background-color: rgba(255, 255, 255, 0.85); color: #17324D; }
+  :root:not([data-theme="dark"]) body .strip { background: linear-gradient(115deg, #17324D, #1f4a46 60%, #3F6B50); }
+  :root:not([data-theme="dark"]) body .ic { box-shadow: 0 8px 18px #17324D40; }
 }
 
 /* Home Section Eyebrows & Layout */
