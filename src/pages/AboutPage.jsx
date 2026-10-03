@@ -8,6 +8,29 @@ import { aboutContent, COLOR_MAP } from '../data/siteData';
 import { useAuth } from '../context/AuthContext';
 import { useContent, useUpdateContent } from '../hooks';
 
+// Dedicated React-safe avatar component with dynamic photo rendering and fallback
+function TrusteeAvatar({ trustee }) {
+  const [loadError, setLoadError] = useState(false);
+
+  useEffect(() => {
+    setLoadError(false);
+  }, [trustee?.photo]);
+
+  if (trustee?.photo && !loadError) {
+    return (
+      <img
+        key={trustee.photo}
+        src={trustee.photo}
+        alt={trustee.name}
+        onError={() => setLoadError(true)}
+        className="w-full h-full object-cover"
+      />
+    );
+  }
+
+  return <span>{trustee?.avatar || '👤'}</span>;
+}
+
 export default function AboutPage({ onNavigate }) {
   const { hero, story, journey, commitment, belief, trustees } = aboutContent;
   const { isAdmin } = useAuth();
@@ -69,9 +92,9 @@ export default function AboutPage({ onNavigate }) {
     const index = trusteesList.findIndex((t) => t.id === trusteeData.id);
     if (index >= 0) {
       updated = [...trusteesList];
-      updated[index] = trusteeData;
+      updated[index] = { ...trusteesList[index], ...trusteeData };
     } else {
-      updated = [...trusteesList, trusteeData];
+      updated = [...trusteesList, { ...trusteeData }];
     }
 
     setTrusteesList(updated);
@@ -96,7 +119,7 @@ export default function AboutPage({ onNavigate }) {
 
     // Keep detail modal in sync if open
     if (selectedTrustee && selectedTrustee.id === trusteeData.id) {
-      setSelectedTrustee(trusteeData);
+      setSelectedTrustee({ ...trusteeData });
     }
   };
 
@@ -398,20 +421,7 @@ export default function AboutPage({ onNavigate }) {
 
                   {/* Avatar / Photo Display */}
                   <div className="av select-none">
-                    {t.photo ? (
-                      <img
-                        src={t.photo}
-                        alt={t.name}
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                          if (e.currentTarget.parentElement) {
-                            e.currentTarget.parentElement.innerText = t.avatar || '👤';
-                          }
-                        }}
-                      />
-                    ) : (
-                      <span>{t.avatar || '👤'}</span>
-                    )}
+                    <TrusteeAvatar trustee={t} />
                   </div>
 
                   <b className="text-[12px] text-[var(--nv)] font-bold mt-1 line-clamp-1">

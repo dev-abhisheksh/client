@@ -144,6 +144,7 @@ export default function TrusteeEditModal({
       setErrorMsg('Failed to process image file. Please enter an image URL.');
     } finally {
       setUploading(false);
+      if (e.target) e.target.value = '';
     }
   };
 
@@ -228,6 +229,7 @@ export default function TrusteeEditModal({
                 {formData.photo && !imgPreviewFailed ? (
                   <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg ring-3 ring-[var(--go)] bg-[var(--card)] flex items-center justify-center">
                     <img
+                      key={formData.photo}
                       src={formData.photo}
                       alt="Preview"
                       onError={() => setImgPreviewFailed(true)}
@@ -285,13 +287,13 @@ export default function TrusteeEditModal({
                 Image URL (optional)
               </label>
               <input
-                type="url"
+                type="text"
                 value={formData.photo}
                 onChange={(e) => {
                   setFormData((prev) => ({ ...prev, photo: e.target.value }));
                   setImgPreviewFailed(false);
                 }}
-                placeholder="https://images.unsplash.com/... or hosted image link"
+                placeholder="https://images.unsplash.com/... or paste image URL / Data URI"
                 className="w-full px-3.5 py-2 text-xs sm:text-sm rounded-xl border border-[var(--ln)] bg-[var(--bg)] text-[var(--tx)] focus:outline-none focus:border-[var(--bl)]"
               />
             </div>
