@@ -1,11 +1,113 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Hero from '../components/Hero';
 import Button from '../components/Button';
 import ImpactStrip from '../components/ImpactStrip';
+import TrusteeDetailModal from '../components/TrusteeDetailModal';
+import TrusteeEditModal from '../components/TrusteeEditModal';
 import { aboutContent, COLOR_MAP } from '../data/siteData';
+import { useAuth } from '../context/AuthContext';
+import { useContent, useUpdateContent } from '../hooks';
 
 export default function AboutPage({ onNavigate }) {
   const { hero, story, journey, commitment, belief, trustees } = aboutContent;
+  const { isAdmin } = useAuth();
+
+  // Load live trustees from backend or localStorage with fallback to siteData
+  const { data: remoteData } = useContent('about_trustees');
+  const updateContentMutation = useUpdateContent();
+
+  const getInitialTrustees = () => {
+    try {
+      const saved = localStorage.getItem('bethesda_trustees');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {
+      console.error('Error loading cached trustees:', e);
+    }
+    return trustees.members;
+  };
+
+  const [trusteesList, setTrusteesList] = useState(getInitialTrustees);
+  const [selectedTrustee, setSelectedTrustee] = useState(null);
+  const [editingTrustee, setEditingTrustee] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  // Sync state if remote database has custom trustees
+  useEffect(() => {
+    const serverTrustees = remoteData?.data;
+    if (Array.isArray(serverTrustees) && serverTrustees.length > 0) {
+      setTrusteesList(serverTrustees);
+      try {
+        localStorage.setItem('bethesda_trustees', JSON.stringify(serverTrustees));
+      } catch (e) {}
+    }
+  }, [remoteData]);
+
+  // Admin CRUD Handlers
+  const handleOpenAddTrustee = () => {
+    setEditingTrustee(null);
+    setIsEditModalOpen(true);
+  };
+
+  const handleOpenEditTrustee = (t, e) => {
+    if (e) e.stopPropagation();
+    setEditingTrustee(t);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveTrustee = (trusteeData) => {
+    let updated;
+    const index = trusteesList.findIndex((t) => t.id === trusteeData.id);
+    if (index >= 0) {
+      updated = [...trusteesList];
+      updated[index] = trusteeData;
+    } else {
+      updated = [...trusteesList, trusteeData];
+    }
+
+    setTrusteesList(updated);
+    try {
+      localStorage.setItem('bethesda_trustees', JSON.stringify(updated));
+    } catch (e) {}
+
+    // Persist to MongoDB backend
+    updateContentMutation.mutate(
+      { key: 'about_trustees', data: updated },
+      {
+        onError: (err) => {
+          console.warn('Backend sync failed, saved locally:', err);
+        },
+      }
+    );
+
+    // Keep detail modal in sync if open
+    if (selectedTrustee && selectedTrustee.id === trusteeData.id) {
+      setSelectedTrustee(trusteeData);
+    }
+  };
+
+  const handleDeleteTrustee = (id) => {
+    const updated = trusteesList.filter((t) => t.id !== id);
+    setTrusteesList(updated);
+    try {
+      localStorage.setItem('bethesda_trustees', JSON.stringify(updated));
+    } catch (e) {}
+
+    updateContentMutation.mutate(
+      { key: 'about_trustees', data: updated },
+      {
+        onError: (err) => {
+          console.warn('Backend delete sync failed, saved locally:', err);
+        },
+      }
+    );
+
+    if (selectedTrustee && selectedTrustee.id === id) {
+      setSelectedTrustee(null);
+    }
+  };
 
   const handleNavClick = (e, target) => {
     e.preventDefault();
@@ -227,20 +329,90 @@ export default function AboutPage({ onNavigate }) {
 
           {/* Right Column: Board of Trustees */}
           <div>
-            <h2 style={{ marginBottom: '4px' }}>{trustees.title}</h2>
+            <div className="flex items-center justify-between gap-3 mb-1">
+              <h2 style={{ margin: 0 }}>{trustees.title}</h2>
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={handleOpenAddTrustee}
+                  className="py-1.5 px-3 rounded-xl text-xs font-bold text-white bg-[var(--bl)] hover:bg-[var(--nv)] transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                >
+                  <span className="text-sm">+</span>
+                  <span>Add Trustee</span>
+                </button>
+              )}
+            </div>
             <p className="text-[13px] text-[var(--mu)] leading-relaxed m-0 mb-4">
               {trustees.description}
             </p>
+
             <div className="g5">
-              {trustees.members.map((t, idx) => (
-                <div key={idx} className="cd tr">
-                  <div className="av select-none">{t.avatar}</div>
-                  <b className="text-[12px] text-[var(--nv)] font-bold mt-1">
+              {trusteesList.map((t) => (
+                <div
+                  key={t.id || t.name}
+                  className="cd tr relative group select-none"
+                  onClick={() => setSelectedTrustee(t)}
+                  title={`Click to view profile of ${t.name}`}
+                >
+                  {/* Admin Quick Action Controls */}
+                  {isAdmin && (
+                    <div
+                      className="absolute top-2 right-2 flex items-center gap-1 z-10"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <button
+                        type="button"
+                        onClick={(e) => handleOpenEditTrustee(t, e)}
+                        className="w-6 h-6 rounded-md bg-[var(--soft)] hover:bg-[var(--bl)] hover:text-white border border-[var(--ln)] text-[11px] flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+                        title="Edit Trustee"
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (window.confirm(`Are you sure you want to remove "${t.name}" from the Board of Trustees?`)) {
+                            handleDeleteTrustee(t.id);
+                          }
+                        }}
+                        className="w-6 h-6 rounded-md bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/30 text-[11px] flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+                        title="Delete Trustee"
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Avatar / Photo Display */}
+                  <div className="av select-none">
+                    {t.photo ? (
+                      <img
+                        src={t.photo}
+                        alt={t.name}
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          if (e.currentTarget.parentElement) {
+                            e.currentTarget.parentElement.innerText = t.avatar || '👤';
+                          }
+                        }}
+                      />
+                    ) : (
+                      <span>{t.avatar || '👤'}</span>
+                    )}
+                  </div>
+
+                  <b className="text-[12px] text-[var(--nv)] font-bold mt-1 line-clamp-1">
                     {t.name}
                   </b>
-                  <small className="block text-[11px] text-[var(--mu)] leading-tight mt-0.5">
+                  <small className="block text-[11px] text-[var(--mu)] leading-tight mt-0.5 line-clamp-1">
                     {t.role}
                   </small>
+
+                  {/* Click to View Hint */}
+                  <span className="mt-2 inline-flex items-center text-[10px] font-semibold text-[var(--bl)] opacity-70 group-hover:opacity-100 transition-opacity">
+                    View Profile →
+                  </span>
                 </div>
               ))}
             </div>
@@ -250,6 +422,30 @@ export default function AboutPage({ onNavigate }) {
 
       {/* 6. Impact Strip Section */}
       <ImpactStrip />
+
+      {/* 7. Interactive Trustee Detail Modal */}
+      <TrusteeDetailModal
+        isOpen={Boolean(selectedTrustee)}
+        trustee={selectedTrustee}
+        onClose={() => setSelectedTrustee(null)}
+        onEdit={(t) => {
+          setEditingTrustee(t);
+          setIsEditModalOpen(true);
+        }}
+        isAdmin={isAdmin}
+      />
+
+      {/* 8. Admin Add / Edit Trustee Modal */}
+      <TrusteeEditModal
+        isOpen={isEditModalOpen}
+        trustee={editingTrustee}
+        onClose={() => {
+          setIsEditModalOpen(false);
+          setEditingTrustee(null);
+        }}
+        onSave={handleSaveTrustee}
+        onDelete={handleDeleteTrustee}
+      />
     </div>
   );
 }
