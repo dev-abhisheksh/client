@@ -8,12 +8,13 @@ export default function Hero({
   subtitle,
   description,
   actions = [],
-  face = '🧒',
+  face = null,
   bgMedia, // Full-width background media (Image or Swiper Carousel)
   media, // Right-column interactive media or controls
   children,
 }) {
   const hasBgMedia = Boolean(bgMedia);
+  const hasRightCol = Boolean(media || (!hasBgMedia && face));
 
   return (
     <section className={`hero ${variant} relative overflow-hidden`}>
@@ -43,7 +44,13 @@ export default function Hero({
       )}
 
       {/* 2. Hero Content Grid */}
-      <div className="w grid grid-cols-1 md:grid-cols-[1.3fr_0.9fr] gap-6 sm:gap-8 items-center relative z-10">
+      <div
+        className={`w ${
+          hasRightCol
+            ? 'grid grid-cols-1 md:grid-cols-[1.3fr_0.9fr] gap-6 sm:gap-8 items-center'
+            : 'max-w-4xl py-2'
+        } relative z-10`}
+      >
         <div className="hero-animate">
           {eyebrow && <div className="eb mb-1 sm:mb-2">{eyebrow}</div>}
           {title && <h1 className="tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">{title}</h1>}

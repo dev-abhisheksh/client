@@ -31,24 +31,6 @@ export default function HomePage({ onNavigate }) {
     },
   }));
 
-  const glassImpactBadge = (
-    <div className="gc">
-      <small>15+ YEARS OF IMPACT</small>
-      <b>15+</b>
-      <span>Years of Empowering Lives &amp; Transforming Communities</span>
-      <div className="gm">
-        <div>
-          <b>7</b>
-          <small>Areas of Service</small>
-        </div>
-        <div>
-          <b>100%</b>
-          <small>Compassion Driven</small>
-        </div>
-      </div>
-    </div>
-  );
-
   return (
     <div className="home-page">
       {/* 1. Hero Section */}
@@ -59,7 +41,7 @@ export default function HomePage({ onNavigate }) {
         subtitle={hero.subtitle}
         description={hero.description}
         actions={heroActions}
-        face={glassImpactBadge}
+        face={null}
       />
 
       {/* 2. 5-Metric Impact Stats Strip */}
