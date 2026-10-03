@@ -1549,10 +1549,11 @@ nav a.on {
 
 /* Footer */
 footer {
-  background: #153a78;
+  background: #17324D;
   color: #dbe6fb;
-  padding: 36px 0;
+  padding: 60px 0 40px;
   font-size: 13px;
+  border-top: 3px solid var(--go);
 }
 
 footer .w:not(.fb) {
@@ -1567,15 +1568,24 @@ footer b {
   margin-bottom: 8px;
 }
 
+footer .w:not(.fb) > div:not(:first-child) > b {
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--go);
+  margin-bottom: 12px;
+}
+
 footer a {
   display: block;
   margin: 4px 0;
   color: #dbe6fb;
   transition: color 0.2s;
+  text-decoration: none;
 }
 
 footer a:hover {
-  color: #fff;
+  color: var(--go);
 }
 
 footer .w.fb {

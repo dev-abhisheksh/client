@@ -291,11 +291,11 @@ export const footerContent = {
     { label: 'Donate', target: 'donate' },
   ],
   ourWork: [
-    { label: 'Education', target: 'projects' },
-    { label: 'Child Development', target: 'projects' },
-    { label: 'Project SMS', target: 'projects' },
-    { label: "Women's Empowerment", target: 'projects' },
-    { label: 'Healthcare', target: 'projects' },
+    { label: 'Education', target: 'pj1' },
+    { label: 'Child Development', target: 'pj6' },
+    { label: 'Project SMS', target: 'pj3' },
+    { label: "Women's Empowerment", target: 'pj4' },
+    { label: 'Healthcare', target: 'pj5' },
   ],
   copyright: '© 2026 Bethesda Charitable Trust. All Rights Reserved.',
   credit: {
