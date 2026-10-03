@@ -6,7 +6,8 @@ export const useContent = (key) => {
     queryKey: ["content", key],
     queryFn: () => getContentByKey(key),
     enabled: !!key,
-    staleTime: 5 * 60 * 1000,
+    staleTime: 15 * 1000,
+    refetchOnWindowFocus: true,
     retry: 1,
   });
 };

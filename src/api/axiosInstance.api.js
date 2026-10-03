@@ -17,6 +17,10 @@ const API = axios.create({
 
 // Request interceptor: attach token from localStorage if available (backup for cross-site cookie restrictions)
 API.interceptors.request.use((config) => {
+  // If sending FormData (file uploads), let the browser set multipart/form-data with boundary
+  if (config.data instanceof FormData) {
+    delete config.headers["Content-Type"];
+  }
   const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

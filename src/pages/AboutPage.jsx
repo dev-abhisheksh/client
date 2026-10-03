@@ -36,8 +36,15 @@ export default function AboutPage({ onNavigate }) {
 
   // Sync state if remote database has custom trustees
   useEffect(() => {
-    const serverTrustees = remoteData?.data;
-    if (Array.isArray(serverTrustees) && serverTrustees.length > 0) {
+    // Axios returns res.data = { success: true, key: "about_trustees", data: [...] }
+    const raw = remoteData?.data;
+    const serverTrustees = Array.isArray(raw?.data)
+      ? raw.data
+      : Array.isArray(raw)
+      ? raw
+      : null;
+
+    if (serverTrustees && serverTrustees.length > 0) {
       setTrusteesList(serverTrustees);
       try {
         localStorage.setItem('bethesda_trustees', JSON.stringify(serverTrustees));
@@ -78,6 +85,11 @@ export default function AboutPage({ onNavigate }) {
       {
         onError: (err) => {
           console.warn('Backend sync failed, saved locally:', err);
+          alert(
+            'Notice: Changes were saved on this device, but syncing to the cloud database encountered an issue: ' +
+              (err.response?.data?.message || err.message || 'Network error') +
+              '. If you are not logged in as admin, please log in.'
+          );
         },
       }
     );

@@ -74,6 +74,42 @@ export default function TrusteeEditModal({
 
   if (!isOpen) return null;
 
+  // Helper to compress image if fallback is needed
+  const compressImageFile = (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (readerEvent) => {
+        const image = new Image();
+        image.onload = () => {
+          const maxDim = 450;
+          let width = image.width;
+          let height = image.height;
+          if (width > height) {
+            if (width > maxDim) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            }
+          } else {
+            if (height > maxDim) {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(image, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', 0.8));
+        };
+        image.onerror = () => resolve(readerEvent.target.result);
+        image.src = readerEvent.target.result;
+      };
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+    });
+  };
+
   // Handle File Upload
   const handleFileUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -92,21 +128,23 @@ export default function TrusteeEditModal({
         return;
       }
     } catch (err) {
-      console.warn('Backend image upload failed, falling back to local base64 preview:', err);
+      console.warn('Backend image upload failed, falling back to optimized lightweight preview:', err);
     }
 
-    // Graceful offline fallback: convert image file directly to base64 Data URL
-    const reader = new FileReader();
-    reader.onload = () => {
-      setFormData((prev) => ({ ...prev, photo: reader.result }));
-      setImgPreviewFailed(false);
+    // Graceful offline fallback: compress and store lightweight base64 Data URL
+    try {
+      const compressedUrl = await compressImageFile(file);
+      if (compressedUrl) {
+        setFormData((prev) => ({ ...prev, photo: compressedUrl }));
+        setImgPreviewFailed(false);
+      } else {
+        setErrorMsg('Failed to process image file. Please enter an image URL.');
+      }
+    } catch (err) {
+      setErrorMsg('Failed to process image file. Please enter an image URL.');
+    } finally {
       setUploading(false);
-    };
-    reader.onerror = () => {
-      setErrorMsg('Failed to read image file. Please try another file or enter an image URL.');
-      setUploading(false);
-    };
-    reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = (e) => {
