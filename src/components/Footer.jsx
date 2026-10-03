@@ -115,16 +115,15 @@ export default function Footer({ onNavigate }) {
             <span>{credit.subtitle}</span>
             <a href={`mailto:${credit.email}`}>{credit.email}</a>
 
-            {/* Admin Login Button below Nexora Technologies credit */}
-            <div className="mt-3 flex justify-end max-[600px]:justify-start">
+            {/* Admin Link below Nexora Technologies credit */}
+            <div className="mt-2 flex justify-end max-[600px]:justify-start">
               <button
                 type="button"
                 onClick={openLoginModal}
-                className="text-[11px] font-semibold text-[#D6A84F] hover:text-[#f7e5b5] bg-[#ffffff0d] hover:bg-[#ffffff1c] border border-[#D6A84F44] hover:border-[#D6A84F] px-2.5 py-1 rounded transition-all duration-200 cursor-pointer inline-flex items-center gap-1.5 tracking-wide"
-                title={isAdmin ? 'Admin Dashboard (Logged In)' : 'Admin Login'}
+                className="text-[11px] text-[#dbe6fb]/60 hover:text-white cursor-pointer bg-transparent border-none p-0 transition-colors"
+                title="Admin"
               >
-                <span className="opacity-80">{isAdmin ? '⚡' : '🔒'}</span>
-                <span>{isAdmin ? 'Admin' : 'Admin Login'}</span>
+                Admin
               </button>
             </div>
           </div>
