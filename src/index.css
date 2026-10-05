@@ -500,7 +500,8 @@ a.c:hover .ic {
     grid-template-columns: repeat(2, 1fr);
   }
   .cm {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 12px;
   }
 }
 

@@ -356,13 +356,10 @@ export default function AboutPage({ onNavigate }) {
               return (
                 <div key={idx} className="flex flex-col gap-1">
                   <span
-                    className="ic select-none"
+                    className="ic select-none !w-10 !h-10 sm:!w-[46px] sm:!h-[46px] !text-[18px] sm:!text-[20px]"
                     style={{
                       backgroundColor: itemColor,
                       margin: '0 0 6px',
-                      width: '46px',
-                      height: '46px',
-                      fontSize: '20px',
                     }}
                   >
                     {c.icon}
@@ -371,12 +368,12 @@ export default function AboutPage({ onNavigate }) {
                     style={{
                       color: itemColor,
                       fontFamily: "'Merriweather', serif",
-                      fontSize: '14px',
                     }}
+                    className="text-[13.5px] sm:text-[14px] leading-snug"
                   >
                     {c.title}
                   </b>
-                  <span className="text-[13px] text-[var(--mu)] leading-snug">
+                  <span className="text-[12px] sm:text-[13px] text-[var(--mu)] leading-snug">
                     {c.desc}
                   </span>
                 </div>
