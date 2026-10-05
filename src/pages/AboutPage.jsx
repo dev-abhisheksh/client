@@ -47,7 +47,18 @@ export default function AboutPage({ onNavigate }) {
       const saved = localStorage.getItem('bethesda_trustees');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const merged = trustees.members.map((m) => {
+            const match = parsed.find((p) => p.id === m.id || p.name === m.name);
+            return match && match.photo
+              ? { ...m, photo: match.photo, avatar: match.avatar || m.avatar }
+              : m;
+          });
+          const customMembers = parsed.filter(
+            (p) => !trustees.members.some((m) => m.id === p.id || m.name === p.name)
+          );
+          return [...merged, ...customMembers];
+        }
       }
     } catch (e) {
       console.error('Error loading cached trustees:', e);
@@ -71,9 +82,19 @@ export default function AboutPage({ onNavigate }) {
       : null;
 
     if (serverTrustees && serverTrustees.length > 0) {
-      setTrusteesList(serverTrustees);
+      const merged = trustees.members.map((m) => {
+        const match = serverTrustees.find((p) => p.id === m.id || p.name === m.name);
+        return match && match.photo
+          ? { ...m, photo: match.photo, avatar: match.avatar || m.avatar }
+          : m;
+      });
+      const customMembers = serverTrustees.filter(
+        (p) => !trustees.members.some((m) => m.id === p.id || m.name === p.name)
+      );
+      const combined = [...merged, ...customMembers];
+      setTrusteesList(combined);
       try {
-        localStorage.setItem('bethesda_trustees', JSON.stringify(serverTrustees));
+        localStorage.setItem('bethesda_trustees', JSON.stringify(combined));
       } catch (e) {}
     }
   }, [remoteData]);

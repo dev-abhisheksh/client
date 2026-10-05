@@ -447,7 +447,9 @@ export const aboutContent = {
         photo: '',
         name: 'Mrs. Rajani S. Naik',
         role: 'President – Social Activities',
-        desc: 'Serving as the President of Bethesda Charitable Trust, Mrs. Rajani S. Naik brings dedicated community leadership and decades of social activism. She guides key outreach, community welfare programs, and family support initiatives with steadfast compassion and integrity.',
+        desc: `Mrs. Rajani S. Naik serves as the President of Bethesda Charitable Trust, providing leadership in social welfare, community outreach, and humanitarian initiatives.
+
+With a strong commitment to serving vulnerable individuals and families, she actively supports programs that promote dignity, care, and community wellbeing. Her leadership and dedication continue to strengthen BCT's mission of bringing hope and practical support to those in need.`,
       },
       {
         id: 'tr-2',
@@ -455,15 +457,19 @@ export const aboutContent = {
         photo: '',
         name: 'Mr. Anil Aranah',
         role: 'Trustee – Religious Leader',
-        desc: 'Mr. Anil Aranah provides spiritual counsel, moral guidance, and pastoral oversight. He upholds the faith-based values and compassionate mission of Bethesda Charitable Trust, ensuring every initiative brings dignity, hope, and ethical dedication to the communities served.',
+        desc: `Mr. Anil Aranah serves as a Trustee and Religious Leader, providing spiritual guidance, ethical leadership, and valuable direction to the Trust.
+
+His commitment to faith-based values and community service contributes to BCT's vision of serving people with compassion, integrity, and respect. He supports the Trust in maintaining a strong foundation of values while pursuing meaningful community transformation.`,
       },
       {
         id: 'tr-3',
         avatar: '👩',
         photo: '',
         name: 'Mrs. Selina Aranah',
-        role: "Trustee – Women's Empowerment & Community Transformation",
-        desc: "Championing women's dignity, financial self-reliance, and vocational training, Mrs. Selina Aranah spearheads Project Sakhi and community transformation programs. Her work empowers underprivileged women and families across Goa through practical skills and sustainable livelihoods.",
+        role: 'Trustee – Women’s Empowerment & Community Transformation',
+        desc: `Mrs. Selina Aranah is actively involved in women’s empowerment and community development initiatives.
+
+She is passionate about creating opportunities for women to develop practical skills, build confidence, and work toward sustainable livelihoods. Through her involvement in community programs, she contributes to BCT's commitment to strengthening families and building healthier, more resilient communities.`,
       },
       {
         id: 'tr-4',
@@ -471,7 +477,15 @@ export const aboutContent = {
         photo: '',
         name: 'Dr. Deepa Mathew',
         role: 'Trustee – Healthcare & AYUSH Services',
-        desc: 'Dr. Deepa Mathew brings professional medical acumen and holistic wellness leadership to Bethesda. She directs community medical camps, preventive healthcare outreach, AYUSH holistic health services, and compassionate patient care for elderly and vulnerable community members.',
+        desc: `B.A.M.S. – Goa
+M.D. (Acupuncture) – Colombo
+Member – International Acupuncture Foundation
+
+Dr. Deepa Mathew brings professional expertise in healthcare, AYUSH services, and public health to the Board of Bethesda Charitable Trust.
+
+She currently serves as an AYUSH Medical Officer at Hospicio South Goa District Hospital. Her medical knowledge and professional experience contribute to BCT's healthcare initiatives, community medical camps, wellness programs, and health awareness activities.
+
+Her involvement strengthens the Trust's commitment to making compassionate and accessible healthcare available to communities in need.`,
       },
       {
         id: 'tr-5',
@@ -479,7 +493,11 @@ export const aboutContent = {
         photo: '',
         name: 'Mr. Moses Sadanand Aghamkar',
         role: 'Chief Executive Officer (CEO)',
-        desc: 'Leading day-to-day operations, project execution, and strategic partnerships, Mr. Moses Sadanand Aghamkar oversees all seven service areas of Bethesda Charitable Trust. Under his executive leadership, the trust continues to expand its reach and transformative impact.',
+        desc: `Mr. Moses Sadanand Aghamkar serves as the Chief Executive Officer of Bethesda Charitable Trust, providing strategic leadership and overseeing the Trust's programs, partnerships, and long-term development.
+
+For the past eight years, he has been involved in shaping the Trust's strategic direction and expanding its community-focused initiatives. His work spans education, child welfare, women’s empowerment, healthcare, leadership development, and humanitarian service.
+
+With a strong commitment to holistic community development, Mr. Aghamkar works to strengthen BCT's programs, build meaningful partnerships, and advance the Trust's vision of empowering lives and transforming communities.`,
       },
     ],
   },
