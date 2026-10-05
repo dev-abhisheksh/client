@@ -8,6 +8,7 @@ import { aboutContent, COLOR_MAP } from '../data/siteData';
 import { useAuth } from '../context/AuthContext';
 import { useContent, useUpdateContent, usePageHero } from '../hooks';
 import { HeroBackground, HeroControls } from '../components/ProjectMediaViewer';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 // Dedicated React-safe avatar component with dynamic photo rendering and fallback
 function TrusteeAvatar({ trustee }) {
@@ -21,7 +22,7 @@ function TrusteeAvatar({ trustee }) {
     return (
       <img
         key={trustee.photo}
-        src={trustee.photo}
+        src={optimizeCloudinaryUrl(trustee.photo, { width: 300, height: 300, crop: 'fill' })}
         alt={trustee.name}
         onError={() => setLoadError(true)}
         className="w-full h-full object-cover"

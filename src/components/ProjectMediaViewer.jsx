@@ -4,6 +4,7 @@ import { Autoplay, EffectFade } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 /**
  * Full-Width Background Media Layer
@@ -52,7 +53,7 @@ export function ProjectHeroBackground({
           {normalizedPhotos.map((url, idx) => (
             <SwiperSlide key={idx} className="w-full h-full bg-transparent">
               <img
-                src={url}
+                src={optimizeCloudinaryUrl(url)}
                 alt={`${title} slide ${idx + 1}`}
                 onLoad={() => {
                   if (idx === 0) setIsLoaded(true);
@@ -66,7 +67,7 @@ export function ProjectHeroBackground({
         </Swiper>
       ) : (
         <img
-          src={normalizedPhotos[activeIndex] || normalizedPhotos[0]}
+          src={optimizeCloudinaryUrl(normalizedPhotos[activeIndex] || normalizedPhotos[0])}
           alt={`${title} full width cover`}
           onLoad={() => setIsLoaded(true)}
           className={`w-full h-full object-cover transition-opacity duration-700 ${
@@ -248,7 +249,11 @@ export function ProjectHeroControls({
                     }`}
                     title={idx === 0 ? 'Current Primary Cover' : `Click to set as primary cover`}
                   >
-                    <img src={url} alt={`thumb ${idx}`} className="w-full h-full object-cover" />
+                    <img
+                      src={optimizeCloudinaryUrl(url, { width: 100, height: 100, crop: 'fill' })}
+                      alt={`thumb ${idx}`}
+                      className="w-full h-full object-cover"
+                    />
                     {idx === 0 && (
                       <span className="absolute bottom-0 inset-x-0 bg-amber-400 text-slate-950 font-bold text-[7px] leading-tight text-center py-0.5">
                         COVER

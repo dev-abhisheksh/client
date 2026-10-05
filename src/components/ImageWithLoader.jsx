@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 /**
  * Reusable image component that displays a smooth shimmer skeleton
@@ -11,10 +12,13 @@ export default function ImageWithLoader({
   skeletonClassName = '',
   loading = 'lazy',
   containerClassName = '',
+  transformOptions,
   ...props
 }) {
   const [loaded, setLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
+
+  const optimizedSrc = optimizeCloudinaryUrl(src, transformOptions);
 
   return (
     <div className={`relative overflow-hidden ${containerClassName}`}>
@@ -36,7 +40,7 @@ export default function ImageWithLoader({
       ) : (
         /* 3. The Image itself with smooth fade-in once loaded */
         <img
-          src={src}
+          src={optimizedSrc}
           alt={alt}
           loading={loading}
           onLoad={(e) => {

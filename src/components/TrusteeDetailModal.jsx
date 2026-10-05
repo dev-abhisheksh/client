@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 export default function TrusteeDetailModal({
   isOpen,
@@ -77,7 +78,7 @@ export default function TrusteeDetailModal({
                 <div className="w-36 h-36 sm:w-44 sm:h-44 rounded-full overflow-hidden shadow-2xl ring-4 ring-[var(--go)] ring-offset-4 ring-offset-[var(--card)] bg-[var(--soft)] flex items-center justify-center">
                   <img
                     key={trustee.photo}
-                    src={trustee.photo}
+                    src={optimizeCloudinaryUrl(trustee.photo, { width: 400, height: 400, crop: 'fill' })}
                     alt={trustee.name}
                     onError={() => setImgError(true)}
                     className="w-full h-full object-cover"

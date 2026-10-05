@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { uploadImage } from '../api/upload.api';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 const EMOJI_OPTIONS = ['👩', '👨', '👩‍⚕️', '👔', '🧑‍🏫', '🤝', '🧑‍💼', '👤', '✝️', '🕊️'];
 
@@ -230,7 +231,7 @@ export default function TrusteeEditModal({
                   <div className="w-20 h-20 rounded-full overflow-hidden shadow-lg ring-3 ring-[var(--go)] bg-[var(--card)] flex items-center justify-center">
                     <img
                       key={formData.photo}
-                      src={formData.photo}
+                      src={optimizeCloudinaryUrl(formData.photo, { width: 160, height: 160, crop: 'fill' })}
                       alt="Preview"
                       onError={() => setImgPreviewFailed(true)}
                       className="w-full h-full object-cover"

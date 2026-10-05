@@ -11,6 +11,7 @@ import ImageWithLoader from '../components/ImageWithLoader';
 import { projectsContent, COLOR_MAP } from '../data/siteData';
 import { useProjects, usePageHero } from '../hooks';
 import { HeroBackground, HeroControls } from '../components/ProjectMediaViewer';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 export default function ProjectsPage({ onNavigate }) {
   const { hero, projects: fallbackProjects } = projectsContent;
@@ -122,7 +123,7 @@ export default function ProjectsPage({ onNavigate }) {
                           {normalizedPhotos.map((url, photoIdx) => (
                             <SwiperSlide key={photoIdx} className="w-full h-full bg-transparent">
                               <img
-                                src={url}
+                                src={optimizeCloudinaryUrl(url, { width: 800, quality: 'auto' })}
                                 alt={`${p.title} slide ${photoIdx + 1}`}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                               />
