@@ -66,7 +66,7 @@ export default function PayPage({ onNavigate }) {
 
           {/* Deep link direct launch for mobile devices */}
           <a
-            className="btn g w-full text-center justify-center py-3 text-sm font-bold shadow-md block mb-4"
+            className="btn r w-full text-center justify-center py-3 text-sm font-bold shadow-md block mb-4"
             id="upi"
             href={upi.payUrl}
           >

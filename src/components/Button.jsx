@@ -36,6 +36,9 @@ export default function Button({
       case 'green':
       case 'gr':
         return 'gr';
+      case 'red':
+      case 'r':
+        return 'r';
       default:
         return '';
     }

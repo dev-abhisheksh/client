@@ -55,7 +55,7 @@ export const homeContent = {
     actions: [
       { label: 'About Us →', target: 'about', variant: 'gold' },
       { label: 'Get Involved', target: 'involved', variant: 'white-outline' },
-      { label: 'Donate Now', target: 'donate', variant: 'white-outline' },
+      { label: 'Donate Now', target: 'donate', variant: 'red' },
     ],
   },
   statsBar: [
@@ -614,7 +614,7 @@ export const involvedContent = {
       {
         label: 'Support Our Work',
         target: 'donate',
-        variant: 'white-outline',
+        variant: 'red',
       },
     ],
   },
@@ -740,7 +740,7 @@ export const donateContent = {
       'Your contribution helps provide education, meals, healthcare, skills and care to children, women and families. Give by bank transfer or UPI, then request your receipt in one tap.',
     avatar: '❤',
     actions: [
-      { label: 'Donate Now ↓', target: 'give', variant: 'gold' },
+      { label: 'Donate Now ↓', target: 'give', variant: 'red' },
       { label: 'Request a Receipt →', target: 'rcpt', variant: 'white-outline' },
     ],
   },
@@ -786,7 +786,7 @@ export const contactContent = {
     avatar: '👩‍👧',
     actions: [
       { label: 'GET IN TOUCH →', target: 'enquiry', variant: 'gold' },
-      { label: 'SUPPORT OUR WORK', target: 'donate', variant: 'white-outline' },
+      { label: 'SUPPORT OUR WORK', target: 'donate', variant: 'red' },
     ],
   },
   channels: [

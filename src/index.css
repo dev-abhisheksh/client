@@ -286,6 +286,22 @@ a {
   color: #fff !important;
 }
 
+.btn.r,
+.btn.red {
+  background-color: #dc2626 !important;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.08) 48%, rgba(0, 0, 0, 0.15)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px -2px rgba(220, 38, 38, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.6) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.btn.r:hover,
+.btn.red:hover {
+  background-color: #b91c1c !important;
+  box-shadow: 0 6px 20px -2px rgba(220, 38, 38, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.7) !important;
+}
+
 /* Sections & General Components */
 .sec {
   padding: 76px 0;
@@ -2071,6 +2087,12 @@ body.pg-home .btn.o {
   color: var(--nv);
 }
 
+body.pg-home .btn.r,
+body.pg-home .btn.red {
+  background-color: #dc2626 !important;
+  color: #fff !important;
+}
+
 body.pg-home .hero.dk {
   background: radial-gradient(1100px 500px at 85% -10%, #D6A84F40, transparent 60%),
               radial-gradient(800px 420px at 0 110%, #3F6B5070, transparent 60%),
@@ -2139,6 +2161,8 @@ body.pg-home footer {
 :root[data-theme="light"] body .btn.o { background-color: rgba(255, 255, 255, 0.6); color: #17324D; border-color: #17324D55; }
 :root[data-theme="light"] body .btn.wo { background-color: rgba(255, 255, 255, 0.14); color: #fff; }
 :root[data-theme="light"] body .btn.w2 { background-color: rgba(255, 255, 255, 0.85); color: #17324D; }
+:root[data-theme="light"] body .btn.r,
+:root[data-theme="light"] body .btn.red { background-color: #dc2626 !important; color: #fff !important; }
 :root[data-theme="light"] body .strip { background: linear-gradient(115deg, #17324D, #1f4a46 60%, #3F6B50); }
 :root[data-theme="light"] body .ic { box-shadow: 0 8px 18px #17324D40; }
 
@@ -2176,6 +2200,8 @@ body.pg-home footer {
   :root:not([data-theme="dark"]) body .btn.o { background-color: rgba(255, 255, 255, 0.6); color: #17324D; border-color: #17324D55; }
   :root:not([data-theme="dark"]) body .btn.wo { background-color: rgba(255, 255, 255, 0.14); color: #fff; }
   :root:not([data-theme="dark"]) body .btn.w2 { background-color: rgba(255, 255, 255, 0.85); color: #17324D; }
+  :root:not([data-theme="dark"]) body .btn.r,
+  :root:not([data-theme="dark"]) body .btn.red { background-color: #dc2626 !important; color: #fff !important; }
   :root:not([data-theme="dark"]) body .strip { background: linear-gradient(115deg, #17324D, #1f4a46 60%, #3F6B50); }
   :root:not([data-theme="dark"]) body .ic { box-shadow: 0 8px 18px #17324D40; }
 }

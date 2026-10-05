@@ -47,7 +47,7 @@ export default function DonatePage({ onNavigate }) {
           {
             label: 'Donate Now ↓',
             target: 'give',
-            variant: 'gold',
+            variant: 'red',
             onClick: (e) => handleNavClick(e, 'give'),
           },
           {
@@ -178,7 +178,7 @@ export default function DonatePage({ onNavigate }) {
             <div className="mt-6">
               <Button
                 target="pay"
-                variant="gold"
+                variant="red"
                 className="w-full text-center justify-center py-3 text-sm shadow-md"
                 onClick={(e) => handleNavClick(e, 'pay')}
               >

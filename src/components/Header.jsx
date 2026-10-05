@@ -81,6 +81,22 @@ export default function Header({ currentPage, onNavigate }) {
                 (currentPage === 'pay' && link.id === 'donate') ||
                 (currentPage.startsWith('pj') && link.id === 'projects');
 
+              if (link.id === 'donate') {
+                return (
+                  <a
+                    key={link.id}
+                    href={`#${link.id}`}
+                    onClick={(e) => handleNavClick(e, link.id)}
+                    className="btn r inline-flex items-center px-4 py-1.5 text-xs font-bold rounded-full uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer !text-white ml-1"
+                    style={{
+                      minHeight: '34px',
+                    }}
+                  >
+                    Donate
+                  </a>
+                );
+              }
+
               return (
                 <a
                   key={link.id}
@@ -117,7 +133,7 @@ export default function Header({ currentPage, onNavigate }) {
             <a
               href="#donate"
               onClick={(e) => handleNavClick(e, 'donate')}
-              className="btn g text-xs font-bold rounded-full shadow-xs"
+              className="btn r text-xs font-bold rounded-full shadow-md inline-flex items-center !text-white"
               style={{
                 padding: '6px 14px',
                 fontSize: '12px',
@@ -201,6 +217,22 @@ export default function Header({ currentPage, onNavigate }) {
                 (currentPage === 'pay' && link.id === 'donate') ||
                 (currentPage.startsWith('pj') && link.id === 'projects');
 
+              if (link.id === 'donate') {
+                return (
+                  <a
+                    key={link.id}
+                    href={`#${link.id}`}
+                    onClick={(e) => handleNavClick(e, link.id)}
+                    className="flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-[14px] bg-red-600 text-white shadow-xs transition-all mt-1"
+                  >
+                    <span>{link.label}</span>
+                    <span className="text-[10px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full bg-white/20 text-white">
+                      Give
+                    </span>
+                  </a>
+                );
+              }
+
               return (
                 <a
                   key={link.id}
@@ -224,8 +256,8 @@ export default function Header({ currentPage, onNavigate }) {
           <div className="mt-5 pt-5 border-t border-[var(--ln)]">
             <Button
               target="donate"
-              variant="gold"
-              className="w-full text-center py-2.5 text-xs shadow-md"
+              variant="red"
+              className="w-full text-center py-2.5 text-xs shadow-md font-bold !bg-red-600 hover:!bg-red-700 !text-white"
               onClick={() => setMobileMenuOpen(false)}
             >
               Donate Now
