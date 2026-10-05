@@ -228,85 +228,101 @@ export default function AboutPage({ onNavigate }) {
         </div>
       </section>
 
-      {/* 3. Our Journey Section - Compact, Minimal & Modern */}
+      {/* 3. Our Journey Section - How Our Journey Started */}
       <section className="sec soft">
         <div className="w">
-          <div className="ln mb-8 items-center">
-            <div>
-              <h2 style={{ margin: 0 }}>{journey.title}</h2>
-              <h3 className="text-[15px] sm:text-[17px] text-[var(--nv)] font-semibold mt-1">
-                {journey.subtitle}
-              </h3>
+          {/* Header */}
+          <div className="max-w-3xl mb-8 sm:mb-10">
+            <div className="eb2">HOW OUR JOURNEY STARTED</div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[var(--nv)] mt-1 mb-2">
+              {journey.subtitle}
+            </h2>
+            <div className="q mt-4 text-[15px] sm:text-[16px] leading-relaxed">
+              {journey.lead}
             </div>
-            <p
-              style={{
-                borderLeft: '2px dotted var(--mu)',
-                paddingLeft: '14px',
-                fontSize: '13px',
-                lineHeight: 1.6,
-                margin: 0,
-              }}
-            >
-              {journey.description}
-            </p>
           </div>
 
-          {/* Compact, Minimal, Modern Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-            {journey.projects.map((p, i) => {
-              const colorBg = COLOR_MAP[p.color] || 'var(--bl)';
-              return (
+          {/* Narrative Story Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start mb-10">
+            <div className="space-y-4 text-[14.5px] sm:text-[15.5px] leading-relaxed text-[var(--tx)]/90">
+              <p>{journey.paragraphs[0]}</p>
+              <p>{journey.paragraphs[1]}</p>
+            </div>
+            <div className="space-y-4 text-[14.5px] sm:text-[15.5px] leading-relaxed text-[var(--tx)]/90">
+              <div className="bg-[var(--card)] border border-[var(--ln)] rounded-2xl p-5 sm:p-6 shadow-sm">
+                <p className="font-semibold text-[var(--nv)] mb-3 text-[15px] sm:text-[16px]">
+                  {journey.paragraphs[2]}
+                </p>
+                <p className="text-[var(--mu)]">
+                  {journey.paragraphs[3]}
+                </p>
+              </div>
+              <p className="italic text-[var(--mu)] pt-2 border-l-2 border-[var(--go)] pl-3.5">
+                {journey.ethos}
+              </p>
+            </div>
+          </div>
+
+          {/* 7 Initiatives Cards */}
+          <div className="bg-[var(--card)] border border-[var(--ln)] rounded-3xl p-6 sm:p-8 shadow-sm mb-10">
+            <h3 className="text-[16px] sm:text-[18px] font-bold text-[var(--nv)] mb-5">
+              {journey.initiativesTitle}
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-3.5">
+              {journey.initiatives.map((item, idx) => (
                 <div
-                  key={i}
-                  className="bg-[var(--card)] border border-[var(--ln)] rounded-2xl p-5 hover:shadow-xl hover:border-transparent hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group cursor-pointer relative overflow-hidden"
-                  onClick={(e) => handleNavClick(e, `pj${i}`)}
+                  key={idx}
+                  className="flex items-center gap-3 p-3 sm:p-3.5 rounded-xl bg-[var(--soft)]/70 border border-[var(--ln)] hover:border-[var(--go)]/50 transition-colors"
                 >
-                  {/* Top Bar: Icon Pill + Step Badge */}
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span
-                        className="w-11 h-11 rounded-xl flex items-center justify-center text-xl text-white shadow-xs group-hover:scale-105 transition-transform"
-                        style={{ backgroundColor: colorBg }}
-                      >
-                        {p.icon}
-                      </span>
-                      <span className="text-[11px] font-mono font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-[var(--soft)] text-[var(--mu)] group-hover:bg-[var(--bl)] group-hover:text-white transition-colors">
-                        0{i + 1}
-                      </span>
-                    </div>
-
-                    {/* Title & Description */}
-                    <h4
-                      style={{ color: 'var(--nv)' }}
-                      className="font-bold text-[16px] leading-snug mb-1.5 group-hover:text-[var(--bl)] transition-colors"
-                    >
-                      {p.title}
-                    </h4>
-                    <p className="text-[13px] text-[var(--mu)] leading-relaxed mb-4">
-                      {p.desc}
-                    </p>
-                  </div>
-
-                  {/* Bottom: Minimal Goal Accent & Learn More Link */}
-                  <div className="pt-3 border-t border-[var(--ln)]/60 flex flex-col gap-2.5">
-                    <div
-                      className="bg-[var(--soft)]/70 border-l-[3px] rounded-r-lg px-2.5 py-1.5 text-[11.5px] leading-snug text-[var(--tx)]/90"
-                      style={{ borderLeftColor: colorBg }}
-                    >
-                      <span className="font-bold mr-1 text-[var(--nv)]">Our Goal:</span>
-                      <i>{p.goal}</i>
-                    </div>
-
-                    <div className="flex items-center justify-between text-[12px] font-semibold text-[var(--bl)] pt-1">
-                      <span>View Project</span>
-                      <span className="transform group-hover:translate-x-1 transition-transform">
-                        →
-                      </span>
-                    </div>
-                  </div>
+                  <span className="w-8 h-8 rounded-lg bg-[var(--card)] shadow-xs flex items-center justify-center text-base shrink-0 select-none">
+                    {item.icon}
+                  </span>
+                  <span className="text-[13px] sm:text-[13.5px] font-semibold text-[var(--tx)] leading-snug">
+                    {item.title}
+                  </span>
                 </div>
-              );
-            })}
+              ))}
+            </div>
+          </div>
+
+          {/* Foundational Commitment & Vision Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+            {/* Left: Commitment Card */}
+            <div className="md:col-span-7 bg-gradient-to-br from-[#102237] via-[#17324D] to-[#1c3c5c] text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between relative overflow-hidden border border-white/10">
+              <div
+                className="absolute inset-0 pointer-events-none opacity-30"
+                style={{
+                  background:
+                    'radial-gradient(500px 200px at 100% 0%, rgba(214, 168, 79, 0.25), transparent 70%)',
+                }}
+              />
+              <div className="relative z-10">
+                <span className="text-xs uppercase tracking-widest text-[#D6A84F] font-semibold mb-2 block">
+                  FOUNDATIONAL COMMITMENT
+                </span>
+                <p className="text-white/80 text-[13.5px] sm:text-[14.5px] mb-4">
+                  {journey.commitmentIntro}
+                </p>
+                <div className="text-[17px] sm:text-[20px] font-serif italic text-white font-bold leading-snug drop-shadow-xs">
+                  {journey.commitmentQuote}
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Closing Vision Card */}
+            <div className="md:col-span-5 bg-[var(--card)] border border-[var(--ln)] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between">
+              <p className="text-[13.5px] sm:text-[14px] leading-relaxed text-[var(--mu)] mb-4">
+                {journey.continuation}
+              </p>
+              <div className="pt-3 border-t border-[var(--ln)]">
+                <p className="text-xs uppercase font-bold tracking-wider text-[var(--mu)] mb-0.5">
+                  {journey.closingSmall}
+                </p>
+                <h4 className="text-[15px] sm:text-[16px] font-serif font-bold text-[var(--nv)] leading-snug">
+                  {journey.closingVision}
+                </h4>
+              </div>
+            </div>
           </div>
         </div>
       </section>
