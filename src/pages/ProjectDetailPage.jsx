@@ -240,7 +240,7 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
           ) : null
         }
         media={
-          isAdmin && photos.length > 0 ? (
+          isAdmin ? (
             <ProjectHeroControls
               photos={project.photos}
               viewMode={mediaMode}
@@ -248,6 +248,10 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
               activeIndex={activePhotoIndex}
               setActiveIndex={setActivePhotoIndex}
               onSelectCoverPhoto={handleSelectCoverPhoto}
+              onDeletePhoto={(idx) => {
+                const p = project.photos?.[idx];
+                handleDeletePhoto(p?._id || p?.url || p);
+              }}
               isAdmin={isAdmin}
               isSaving={updateProjectMutation.isPending}
               onUploadPhoto={(file) => {

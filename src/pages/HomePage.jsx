@@ -6,10 +6,13 @@ import HomeProjects from '../components/HomeProjects';
 import HomeGetInvolved from '../components/HomeGetInvolved';
 import NeedHelp from '../components/NeedHelp';
 import ImpactStrip from '../components/ImpactStrip';
+import { HeroBackground, HeroControls } from '../components/ProjectMediaViewer';
+import { usePageHero } from '../hooks';
 import { homeContent } from '../data/siteData';
 
 export default function HomePage({ onNavigate }) {
   const { hero, statsBar, focusAreas, projectsSection, getInvolvedSection } = homeContent;
+  const heroMedia = usePageHero('home');
 
   useEffect(() => {
     document.body.classList.add('pg-home');
@@ -33,7 +36,7 @@ export default function HomePage({ onNavigate }) {
 
   return (
     <div className="home-page">
-      {/* 1. Hero Section */}
+      {/* 1. Hero Section with Isolated Carousel / Static Cover Support */}
       <Hero
         variant="dk"
         eyebrow={hero.eyebrow}
@@ -42,9 +45,36 @@ export default function HomePage({ onNavigate }) {
         description={hero.description}
         actions={heroActions}
         face={null}
+        bgMedia={
+          heroMedia.hasPhotos ? (
+            <HeroBackground
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              activeIndex={heroMedia.activeIndex}
+              title={hero.title}
+            />
+          ) : null
+        }
+        media={
+          heroMedia.isAdmin ? (
+            <HeroControls
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              setViewMode={heroMedia.handleToggleMediaMode}
+              activeIndex={heroMedia.activeIndex}
+              setActiveIndex={heroMedia.setActiveIndex}
+              onSelectCoverPhoto={heroMedia.handleSelectCoverPhoto}
+              onDeletePhoto={heroMedia.handleDeletePhoto}
+              isAdmin={heroMedia.isAdmin}
+              isSaving={heroMedia.isSaving}
+              onUploadPhoto={heroMedia.handleUploadPhoto}
+              isUploading={heroMedia.isUploading}
+            />
+          ) : null
+        }
       />
 
-      {/* 2. 5-Metric Impact Stats Strip */}
+      {/* 2. 8-Metric Impact Stats Strip */}
       <StatsBar stats={statsBar} />
 
       {/* 3. Our Focus Areas */}

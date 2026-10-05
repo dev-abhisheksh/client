@@ -9,11 +9,13 @@ import Button from '../components/Button';
 import ImpactStrip from '../components/ImpactStrip';
 import ImageWithLoader from '../components/ImageWithLoader';
 import { projectsContent, COLOR_MAP } from '../data/siteData';
-import { useProjects } from '../hooks';
+import { useProjects, usePageHero } from '../hooks';
+import { HeroBackground, HeroControls } from '../components/ProjectMediaViewer';
 
 export default function ProjectsPage({ onNavigate }) {
   const { hero, projects: fallbackProjects } = projectsContent;
   const { data: dbData } = useProjects();
+  const heroMedia = usePageHero('projects');
 
   const dbProjects = dbData?.data?.projects;
 
@@ -43,7 +45,34 @@ export default function ProjectsPage({ onNavigate }) {
         title={hero.title}
         description={hero.description}
         actions={[hero.action]}
-        face={hero.avatar}
+        face={heroMedia.hasPhotos ? null : hero.avatar}
+        bgMedia={
+          heroMedia.hasPhotos ? (
+            <HeroBackground
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              activeIndex={heroMedia.activeIndex}
+              title={hero.title}
+            />
+          ) : null
+        }
+        media={
+          heroMedia.isAdmin ? (
+            <HeroControls
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              setViewMode={heroMedia.handleToggleMediaMode}
+              activeIndex={heroMedia.activeIndex}
+              setActiveIndex={heroMedia.setActiveIndex}
+              onSelectCoverPhoto={heroMedia.handleSelectCoverPhoto}
+              onDeletePhoto={heroMedia.handleDeletePhoto}
+              isAdmin={heroMedia.isAdmin}
+              isSaving={heroMedia.isSaving}
+              onUploadPhoto={heroMedia.handleUploadPhoto}
+              isUploading={heroMedia.isUploading}
+            />
+          ) : null
+        }
       />
 
       {/* 2. Seven Areas of Service Showcase Grid */}

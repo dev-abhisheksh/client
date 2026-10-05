@@ -5,9 +5,12 @@ import WhereSupportGoes from '../components/WhereSupportGoes';
 import NeedHelp from '../components/NeedHelp';
 import ImpactStrip from '../components/ImpactStrip';
 import { involvedContent, COLOR_MAP, siteConfig } from '../data/siteData';
+import { usePageHero } from '../hooks';
+import { HeroBackground, HeroControls } from '../components/ProjectMediaViewer';
 
 export default function InvolvedPage({ onNavigate }) {
   const { hero, ways, banners, stayConnected } = involvedContent;
+  const heroMedia = usePageHero('involved');
 
   const handleNavClick = (e, target) => {
     e.preventDefault();
@@ -28,7 +31,34 @@ export default function InvolvedPage({ onNavigate }) {
         subtitle={hero.subtitle}
         description={hero.description}
         actions={hero.actions}
-        face={hero.avatar}
+        face={heroMedia.hasPhotos ? null : hero.avatar}
+        bgMedia={
+          heroMedia.hasPhotos ? (
+            <HeroBackground
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              activeIndex={heroMedia.activeIndex}
+              title={hero.title}
+            />
+          ) : null
+        }
+        media={
+          heroMedia.isAdmin ? (
+            <HeroControls
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              setViewMode={heroMedia.handleToggleMediaMode}
+              activeIndex={heroMedia.activeIndex}
+              setActiveIndex={heroMedia.setActiveIndex}
+              onSelectCoverPhoto={heroMedia.handleSelectCoverPhoto}
+              onDeletePhoto={heroMedia.handleDeletePhoto}
+              isAdmin={heroMedia.isAdmin}
+              isSaving={heroMedia.isSaving}
+              onUploadPhoto={heroMedia.handleUploadPhoto}
+              isUploading={heroMedia.isUploading}
+            />
+          ) : null
+        }
       />
 
       {/* 2. Ways to Get Involved Showcase Cards */}

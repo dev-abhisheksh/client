@@ -13,7 +13,7 @@ export function ProjectHeroBackground({
   photos = [],
   viewMode = 'carousel',
   activeIndex = 0,
-  title = 'Project',
+  title = 'Page',
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -80,7 +80,7 @@ export function ProjectHeroBackground({
 
 /**
  * Refined Glassmorphism Admin Hero Controls
- * Crisp luxury segmented toggle, thumbnail switcher & upload
+ * Crisp luxury segmented toggle, thumbnail switcher, delete & upload
  */
 export function ProjectHeroControls({
   photos = [],
@@ -89,6 +89,7 @@ export function ProjectHeroControls({
   activeIndex = 0,
   setActiveIndex,
   onSelectCoverPhoto,
+  onDeletePhoto,
   isAdmin = false,
   isSaving = false,
   onUploadPhoto,
@@ -99,10 +100,49 @@ export function ProjectHeroControls({
     .filter(Boolean);
 
   // Strictly hide controls from normal visitors (Admin only)
-  if (!isAdmin || normalizedPhotos.length === 0) return null;
+  if (!isAdmin) return null;
+
+  // Empty state when admin has not uploaded any photos yet
+  if (normalizedPhotos.length === 0) {
+    return (
+      <div className="w-full max-w-[320px] bg-slate-950/80 backdrop-blur-2xl border border-white/15 rounded-2xl p-4 shadow-2xl text-white transition-all duration-300 hover:border-white/25">
+        <div className="flex items-center justify-between mb-2 pb-2 border-b border-white/10 text-[11px]">
+          <div className="flex items-center gap-1.5 font-mono text-white/70 tracking-wider uppercase text-[10px]">
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+            <span className="font-bold">Hero Carousel</span>
+          </div>
+          <span className="text-[10px] font-mono text-white/50 bg-white/5 px-2 py-0.5 rounded-full border border-white/10">
+            0 photos
+          </span>
+        </div>
+        <p className="text-xs text-white/70 mb-3 leading-relaxed">
+          No hero background photos uploaded yet for this page. Add images to activate the smooth carousel / static cover.
+        </p>
+        <label className="flex items-center justify-center gap-2 py-2 px-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl text-xs cursor-pointer transition-colors shadow-md">
+          <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="17 8 12 3 7 8" />
+            <line x1="12" x2="12" y1="3" y2="15" />
+          </svg>
+          <input
+            type="file"
+            accept="image/*"
+            className="hidden"
+            disabled={isUploading}
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file && onUploadPhoto) onUploadPhoto(file);
+              e.target.value = '';
+            }}
+          />
+          <span>{isUploading ? 'Uploading...' : '+ Add Hero Photo'}</span>
+        </label>
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full max-w-[320px] bg-slate-950/75 backdrop-blur-2xl border border-white/15 rounded-2xl p-3 shadow-2xl text-white transition-all duration-300 hover:border-white/25">
+    <div className="w-full max-w-[320px] bg-slate-950/80 backdrop-blur-2xl border border-white/15 rounded-2xl p-3 shadow-2xl text-white transition-all duration-300 hover:border-white/25">
       {/* 1. Header Bar: Status Indicator & Photo Count */}
       <div className="flex items-center justify-between mb-2.5 pb-2 border-b border-white/10 text-[11px]">
         <div className="flex items-center gap-1.5 font-mono text-white/70 tracking-wider uppercase text-[10px]">
@@ -179,42 +219,58 @@ export function ProjectHeroControls({
         </button>
       </div>
 
-      {/* 3. Thumbnail Switcher (when in static mode with multiple photos) */}
-      {viewMode === 'static' && normalizedPhotos.length > 1 && (
+      {/* 3. Thumbnail Switcher & Photo Manager */}
+      {normalizedPhotos.length > 0 && (
         <div className="mt-2.5 pt-2 border-t border-white/10">
           <div className="flex items-center justify-between text-[10px] text-white/50 mb-1.5 uppercase font-mono tracking-wider">
-            <span>Select Cover Image:</span>
+            <span>{viewMode === 'static' ? 'Select Cover Image:' : 'Uploaded Slides:'}</span>
             {isSaving && <span className="text-amber-400 text-[9px] animate-pulse">Syncing...</span>}
           </div>
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1">
             {normalizedPhotos.map((url, idx) => {
               const isSelected = activeIndex === idx;
               return (
-                <button
-                  key={idx}
-                  type="button"
-                  disabled={isSaving}
-                  onClick={() => {
-                    if (onSelectCoverPhoto) {
-                      onSelectCoverPhoto(idx);
-                    } else if (setActiveIndex) {
-                      setActiveIndex(idx);
-                    }
-                  }}
-                  className={`relative w-10 h-10 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
-                    isSelected
-                      ? 'border-amber-400 shadow-lg scale-105 ring-2 ring-amber-400/40'
-                      : 'border-white/20 opacity-60 hover:opacity-100 hover:border-white/50'
-                  }`}
-                  title={idx === 0 ? 'Current Primary Cover' : `Click to set as primary cover`}
-                >
-                  <img src={url} alt={`thumb ${idx}`} className="w-full h-full object-cover" />
-                  {idx === 0 && (
-                    <span className="absolute bottom-0 inset-x-0 bg-amber-400 text-slate-950 font-bold text-[7px] leading-tight text-center py-0.5">
-                      COVER
-                    </span>
+                <div key={idx} className="relative group shrink-0">
+                  <button
+                    type="button"
+                    disabled={isSaving}
+                    onClick={() => {
+                      if (onSelectCoverPhoto) {
+                        onSelectCoverPhoto(idx);
+                      } else if (setActiveIndex) {
+                        setActiveIndex(idx);
+                      }
+                    }}
+                    className={`relative w-10 h-10 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer block ${
+                      isSelected
+                        ? 'border-amber-400 shadow-lg scale-105 ring-2 ring-amber-400/40'
+                        : 'border-white/20 opacity-70 hover:opacity-100 hover:border-white/50'
+                    }`}
+                    title={idx === 0 ? 'Current Primary Cover' : `Click to set as primary cover`}
+                  >
+                    <img src={url} alt={`thumb ${idx}`} className="w-full h-full object-cover" />
+                    {idx === 0 && (
+                      <span className="absolute bottom-0 inset-x-0 bg-amber-400 text-slate-950 font-bold text-[7px] leading-tight text-center py-0.5">
+                        COVER
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Delete Photo Button on Hover */}
+                  {onDeletePhoto && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDeletePhoto(idx);
+                      }}
+                      className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-red-600 hover:bg-red-500 text-white flex items-center justify-center text-[10px] shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-10 cursor-pointer"
+                      title="Delete this photo"
+                    >
+                      ×
+                    </button>
                   )}
-                </button>
+                </div>
               );
             })}
           </div>
@@ -256,5 +312,9 @@ export function ProjectHeroControls({
     </div>
   );
 }
+
+// Aliases for clean semantic imports across all pages
+export const HeroBackground = ProjectHeroBackground;
+export const HeroControls = ProjectHeroControls;
 
 export default ProjectHeroBackground;

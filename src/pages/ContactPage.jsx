@@ -4,6 +4,8 @@ import Button from '../components/Button';
 import NeedHelp from '../components/NeedHelp';
 import ImpactStrip from '../components/ImpactStrip';
 import { contactContent, COLOR_MAP } from '../data/siteData';
+import { usePageHero } from '../hooks';
+import { HeroBackground, HeroControls } from '../components/ProjectMediaViewer';
 
 export default function ContactPage({ onNavigate }) {
   const {
@@ -16,6 +18,8 @@ export default function ContactPage({ onNavigate }) {
     statsStrip,
     faq,
   } = contactContent;
+
+  const heroMedia = usePageHero('contact');
 
   const [openFaqs, setOpenFaqs] = useState({});
 
@@ -44,7 +48,34 @@ export default function ContactPage({ onNavigate }) {
         subtitle={hero.subtitle}
         description={hero.description}
         actions={hero.actions}
-        face={hero.avatar}
+        face={heroMedia.hasPhotos ? null : hero.avatar}
+        bgMedia={
+          heroMedia.hasPhotos ? (
+            <HeroBackground
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              activeIndex={heroMedia.activeIndex}
+              title={hero.title}
+            />
+          ) : null
+        }
+        media={
+          heroMedia.isAdmin ? (
+            <HeroControls
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              setViewMode={heroMedia.handleToggleMediaMode}
+              activeIndex={heroMedia.activeIndex}
+              setActiveIndex={heroMedia.setActiveIndex}
+              onSelectCoverPhoto={heroMedia.handleSelectCoverPhoto}
+              onDeletePhoto={heroMedia.handleDeletePhoto}
+              isAdmin={heroMedia.isAdmin}
+              isSaving={heroMedia.isSaving}
+              onUploadPhoto={heroMedia.handleUploadPhoto}
+              isUploading={heroMedia.isUploading}
+            />
+          ) : null
+        }
       />
 
       {/* 2. Contact Channels (4 Cards in .g4) */}

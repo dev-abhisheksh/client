@@ -5,9 +5,12 @@ import CopyButton from '../components/CopyButton';
 import NeedHelp from '../components/NeedHelp';
 import ImpactStrip from '../components/ImpactStrip';
 import { donateContent } from '../data/siteData';
+import { usePageHero } from '../hooks';
+import { HeroBackground, HeroControls } from '../components/ProjectMediaViewer';
 
 export default function DonatePage({ onNavigate }) {
   const { hero, bank, upi, taxCertificates, receipt } = donateContent;
+  const heroMedia = usePageHero('donate');
 
   const receiptWhatsappUrl = `https://wa.me/${receipt.whatsappNumber}?text=${encodeURIComponent(receipt.whatsappMessage)}`;
 
@@ -54,7 +57,34 @@ export default function DonatePage({ onNavigate }) {
             onClick: (e) => handleNavClick(e, 'rcpt'),
           },
         ]}
-        face={hero.avatar}
+        face={heroMedia.hasPhotos ? null : hero.avatar}
+        bgMedia={
+          heroMedia.hasPhotos ? (
+            <HeroBackground
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              activeIndex={heroMedia.activeIndex}
+              title={hero.title}
+            />
+          ) : null
+        }
+        media={
+          heroMedia.isAdmin ? (
+            <HeroControls
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              setViewMode={heroMedia.handleToggleMediaMode}
+              activeIndex={heroMedia.activeIndex}
+              setActiveIndex={heroMedia.setActiveIndex}
+              onSelectCoverPhoto={heroMedia.handleSelectCoverPhoto}
+              onDeletePhoto={heroMedia.handleDeletePhoto}
+              isAdmin={heroMedia.isAdmin}
+              isSaving={heroMedia.isSaving}
+              onUploadPhoto={heroMedia.handleUploadPhoto}
+              isUploading={heroMedia.isUploading}
+            />
+          ) : null
+        }
       />
 
       {/* 2. Bank Transfer & Scan to Donate Section */}

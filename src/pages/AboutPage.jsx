@@ -6,7 +6,8 @@ import TrusteeDetailModal from '../components/TrusteeDetailModal';
 import TrusteeEditModal from '../components/TrusteeEditModal';
 import { aboutContent, COLOR_MAP } from '../data/siteData';
 import { useAuth } from '../context/AuthContext';
-import { useContent, useUpdateContent } from '../hooks';
+import { useContent, useUpdateContent, usePageHero } from '../hooks';
+import { HeroBackground, HeroControls } from '../components/ProjectMediaViewer';
 
 // Dedicated React-safe avatar component with dynamic photo rendering and fallback
 function TrusteeAvatar({ trustee }) {
@@ -34,6 +35,7 @@ function TrusteeAvatar({ trustee }) {
 export default function AboutPage({ onNavigate }) {
   const { hero, story, journey, commitment, belief, trustees } = aboutContent;
   const { isAdmin } = useAuth();
+  const heroMedia = usePageHero('about');
 
   // Load live trustees from backend or localStorage with fallback to siteData
   const { data: remoteData } = useContent('about_trustees');
@@ -163,7 +165,34 @@ export default function AboutPage({ onNavigate }) {
         subtitle={hero.subtitle}
         description={hero.description}
         actions={hero.actions}
-        face={hero.avatar}
+        face={heroMedia.hasPhotos ? null : hero.avatar}
+        bgMedia={
+          heroMedia.hasPhotos ? (
+            <HeroBackground
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              activeIndex={heroMedia.activeIndex}
+              title={hero.title}
+            />
+          ) : null
+        }
+        media={
+          isAdmin ? (
+            <HeroControls
+              photos={heroMedia.photos}
+              viewMode={heroMedia.mediaMode}
+              setViewMode={heroMedia.handleToggleMediaMode}
+              activeIndex={heroMedia.activeIndex}
+              setActiveIndex={heroMedia.setActiveIndex}
+              onSelectCoverPhoto={heroMedia.handleSelectCoverPhoto}
+              onDeletePhoto={heroMedia.handleDeletePhoto}
+              isAdmin={isAdmin}
+              isSaving={heroMedia.isSaving}
+              onUploadPhoto={heroMedia.handleUploadPhoto}
+              isUploading={heroMedia.isUploading}
+            />
+          ) : null
+        }
       />
 
       {/* 2. Our Story Section */}

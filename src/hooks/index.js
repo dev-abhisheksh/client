@@ -8,4 +8,6 @@ export * from "./projects/useUploadProjectPhoto";
 export * from "./projects/useDeleteProjectPhoto";
 export * from "./content/useContent";
 export * from "./content/useUpdateContent";
+export * from "./content/usePageHero";
+
 
