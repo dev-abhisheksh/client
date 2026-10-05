@@ -200,7 +200,7 @@ export default function AboutPage({ onNavigate }) {
       </section>
 
       {/* 3. Our Journey Section - Compact, Minimal & Modern */}
-      {/* <section className="sec soft">
+      <section className="sec soft">
         <div className="w">
           <div className="ln mb-8 items-center">
             <div>
@@ -223,7 +223,7 @@ export default function AboutPage({ onNavigate }) {
           </div>
 
           {/* Compact, Minimal, Modern Grid */}
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
             {journey.projects.map((p, i) => {
               const colorBg = COLOR_MAP[p.color] || 'var(--bl)';
               return (
@@ -232,7 +232,7 @@ export default function AboutPage({ onNavigate }) {
                   className="bg-[var(--card)] border border-[var(--ln)] rounded-2xl p-5 hover:shadow-xl hover:border-transparent hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group cursor-pointer relative overflow-hidden"
                   onClick={(e) => handleNavClick(e, `pj${i}`)}
                 >
-                  
+                  {/* Top Bar: Icon Pill + Step Badge */}
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <span
@@ -246,7 +246,7 @@ export default function AboutPage({ onNavigate }) {
                       </span>
                     </div>
 
-                    
+                    {/* Title & Description */}
                     <h4
                       style={{ color: 'var(--nv)' }}
                       className="font-bold text-[16px] leading-snug mb-1.5 group-hover:text-[var(--bl)] transition-colors"
@@ -258,7 +258,7 @@ export default function AboutPage({ onNavigate }) {
                     </p>
                   </div>
 
-                  
+                  {/* Bottom: Minimal Goal Accent & Learn More Link */}
                   <div className="pt-3 border-t border-[var(--ln)]/60 flex flex-col gap-2.5">
                     <div
                       className="bg-[var(--soft)]/70 border-l-[3px] rounded-r-lg px-2.5 py-1.5 text-[11.5px] leading-snug text-[var(--tx)]/90"
@@ -279,8 +279,8 @@ export default function AboutPage({ onNavigate }) {
               );
             })}
           </div>
-        </div> 
-      </section> */}
+        </div>
+      </section>
 
       {/* 4. Our Commitment Section */}
       <section className="sec">
