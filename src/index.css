@@ -839,12 +839,13 @@ a.c:hover .ic {
 @media (max-width: 640px) {
   .g6 {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
-}
-
-@media (max-width: 460px) {
-  .g6 {
-    grid-template-columns: 1fr;
+  .g6 > a.c {
+    background: var(--card);
+    border: 1px solid var(--ln);
+    box-shadow: 0 4px 14px -6px rgba(0, 0, 0, 0.06);
+    padding: 16px 10px;
   }
 }
 
@@ -1508,12 +1509,7 @@ nav a.on {
 @media (max-width: 640px) {
   .g6 {
     grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 440px) {
-  .g6 {
-    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
 
