@@ -51,7 +51,7 @@ export default function HomePage({ onNavigate }) {
       <HomeFocusAreas data={focusAreas} onNavigate={onNavigate} />
 
       {/* 4. Our Projects: Seven Areas of Service */}
-      <HomeProjects data={projectsSection} onNavigate={onNavigate} />
+      {/* <HomeProjects data={projectsSection} onNavigate={onNavigate} /> */}
 
       {/* 5. Get Involved Showcase Split */}
       <HomeGetInvolved data={getInvolvedSection} onNavigate={onNavigate} />
