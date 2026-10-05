@@ -428,20 +428,20 @@ export default function AboutPage({ onNavigate }) {
               {trusteesList.map((t) => (
                 <div
                   key={t.id || t.name}
-                  className="cd tr relative group select-none"
+                  className="cd tr relative group select-none p-5 rounded-2xl flex flex-col items-center justify-between"
                   onClick={() => setSelectedTrustee(t)}
                   title={`Click to view profile of ${t.name}`}
                 >
                   {/* Admin Quick Action Controls */}
                   {isAdmin && (
                     <div
-                      className="absolute top-2 right-2 flex items-center gap-1 z-10"
+                      className="absolute top-2.5 right-2.5 flex items-center gap-1 z-10"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <button
                         type="button"
                         onClick={(e) => handleOpenEditTrustee(t, e)}
-                        className="w-6 h-6 rounded-md bg-[var(--soft)] hover:bg-[var(--bl)] hover:text-white border border-[var(--ln)] text-[11px] flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+                        className="w-7 h-7 rounded-lg bg-[var(--soft)] hover:bg-[var(--bl)] hover:text-white border border-[var(--ln)] text-[12px] flex items-center justify-center transition-colors shadow-xs cursor-pointer"
                         title="Edit Trustee"
                       >
                         ✏️
@@ -454,7 +454,7 @@ export default function AboutPage({ onNavigate }) {
                             handleDeleteTrustee(t.id);
                           }
                         }}
-                        className="w-6 h-6 rounded-md bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/30 text-[11px] flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+                        className="w-7 h-7 rounded-lg bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/30 text-[12px] flex items-center justify-center transition-colors shadow-xs cursor-pointer"
                         title="Delete Trustee"
                       >
                         🗑️
@@ -467,15 +467,17 @@ export default function AboutPage({ onNavigate }) {
                     <TrusteeAvatar trustee={t} />
                   </div>
 
-                  <b className="text-[12px] text-[var(--nv)] font-bold mt-1 line-clamp-1">
-                    {t.name}
-                  </b>
-                  <small className="block text-[11px] text-[var(--mu)] leading-tight mt-0.5 line-clamp-1">
-                    {t.role}
-                  </small>
+                  <div className="w-full flex flex-col items-center text-center">
+                    <b className="text-[14px] sm:text-[15px] text-[var(--nv)] font-serif font-bold mt-1 line-clamp-1">
+                      {t.name}
+                    </b>
+                    <small className="block text-[12px] sm:text-[12.5px] text-[var(--mu)] leading-snug mt-1 line-clamp-2">
+                      {t.role}
+                    </small>
+                  </div>
 
                   {/* Click to View Hint */}
-                  <span className="mt-2 inline-flex items-center text-[10px] font-semibold text-[var(--bl)] opacity-70 group-hover:opacity-100 transition-opacity">
+                  <span className="mt-3 inline-flex items-center text-[11px] sm:text-[11.5px] font-semibold text-[var(--bl)] opacity-75 group-hover:opacity-100 transition-opacity">
                     View Profile →
                   </span>
                 </div>
