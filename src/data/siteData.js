@@ -117,7 +117,7 @@ export const homeContent = {
         icon: '📖',
         color: 'bl',
         title: 'Education',
-        desc: 'Project Hope & Child Development',
+        desc: 'Project Hope Thru Education & Child Development',
         target: 'pj1',
       },
       {
@@ -145,7 +145,7 @@ export const homeContent = {
         icon: '🧒',
         color: 'or',
         title: 'Children',
-        desc: 'Morning Star & Child Development',
+        desc: 'Morning Star Play School & Child Development',
         target: 'pj2',
       },
       {
@@ -174,14 +174,14 @@ export const homeContent = {
         id: 'pj1',
         icon: '📖',
         color: 'bl',
-        title: 'Project Hope',
+        title: 'Project Hope Thru Education',
         desc: 'Educational assistance and essential school materials for children from disadvantaged families.',
       },
       {
         id: 'pj2',
         icon: '🧒',
         color: 'gr',
-        title: 'Morning Star',
+        title: 'Morning Star Play School',
         desc: 'Early childhood education and care in a safe and nurturing environment.',
       },
       {
@@ -189,7 +189,7 @@ export const homeContent = {
         icon: '🍲',
         color: 'or',
         title: 'Project SMS',
-        desc: 'Sharing Meals. Sharing Love. Sharing Hope. Food, friendship and practical care for vulnerable individuals and families.',
+        desc: 'Sharing meals, groceries, and emergency food support with people facing food insecurity.',
       },
       {
         id: 'pj4',
@@ -239,7 +239,7 @@ export const homeContent = {
         icon: '📖',
         color: 'bl',
         title: 'Education',
-        desc: 'Project Hope & Child Development',
+        desc: 'Project Hope Thru Education & Child Development',
         target: 'projects',
       },
       {
@@ -267,7 +267,7 @@ export const homeContent = {
         icon: '🧒',
         color: 'or',
         title: 'Children',
-        desc: 'Morning Star & Child Development',
+        desc: 'Morning Star Play School & Child Development',
         target: 'projects',
       },
       {
@@ -356,12 +356,34 @@ export const aboutContent = {
     title: 'How Our Journey Started',
     subtitle: 'From a Small Beginning to a Growing Mission of Compassion',
     lead: 'Bethesda Charitable Trust began with a simple but powerful conviction: every person deserves to be treated with dignity, compassion, and hope.',
+    beganHeading: 'Our Journey Began',
     paragraphs: [
-      'Our journey began when a few like-minded individuals came together with a desire to serve people who were struggling, neglected, and living on the margins of society. The Trust was established with a vision to serve sacrificially, uplift the vulnerable, and bring meaningful change to families and communities.',
-      'In our early years, we reached out to families affected by HIV/AIDS, providing essential food support, encouragement, counselling, and a listening ear. We also began working among children in underprivileged communities, providing moral and value-based education and helping families facing difficult circumstances. Early records from 2011 also document adult literacy centres and support for families affected by unexpected crises.',
-      'What began with small acts of kindness gradually grew into a broader mission.',
-      'We learned that poverty is not only about the lack of financial resources. Many families also face a lack of education, healthcare, opportunity, emotional support, and hope. Therefore, our work began to expand beyond immediate assistance toward holistic community development.',
+      'Bethesda Charitable Trust began with a simple desire—to serve people who were struggling, neglected, and vulnerable. With a vision to uplift lives and strengthen communities, we started by supporting families affected by HIV/AIDS with food assistance, encouragement, counselling, and care.',
+      'We also reached out to children and families in underprivileged communities through education, moral guidance, and practical support. These early steps became the foundation of our ongoing journey of serving with compassion and transforming lives.',
     ],
+    growingMission: {
+      title: 'Growing Our Mission',
+      subtitle:
+        'What began with small acts of kindness grew into a broader mission of holistic community development.',
+      points: [
+        {
+          title: 'Beyond Basic Needs',
+          desc: 'Addressing education, healthcare, and essential needs.',
+        },
+        {
+          title: 'Restoring Dignity',
+          desc: 'Walking alongside individuals and families with compassion and respect.',
+        },
+        {
+          title: 'Creating Opportunities',
+          desc: 'Equipping people to build a better and more secure future.',
+        },
+        {
+          title: 'Bringing Hope',
+          desc: 'Offering encouragement, care, and meaningful support to communities.',
+        },
+      ],
+    },
     initiativesTitle: 'Over the years, Bethesda Charitable Trust has continued to respond to the needs around us through initiatives in:',
     initiatives: [
       { icon: '📖', title: 'Education and Child Development' },
@@ -372,12 +394,12 @@ export const aboutContent = {
       { icon: '🤝', title: 'Community Care' },
       { icon: '🕊', title: 'Humanitarian Assistance' },
     ],
-    ethos: 'Our journey has never been about simply giving things away. It has been about walking alongside people, restoring dignity, creating opportunities, and helping individuals and families move toward a better future.',
-    commitmentIntro: 'Today, Bethesda Charitable Trust continues this journey with the same foundational commitment:',
-    commitmentQuote: '«To serve with compassion, empower with dignity, and transform lives through practical care and hope.»',
-    continuation: 'What started as a small step of faith has become a growing journey of service. And we believe the journey is still continuing—with every child encouraged, every family supported, every woman empowered, every person cared for, and every community touched by compassion.',
-    closingSmall: 'Our journey started small.',
-    closingVision: 'Our vision has always been bigger: to see lives transformed and communities strengthened.',
+    commitmentHeading: 'Our Foundational Commitment',
+    commitmentIntro: 'Our journey continues with the same unwavering commitment:',
+    commitmentQuote:
+      '“Serving with compassion. Empowering with dignity. Transforming lives with practical care and hope.”',
+    continuation:
+      'What started as a small step of faith has become a growing journey of service. And we believe the journey is still continuing—with every child encouraged, every family supported, every woman empowered, every person cared for, and every community touched by compassion.',
   },
   commitment: {
     title: 'Our Commitment',
@@ -447,9 +469,7 @@ export const aboutContent = {
         photo: '',
         name: 'Mrs. Rajani S. Naik',
         role: 'President – Social Activities',
-        desc: `Mrs. Rajani S. Naik serves as the President of Bethesda Charitable Trust, providing leadership in social welfare, community outreach, and humanitarian initiatives.
-
-With a strong commitment to serving vulnerable individuals and families, she actively supports programs that promote dignity, care, and community wellbeing. Her leadership and dedication continue to strengthen BCT's mission of bringing hope and practical support to those in need.`,
+        desc: `Mrs. Rajani S. Naik provides leadership in social welfare, community outreach, and humanitarian initiatives. Her dedication to serving vulnerable individuals and families strengthens BCT’s mission of bringing care, dignity, and hope to communities in need.`,
       },
       {
         id: 'tr-2',
@@ -477,27 +497,18 @@ She is passionate about creating opportunities for women to develop practical sk
         photo: '',
         name: 'Dr. Deepa Mathew',
         role: 'Trustee – Healthcare & AYUSH Services',
-        desc: `B.A.M.S. – Goa
-M.D. (Acupuncture) – Colombo
+        desc: `B.A.M.S. – Goa | M.D. (Acupuncture) – Colombo
 Member – International Acupuncture Foundation
 
-Dr. Deepa Mathew brings professional expertise in healthcare, AYUSH services, and public health to the Board of Bethesda Charitable Trust.
-
-She currently serves as an AYUSH Medical Officer at Hospicio South Goa District Hospital. Her medical knowledge and professional experience contribute to BCT's healthcare initiatives, community medical camps, wellness programs, and health awareness activities.
-
-Her involvement strengthens the Trust's commitment to making compassionate and accessible healthcare available to communities in need.`,
+Dr. Deepa Mathew brings professional expertise in AYUSH healthcare and public health to Bethesda Charitable Trust. As an AYUSH Medical Officer at Hospicio South Goa District Hospital, she contributes to BCT’s medical camps, wellness initiatives, and community health programs.`,
       },
       {
         id: 'tr-5',
         avatar: '👨',
         photo: '',
         name: 'Mr. Moses Sadanand Aghamkar',
-        role: 'Chief Executive Officer (CEO)',
-        desc: `Mr. Moses Sadanand Aghamkar serves as the Chief Executive Officer of Bethesda Charitable Trust, providing strategic leadership and overseeing the Trust's programs, partnerships, and long-term development.
-
-For the past eight years, he has been involved in shaping the Trust's strategic direction and expanding its community-focused initiatives. His work spans education, child welfare, women’s empowerment, healthcare, leadership development, and humanitarian service.
-
-With a strong commitment to holistic community development, Mr. Aghamkar works to strengthen BCT's programs, build meaningful partnerships, and advance the Trust's vision of empowering lives and transforming communities.`,
+        role: 'Chief Executive Officer',
+        desc: `Mr. Moses Sadanand Aghamkar provides strategic leadership for Bethesda Charitable Trust, overseeing its programs, partnerships, and development. With eight years of experience, he has helped strengthen initiatives in education, child welfare, women’s empowerment, healthcare, and humanitarian service, advancing BCT’s vision of empowering lives and transforming communities.`,
       },
     ],
   },
@@ -525,29 +536,29 @@ export const projectsContent = {
       desc: 'Support for families affected by HIV/AIDS with groceries, counselling, encouragement and moral support.',
       goal: 'To remind families that they are not alone.',
       aboutText:
-        'Established in 2009, this project was Bethesda Charitable Trust’s very first initiative. We walk alongside families facing difficult health and social circumstances, offering regular grocery distributions, emotional and spiritual counselling, and holistic care so no family ever feels abandoned.',
+        'Bethesda Charitable Trust, together with its volunteers, visits established elderly care and children’s homes to provide compassionate humanitarian service. Through food assistance, encouragement, counselling, and practical care, we bring dignity, hope, and a sense of belonging to those in need.',
       photos: [],
     },
     {
       id: 'pj1',
       icon: '📖',
       color: 'bl',
-      title: 'Project Hope',
+      title: 'Project Hope Thru Education',
       desc: 'Educational assistance and essential school materials for children from disadvantaged families.',
       goal: 'Helping children pursue education with confidence and hope.',
       aboutText:
-        'Project Hope ensures that financial constraints do not stand between a child and their education. We provide school kits, uniforms, textbooks, tuition support, and mentorship to equip children for a brighter future.',
+        'Project Hope Thru Education ensures that financial constraints do not stand between a child and their education. We provide school kits, uniforms, textbooks, tuition support, and mentorship to equip children for a brighter future.',
       photos: [],
     },
     {
       id: 'pj2',
       icon: '🧒',
       color: 'gr',
-      title: 'Morning Star',
+      title: 'Morning Star Play School',
       desc: 'Early childhood education and care in a safe and nurturing environment.',
       goal: 'Building a strong foundation for the next generation.',
       aboutText:
-        'Morning Star creates a loving, supportive, and stimulating environment for young children during their critical early developmental years, preparing them with fundamental learning, nutrition, and values.',
+        'Morning Star Play School creates a loving, supportive, and stimulating environment for young children during their critical early developmental years, preparing them with fundamental learning, nutrition, and values.',
       photos: [],
     },
     {
@@ -558,7 +569,7 @@ export const projectsContent = {
       desc: 'Meals and practical care for people experiencing food insecurity and vulnerable families.',
       goal: 'Meeting a basic need while showing people they are valued and cared for.',
       aboutText:
-        'Project SMS (Share My Sandwich / Share Meals Scheme) provides nutritious meals, rations, and emergency sustenance packages to underprivileged community members, migrant laborers, and homeless individuals.',
+        'Project SMS – Sharing Meals with Someone\n\nProject SMS provides nutritious meals, essential groceries, and emergency food support to people facing food insecurity, including underprivileged families, migrant workers, and homeless individuals—sharing food, care, and hope with those in need.',
       photos: [],
     },
     {

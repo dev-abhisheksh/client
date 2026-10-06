@@ -95,9 +95,11 @@ export default function AboutPage({ onNavigate }) {
       setTrusteesList(combined);
       try {
         localStorage.setItem('bethesda_trustees', JSON.stringify(combined));
-      } catch (e) {}
+      } catch {
+        // Ignore local storage quota errors
+      }
     }
-  }, [remoteData]);
+  }, [remoteData, trustees.members]);
 
   // Admin CRUD Handlers
   const handleOpenAddTrustee = () => {
@@ -124,7 +126,9 @@ export default function AboutPage({ onNavigate }) {
     setTrusteesList(updated);
     try {
       localStorage.setItem('bethesda_trustees', JSON.stringify(updated));
-    } catch (e) {}
+    } catch {
+      // Ignore storage errors
+    }
 
     // Persist to MongoDB backend
     updateContentMutation.mutate(
@@ -152,7 +156,9 @@ export default function AboutPage({ onNavigate }) {
     setTrusteesList(updated);
     try {
       localStorage.setItem('bethesda_trustees', JSON.stringify(updated));
-    } catch (e) {}
+    } catch {
+      // Ignore storage errors
+    }
 
     updateContentMutation.mutate(
       { key: 'about_trustees', data: updated },
@@ -265,23 +271,50 @@ export default function AboutPage({ onNavigate }) {
           </div>
 
           {/* Narrative Story Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start mb-10">
-            <div className="space-y-4 text-[14.5px] sm:text-[15.5px] leading-relaxed text-[var(--tx)]/90">
-              <p>{journey.paragraphs[0]}</p>
-              <p>{journey.paragraphs[1]}</p>
-            </div>
-            <div className="space-y-4 text-[14.5px] sm:text-[15.5px] leading-relaxed text-[var(--tx)]/90">
-              <div className="bg-[var(--card)] border border-[var(--ln)] rounded-2xl p-5 sm:p-6 shadow-sm">
-                <p className="font-semibold text-[var(--nv)] mb-3 text-[15px] sm:text-[16px]">
-                  {journey.paragraphs[2]}
-                </p>
-                <p className="text-[var(--mu)]">
-                  {journey.paragraphs[3]}
-                </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch mb-10">
+            {/* Left: Our Journey Began */}
+            <div className="bg-[var(--card)] border border-[var(--ln)] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between">
+              <div>
+                <span className="text-xs uppercase tracking-widest text-[var(--go)] font-bold mb-2 block">
+                  ORIGIN &amp; CALLING
+                </span>
+                <h3 className="text-xl sm:text-2xl font-serif font-bold text-[var(--nv)] mb-4">
+                  {journey.beganHeading || 'Our Journey Began'}
+                </h3>
+                <div className="space-y-4 text-[14.5px] sm:text-[15.5px] leading-relaxed text-[var(--tx)]/90">
+                  <p>{journey.paragraphs[0]}</p>
+                  <p>{journey.paragraphs[1]}</p>
+                </div>
               </div>
-              <p className="italic text-[var(--mu)] pt-2 border-l-2 border-[var(--go)] pl-3.5">
-                {journey.ethos}
-              </p>
+            </div>
+
+            {/* Right: Growing Our Mission */}
+            <div className="bg-[var(--card)] border border-[var(--ln)] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between">
+              <div>
+                <span className="text-xs uppercase tracking-widest text-[var(--go)] font-bold mb-2 block">
+                  COMMUNITY EXPANSION
+                </span>
+                <h3 className="text-xl sm:text-2xl font-serif font-bold text-[var(--nv)] mb-2">
+                  {journey.growingMission?.title || 'Growing Our Mission'}
+                </h3>
+                <p className="text-[14px] sm:text-[15px] text-[var(--mu)] leading-relaxed mb-5">
+                  {journey.growingMission?.subtitle}
+                </p>
+                <div className="space-y-3.5">
+                  {journey.growingMission?.points?.map((pt, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-start gap-3 text-[13.5px] sm:text-[14.5px] leading-relaxed"
+                    >
+                      <span className="w-2 h-2 rounded-full bg-[var(--go)] mt-2 shrink-0" />
+                      <div>
+                        <strong className="text-[var(--nv)] font-semibold">{pt.title}</strong>
+                        <span className="text-[var(--tx)]/85"> — {pt.desc}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -307,43 +340,28 @@ export default function AboutPage({ onNavigate }) {
             </div>
           </div>
 
-          {/* Foundational Commitment & Vision Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
-            {/* Left: Commitment Card */}
-            <div className="md:col-span-7 bg-gradient-to-br from-[#102237] via-[#17324D] to-[#1c3c5c] text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col justify-between relative overflow-hidden border border-white/10">
-              <div
-                className="absolute inset-0 pointer-events-none opacity-30"
-                style={{
-                  background:
-                    'radial-gradient(500px 200px at 100% 0%, rgba(214, 168, 79, 0.25), transparent 70%)',
-                }}
-              />
-              <div className="relative z-10">
-                <span className="text-xs uppercase tracking-widest text-[#D6A84F] font-semibold mb-2 block">
-                  FOUNDATIONAL COMMITMENT
-                </span>
-                <p className="text-white/80 text-[13.5px] sm:text-[14.5px] mb-4">
-                  {journey.commitmentIntro}
-                </p>
-                <div className="text-[17px] sm:text-[20px] font-serif italic text-white font-bold leading-snug drop-shadow-xs">
-                  {journey.commitmentQuote}
-                </div>
+          {/* Foundational Commitment Showcase Card */}
+          <div className="bg-gradient-to-br from-[#102237] via-[#17324D] to-[#1c3c5c] text-white rounded-3xl p-8 sm:p-12 shadow-xl relative overflow-hidden border border-white/10 text-center">
+            <div
+              className="absolute inset-0 pointer-events-none opacity-30"
+              style={{
+                background:
+                  'radial-gradient(700px 300px at 50% 0%, rgba(214, 168, 79, 0.35), transparent 75%)',
+              }}
+            />
+            <div className="relative z-10 max-w-4xl mx-auto">
+              <span className="text-xs uppercase tracking-widest text-[#D6A84F] font-bold mb-3 inline-block px-3.5 py-1 rounded-full bg-white/5 border border-white/10">
+                {journey.commitmentHeading || 'OUR FOUNDATIONAL COMMITMENT'}
+              </span>
+              <p className="text-white/80 text-[14px] sm:text-[16px] mb-4">
+                {journey.commitmentIntro}
+              </p>
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-serif italic font-bold text-white leading-tight sm:leading-snug tracking-tight my-6 sm:my-8 text-balance drop-shadow-sm">
+                {journey.commitmentQuote}
               </div>
-            </div>
-
-            {/* Right: Closing Vision Card */}
-            <div className="md:col-span-5 bg-[var(--card)] border border-[var(--ln)] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-between">
-              <p className="text-[13.5px] sm:text-[14px] leading-relaxed text-[var(--mu)] mb-4">
+              <p className="text-white/85 text-[14.5px] sm:text-[16px] leading-relaxed max-w-3xl mx-auto pt-6 border-t border-white/15">
                 {journey.continuation}
               </p>
-              <div className="pt-3 border-t border-[var(--ln)]">
-                <p className="text-xs uppercase font-bold tracking-wider text-[var(--mu)] mb-0.5">
-                  {journey.closingSmall}
-                </p>
-                <h4 className="text-[15px] sm:text-[16px] font-serif font-bold text-[var(--nv)] leading-snug">
-                  {journey.closingVision}
-                </h4>
-              </div>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Hero from '../components/Hero';
 import Button from '../components/Button';
 import ImageWithLoader from '../components/ImageWithLoader';
@@ -54,19 +54,21 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
       : fallbackProjects[nextIndex];
 
   // Hero media view mode (Static Image vs Smooth Swiper Carousel)
-  const [mediaMode, setMediaMode] = useState(project.mediaMode || 'carousel');
+  const [customMediaMode, setCustomMediaMode] = useState(null);
+  const [prevProjectId, setPrevProjectId] = useState(project?._id);
   const [activePhotoIndex, setActivePhotoIndex] = useState(0);
 
-  // Sync state whenever project updates from server or active project changes
-  useEffect(() => {
-    if (project?.mediaMode) {
-      setMediaMode(project.mediaMode);
-    }
-  }, [project?.mediaMode, project?._id]);
+  // Reset custom mode when navigating to a different project
+  if (project?._id !== prevProjectId) {
+    setPrevProjectId(project?._id);
+    setCustomMediaMode(null);
+  }
+
+  const mediaMode = customMediaMode ?? (project?.mediaMode || 'carousel');
 
   // Persist mediaMode ("static" | "carousel") change to MongoDB across the entire website
   const handleToggleMediaMode = (newMode) => {
-    setMediaMode(newMode);
+    setCustomMediaMode(newMode);
     if (!project?._id) {
       console.warn('Cannot save mediaMode: Project ID not found');
       return;
@@ -80,7 +82,7 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
       {
         onError: (err) => {
           alert('Failed to save display mode: ' + (err.message || 'Error occurred'));
-          setMediaMode(project.mediaMode || 'carousel');
+          setCustomMediaMode(project.mediaMode || 'carousel');
         },
       }
     );
@@ -329,10 +331,12 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
                   return (
                     <div
                       key={photoId || idx}
-                      className="cd gi shadow-md relative group overflow-hidden rounded-xl bg-black/5"
+                      className="cd gi shadow-md relative group overflow-hidden rounded-xl bg-black/5 transform-gpu will-change-transform"
                     >
                       <ImageWithLoader
                         src={url}
+                        transformOptions={{ width: 640, quality: 'auto' }}
+                        loading={idx < 3 ? 'eager' : 'lazy'}
                         alt={`${project.title} photo ${idx + 1}`}
                         containerClassName="w-full h-56"
                         className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105"
