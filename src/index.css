@@ -315,14 +315,15 @@ a {
   background: var(--card);
   border: 1px solid var(--ln);
   border-radius: 18px;
-  box-shadow: 0 1px 2px #0b1f4510, 0 14px 34px -14px #0b1f4528;
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 16px -4px #0b1f4518;
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
   overflow: hidden;
+  transform: translateZ(0);
 }
 
 .cd:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 2px 4px #0b1f4512, 0 26px 50px -16px #0b1f4545;
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px -8px #0b1f4528;
 }
 
 .ic {
@@ -1305,6 +1306,8 @@ a.c:hover .ic {
   border-radius: 50%;
   filter: blur(50px);
   pointer-events: none;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .hero::before {
@@ -1373,9 +1376,10 @@ a.c:hover .ic {
   font-size: 120px;
   background: radial-gradient(circle, #ffffff2a, #ffffff0a);
   border: 1px solid #ffffff55;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 30px 60px #0004, inset 0 0 40px #ffffff18;
+  box-shadow: 0 16px 36px #0003;
   animation: fl 6s ease-in-out infinite;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 @keyframes fl {
@@ -1406,14 +1410,16 @@ a.c:hover .ic {
 /* Scroll reveal class */
 .rv {
   opacity: 0;
-  transform: translateY(28px) scale(0.97);
-  transition: opacity 0.7s var(--d, 0ms), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) var(--d, 0ms);
+  transform: translate3d(0, 20px, 0);
+  will-change: opacity, transform;
+  transition: opacity 0.45s ease-out var(--d, 0ms), transform 0.45s ease-out var(--d, 0ms);
 }
 
 .rv.in {
   opacity: 1;
-  transform: none;
-  transition: transform 0.35s, box-shadow 0.35s, opacity 0.3s;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 /* Header & Nav */
@@ -1422,9 +1428,11 @@ header {
   top: env(safe-area-inset-top, 0px);
   z-index: 90;
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   border-bottom: 1px solid var(--ln);
   box-shadow: 0 8px 30px #0b1f4512;
+  transform: translateZ(0);
 }
 
 .hd {

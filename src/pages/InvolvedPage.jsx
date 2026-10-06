@@ -1,4 +1,3 @@
-import React from 'react';
 import Hero from '../components/Hero';
 import Button from '../components/Button';
 import WhereSupportGoes from '../components/WhereSupportGoes';
@@ -17,7 +16,7 @@ export default function InvolvedPage({ onNavigate }) {
     if (onNavigate) {
       onNavigate(target);
     } else {
-      window.location.hash = target;
+      window.location.assign(`#${target}`);
     }
   };
 
@@ -77,7 +76,7 @@ export default function InvolvedPage({ onNavigate }) {
               return (
                 <div
                   key={index}
-                  className="cd flex flex-col justify-between group hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                  className="cd flex flex-col justify-between group transform-gpu will-change-transform"
                 >
                   <div>
                     {/* Header Emoji Visual Banner */}
@@ -176,7 +175,7 @@ export default function InvolvedPage({ onNavigate }) {
       <section className="sec">
         <div className="w g2">
           {/* Volunteer Banner */}
-          <div className="ban" style={{ background: 'var(--bl)' }}>
+          <div className="ban transform-gpu" style={{ background: 'var(--bl)' }}>
             <div className="ph select-none">{banners.volunteer.emoji}</div>
             <div>
               <h3 className="text-xl font-bold font-serif">{banners.volunteer.title}</h3>
@@ -193,7 +192,7 @@ export default function InvolvedPage({ onNavigate }) {
           </div>
 
           {/* Partner Banner */}
-          <div className="ban" style={{ background: 'var(--gr)' }}>
+          <div className="ban transform-gpu" style={{ background: 'var(--gr)' }}>
             <div className="ph select-none">{banners.partner.emoji}</div>
             <div>
               <h3 className="text-xl font-bold font-serif">{banners.partner.title}</h3>

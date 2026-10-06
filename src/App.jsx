@@ -41,8 +41,10 @@ function AppContent() {
   // Initialize Lenis Smooth Scrolling
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 0.8,
+      duration: 0.7,
       smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
     });
 
     lenisRef.current = lenis;
@@ -107,7 +109,7 @@ function AppContent() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05, rootMargin: '0px 0px 50px 0px' }
     );
 
     const elements = document.querySelectorAll(
@@ -116,26 +118,34 @@ function AppContent() {
 
     elements.forEach((el, index) => {
       el.classList.add('rv');
-      el.style.setProperty('--d', `${(index % 6) * 70}ms`);
+      el.style.setProperty('--d', `${(index % 6) * 60}ms`);
       observer.observe(el);
     });
 
     return () => observer.disconnect();
   }, [currentPage]);
 
-  // Global button pointer-move shine effect
+  // Global button pointer-move shine effect (RAF throttled with passive listener to prevent scroll reflow)
   useEffect(() => {
+    let rafId = null;
     const handlePointerMove = (e) => {
-      const btn = e.target.closest && e.target.closest('.btn');
-      if (btn) {
-        const rect = btn.getBoundingClientRect();
-        btn.style.setProperty('--mx', `${e.clientX - rect.left}px`);
-        btn.style.setProperty('--my', `${e.clientY - rect.top}px`);
-      }
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        const btn = e.target?.closest?.('.btn');
+        if (btn) {
+          const rect = btn.getBoundingClientRect();
+          btn.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+          btn.style.setProperty('--my', `${e.clientY - rect.top}px`);
+        }
+      });
     };
 
-    document.addEventListener('pointermove', handlePointerMove);
-    return () => document.removeEventListener('pointermove', handlePointerMove);
+    document.addEventListener('pointermove', handlePointerMove, { passive: true });
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      document.removeEventListener('pointermove', handlePointerMove);
+    };
   }, []);
 
   // Render current page content

@@ -23,7 +23,7 @@ export default function NeedHelp() {
   return (
     <section className="sec" id="help">
       <div className="w">
-        <div className="hp flex-col lg:flex-row items-stretch lg:items-center p-5 sm:p-8">
+        <div className="hp flex-col lg:flex-row items-stretch lg:items-center p-5 sm:p-8 transform-gpu">
           {/* Left Content & Topic Chips */}
           <div className="w-full lg:max-w-[540px]">
             <h2 className="text-[22px] sm:text-[26px]">{title}</h2>
@@ -37,7 +37,7 @@ export default function NeedHelp() {
                 <button
                   key={index}
                   type="button"
-                  className={`chip w-full lg:w-auto text-center flex items-center justify-center text-[12px] sm:text-[13px] py-2.5 px-2.5 sm:px-4 transition-all duration-200 ${
+                  className={`chip w-full lg:w-auto text-center flex items-center justify-center text-[12px] sm:text-[13px] py-2.5 px-2.5 sm:px-4 transition-colors duration-150 ${
                     selectedTopic === topic ? 'on shadow-sm' : ''
                   }`}
                   onClick={() => setSelectedTopic(topic)}

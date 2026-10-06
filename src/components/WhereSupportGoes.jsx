@@ -24,7 +24,7 @@ export default function WhereSupportGoes({ onNavigate }) {
               <a
                 key={index}
                 href={`#${item.target}`}
-                className="c block p-3.5 sm:p-4 rounded-2xl text-center transition-all duration-300 hover:bg-[var(--card)] hover:-translate-y-1 hover:shadow-lg"
+                className="c block p-3.5 sm:p-4 rounded-2xl text-center transition-[transform,background-color,box-shadow] duration-200 transform-gpu hover:bg-[var(--card)] hover:-translate-y-1 hover:shadow-md"
                 onClick={(e) => handleClick(e, item.target)}
               >
                 <span

@@ -5,7 +5,7 @@ export default function ImpactStrip() {
   const { badge, heading, description } = homeContent.impactStrip;
 
   return (
-    <section className="strip py-10 sm:py-14">
+    <section className="strip py-10 sm:py-14 transform-gpu">
       <div className="w flex flex-col md:flex-row md:items-center justify-between gap-5 sm:gap-6 md:gap-8">
         <div>
           <h2 style={{ fontStyle: 'italic', margin: 0 }} className="text-[22px] sm:text-[26px]">
