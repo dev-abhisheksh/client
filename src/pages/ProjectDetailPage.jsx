@@ -155,17 +155,17 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
   };
 
   const handlePhotoUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
     if (!project._id) {
       alert('Project ID not found. Ensure backend is running and database is seeded.');
       return;
     }
     uploadPhotoMutation.mutate(
-      { id: project._id, file },
+      { id: project._id, files },
       {
         onError: (err) => {
-          alert('Failed to upload photo: ' + (err.response?.data?.message || err.message));
+          alert('Failed to upload photo(s): ' + (err.response?.data?.message || err.message));
         },
       }
     );
@@ -256,9 +256,9 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
               }}
               isAdmin={isAdmin}
               isSaving={updateProjectMutation.isPending}
-              onUploadPhoto={(file) => {
+              onUploadPhoto={(fileOrFiles) => {
                 if (project._id) {
-                  uploadPhotoMutation.mutate({ id: project._id, file });
+                  uploadPhotoMutation.mutate({ id: project._id, files: fileOrFiles });
                 }
               }}
               isUploading={uploadPhotoMutation.isPending}
@@ -312,11 +312,12 @@ export default function ProjectDetailPage({ projectId, onNavigate }) {
                 <input
                   type="file"
                   accept="image/*"
+                  multiple
                   className="hidden"
                   disabled={uploadPhotoMutation.isPending}
                   onChange={handlePhotoUpload}
                 />
-                <span>{uploadPhotoMutation.isPending ? '⏳ Uploading...' : '📷 Upload Photo'}</span>
+                <span>{uploadPhotoMutation.isPending ? '⏳ Uploading...' : '📷 Upload Photos (Multi)'}</span>
               </label>
             )}
           </div>

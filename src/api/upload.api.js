@@ -1,11 +1,15 @@
 import API from "./axiosInstance.api";
 
 /**
- * Upload a single image to Cloudinary (Admin only)
- * @param {File} file - Image file to upload
+ * Upload image(s) to Cloudinary (Admin only - supports multi-upload)
+ * @param {File|File[]|FileList} files - Image file(s) to upload
  */
-export const uploadImage = (file) => {
+export const uploadImage = (files) => {
   const formData = new FormData();
-  formData.append("image", file);
+  if (Array.isArray(files) || (typeof FileList !== "undefined" && files instanceof FileList)) {
+    Array.from(files).forEach((file) => formData.append("images", file));
+  } else {
+    formData.append("images", files);
+  }
   return API.post("/upload", formData);
 };

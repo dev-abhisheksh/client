@@ -56,24 +56,24 @@ export function SpecialProjectCard({ project }) {
   const projectId = project._id || project.slug || project.id || 'manipur';
   const isUploading = uploadPhotoMutation.isPending;
 
-  // Handle image upload through backend or local preview
+  // Handle image upload through backend or local preview (supports multi-upload)
   const handleImageUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
 
     if (isAdmin) {
       uploadPhotoMutation.mutate(
-        { id: projectId, file },
+        { id: projectId, files },
         {
           onError: (err) => {
-            alert('Upload failed: ' + (err.message || 'Error uploading photo'));
+            alert('Upload failed: ' + (err.message || 'Error uploading photo(s)'));
           },
         }
       );
     } else {
       // Local preview if not logged in as admin
-      const previewUrl = URL.createObjectURL(file);
-      setLocalImages((prev) => [...prev, previewUrl]);
+      const previewUrls = files.map((file) => URL.createObjectURL(file));
+      setLocalImages((prev) => [...prev, ...previewUrls]);
     }
 
     e.target.value = '';
@@ -215,6 +215,7 @@ export function SpecialProjectCard({ project }) {
               <input
                 type="file"
                 accept="image/*"
+                multiple
                 onChange={handleImageUpload}
                 disabled={isUploading}
                 className="hidden"
@@ -243,10 +244,10 @@ export function SpecialProjectCard({ project }) {
                     </svg>
                   </div>
                   <span className="text-xs font-semibold text-[var(--tx)] group-hover:text-amber-500 transition-colors">
-                    {allPhotos.length === 0 ? `Image Space ${idx + 1}` : 'Upload Another Image'}
+                    {allPhotos.length === 0 ? 'Upload Photos (Multi-Select)' : 'Upload More Photos'}
                   </span>
                   <span className="text-[11px] text-[var(--mu)] mt-0.5">
-                    {isAdmin ? 'Click to upload to server' : 'Click to select photo'}
+                    {isAdmin ? 'Select one or more images' : 'Preview photos locally'}
                   </span>
                 </>
               )}

@@ -58,13 +58,13 @@ export function usePageHero(pageKey, defaultPhotos = []) {
   });
 
   const uploadMutation = useMutation({
-    mutationFn: (file) => uploadHeroPhoto(page, file),
+    mutationFn: (fileOrFiles) => uploadHeroPhoto(page, fileOrFiles),
     onSuccess: (res) => {
       queryClient.setQueryData(['hero', page], res);
       queryClient.invalidateQueries({ queryKey: ['hero', page] });
     },
     onError: (err) => {
-      alert('Failed to upload image: ' + (err.response?.data?.message || err.message));
+      alert('Failed to upload image(s): ' + (err.response?.data?.message || err.message));
     },
   });
 
@@ -89,9 +89,9 @@ export function usePageHero(pageKey, defaultPhotos = []) {
     updateMutation.mutate({ activeIndex: idx });
   };
 
-  const handleUploadPhoto = (file) => {
-    if (!file) return;
-    uploadMutation.mutate(file);
+  const handleUploadPhoto = (fileOrFiles) => {
+    if (!fileOrFiles) return;
+    uploadMutation.mutate(fileOrFiles);
   };
 
   const handleDeletePhoto = (idx) => {

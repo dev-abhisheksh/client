@@ -130,15 +130,16 @@ export function ProjectHeroControls({
           <input
             type="file"
             accept="image/*"
+            multiple
             className="hidden"
             disabled={isUploading}
             onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file && onUploadPhoto) onUploadPhoto(file);
+              const files = Array.from(e.target.files || []);
+              if (files.length && onUploadPhoto) onUploadPhoto(files.length === 1 ? files[0] : files);
               e.target.value = '';
             }}
           />
-          <span>{isUploading ? 'Uploading...' : '+ Add Hero Photo'}</span>
+          <span>{isUploading ? 'Uploading...' : '+ Add Hero Photos'}</span>
         </label>
       </div>
     );
@@ -303,15 +304,16 @@ export function ProjectHeroControls({
           <input
             type="file"
             accept="image/*"
+            multiple
             className="hidden"
             disabled={isUploading}
             onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file && onUploadPhoto) onUploadPhoto(file);
+              const files = Array.from(e.target.files || []);
+              if (files.length && onUploadPhoto) onUploadPhoto(files.length === 1 ? files[0] : files);
               e.target.value = '';
             }}
           />
-          <span>{isUploading ? 'Uploading...' : 'Add photo'}</span>
+          <span>{isUploading ? 'Uploading...' : 'Add photos (multi)'}</span>
         </label>
 
         <span className="text-[10px] text-white/40 font-mono">⚡ Admin Only</span>

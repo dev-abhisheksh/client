@@ -31,13 +31,17 @@ export const updateProject = (id, projectData) => API.put(`/projects/${id}`, pro
 export const deleteProject = (id) => API.delete(`/projects/${id}`);
 
 /**
- * Upload a photo directly to project gallery via Cloudinary (Admin only)
+ * Upload photo(s) directly to project gallery via Cloudinary (Admin only - supports multi-upload)
  * @param {string} id - Project ID
- * @param {File} file - Image file
+ * @param {File|File[]|FileList} files - Single file or array/FileList of images
  */
-export const uploadProjectPhoto = (id, file) => {
+export const uploadProjectPhoto = (id, files) => {
   const formData = new FormData();
-  formData.append("image", file);
+  if (Array.isArray(files) || (typeof FileList !== "undefined" && files instanceof FileList)) {
+    Array.from(files).forEach((file) => formData.append("images", file));
+  } else {
+    formData.append("images", files);
+  }
   return API.post(`/projects/${id}/photos`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",

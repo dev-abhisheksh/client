@@ -15,13 +15,17 @@ export const updateHero = (page, data) =>
   API.put(`/hero/${page.toLowerCase()}`, data);
 
 /**
- * Upload a photo directly to page's hero carousel (Admin only)
+ * Upload photo(s) directly to page's hero carousel (Admin only - supports multi-upload)
  * @param {string} page
- * @param {File} file
+ * @param {File|File[]|FileList} files
  */
-export const uploadHeroPhoto = (page, file) => {
+export const uploadHeroPhoto = (page, files) => {
   const formData = new FormData();
-  formData.append('image', file);
+  if (Array.isArray(files) || (typeof FileList !== 'undefined' && files instanceof FileList)) {
+    Array.from(files).forEach((file) => formData.append('images', file));
+  } else {
+    formData.append('images', files);
+  }
   return API.post(`/hero/${page.toLowerCase()}/photos`, formData);
 };
 

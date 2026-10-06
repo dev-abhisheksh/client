@@ -5,7 +5,7 @@ export const useUploadProjectPhoto = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, file }) => uploadProjectPhoto(id, file),
+    mutationFn: ({ id, file, files }) => uploadProjectPhoto(id, files || file),
     onSuccess: (res, variables) => {
       queryClient.invalidateQueries({ queryKey: ["projects"] });
       queryClient.invalidateQueries({ queryKey: ["project", variables.id] });

@@ -18,7 +18,7 @@ export const useUploadSpecialProjectPhoto = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, file }) => uploadSpecialProjectPhoto(id, file),
+    mutationFn: ({ id, file, files }) => uploadSpecialProjectPhoto(id, files || file),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["special-projects"] });
     },

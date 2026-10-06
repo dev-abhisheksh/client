@@ -6,13 +6,17 @@ import API from "./axiosInstance.api";
 export const getAllSpecialProjects = () => API.get("/special-projects");
 
 /**
- * Upload a photo directly to special project gallery via Cloudinary (Admin only)
+ * Upload photo(s) directly to special project gallery via Cloudinary (Admin only - supports multi-upload)
  * @param {string} id - Project ID or slug
- * @param {File} file - Image file
+ * @param {File|File[]|FileList} files - Single file or array/FileList of images
  */
-export const uploadSpecialProjectPhoto = (id, file) => {
+export const uploadSpecialProjectPhoto = (id, files) => {
   const formData = new FormData();
-  formData.append("image", file);
+  if (Array.isArray(files) || (typeof FileList !== "undefined" && files instanceof FileList)) {
+    Array.from(files).forEach((file) => formData.append("images", file));
+  } else {
+    formData.append("images", files);
+  }
   return API.post(`/special-projects/${id}/photos`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
