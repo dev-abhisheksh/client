@@ -1,4 +1,3 @@
-import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
@@ -8,7 +7,8 @@ import Hero from '../components/Hero';
 import Button from '../components/Button';
 import ImpactStrip from '../components/ImpactStrip';
 import ImageWithLoader from '../components/ImageWithLoader';
-import { projectsContent, COLOR_MAP } from '../data/siteData';
+import SpecialProjects from '../components/SpecialProjects';
+import { projectsContent, specialProjectsContent, COLOR_MAP } from '../data/siteData';
 import { useProjects, usePageHero } from '../hooks';
 import { HeroBackground, HeroControls } from '../components/ProjectMediaViewer';
 import { optimizeCloudinaryUrl } from '../utils/cloudinary';
@@ -196,7 +196,14 @@ export default function ProjectsPage({ onNavigate }) {
         </div>
       </section>
 
-      {/* 3. Impact Strip Section */}
+      {/* 3. Special Projects Section */}
+      <SpecialProjects
+        title={specialProjectsContent?.title}
+        subtitle={specialProjectsContent?.subtitle}
+        projects={specialProjectsContent?.projects}
+      />
+
+      {/* 4. Impact Strip Section */}
       <ImpactStrip />
     </div>
   );

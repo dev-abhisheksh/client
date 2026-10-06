@@ -597,6 +597,25 @@ export const projectsContent = {
   ],
 };
 
+export const specialProjectsContent = {
+  title: 'Our Special Projects',
+  subtitle:
+    'Dedicated initiatives and emergency relief efforts responding with compassion to urgent community needs.',
+  projects: [
+    {
+      id: 'manipur',
+      title: 'Manipur',
+      badge: 'Special Relief Project',
+      description:
+        'Standing alongside vulnerable families and displaced communities in Manipur with critical relief supplies, food assistance, student education support, and rehabilitation care.',
+      images: [
+        // Add your image URLs here (e.g. '/images/manipur-1.jpg', 'https://...')
+      ],
+      emptySlotsCount: 4,
+    },
+  ],
+};
+
 export const involvedContent = {
   hero: {
     eyebrow: 'Get Involved —',
