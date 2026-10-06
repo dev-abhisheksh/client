@@ -9,5 +9,6 @@ export * from "./projects/useDeleteProjectPhoto";
 export * from "./content/useContent";
 export * from "./content/useUpdateContent";
 export * from "./content/usePageHero";
+export * from "./specialProjects/useSpecialProjects";
 
 
