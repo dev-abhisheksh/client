@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 
@@ -53,8 +53,9 @@ export function ProjectHeroBackground({
           {normalizedPhotos.map((url, idx) => (
             <SwiperSlide key={idx} className="w-full h-full bg-transparent">
               <img
-                src={optimizeCloudinaryUrl(url)}
+                src={optimizeCloudinaryUrl(url, { width: 1440, quality: 'auto' })}
                 alt={`${title} slide ${idx + 1}`}
+                decoding="async"
                 onLoad={() => {
                   if (idx === 0) setIsLoaded(true);
                 }}
@@ -67,8 +68,9 @@ export function ProjectHeroBackground({
         </Swiper>
       ) : (
         <img
-          src={optimizeCloudinaryUrl(normalizedPhotos[activeIndex] || normalizedPhotos[0])}
+          src={optimizeCloudinaryUrl(normalizedPhotos[activeIndex] || normalizedPhotos[0], { width: 1440, quality: 'auto' })}
           alt={`${title} full width cover`}
+          decoding="async"
           onLoad={() => setIsLoaded(true)}
           className={`w-full h-full object-cover transition-opacity duration-700 ${
             isLoaded ? 'opacity-100' : 'opacity-0'

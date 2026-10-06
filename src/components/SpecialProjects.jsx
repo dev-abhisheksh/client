@@ -6,6 +6,7 @@ import {
   useDeleteSpecialProjectPhoto,
 } from '../hooks';
 import { useAuth } from '../context/AuthContext';
+import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 /**
  * Reusable Special Projects Component
@@ -168,10 +169,11 @@ export function SpecialProjectCard({ project }) {
               className="group relative rounded-2xl overflow-hidden border border-[var(--ln)] bg-[var(--soft)] aspect-4/3 sm:aspect-square flex flex-col justify-end shadow-sm hover:shadow-md transition-all duration-300"
             >
               <img
-                src={photo.url}
+                src={optimizeCloudinaryUrl(photo.url, { width: 480, quality: 'auto' })}
                 alt={`${project.title} photo ${idx + 1}`}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
+                decoding="async"
               />
 
               {/* Admin Delete Action */}

@@ -25,7 +25,7 @@ function ServiceProjectCard({ project, index, onNavigate }) {
 
   return (
     <div
-      className="group relative rounded-2xl overflow-hidden h-[480px] sm:h-[490px] flex flex-col justify-between border border-white/10 hover:border-amber-400/50 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer bg-slate-900"
+      className="group relative rounded-2xl overflow-hidden h-[480px] sm:h-[490px] flex flex-col justify-between border border-white/10 hover:border-amber-400/50 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-transform duration-300 cursor-pointer bg-slate-900 transform-gpu will-change-transform"
       onClick={(e) => onNavigate(e, project.id)}
     >
       {/* 1. Background Cover Image */}
@@ -50,13 +50,13 @@ function ServiceProjectCard({ project, index, onNavigate }) {
 
       {/* 2. Top Bar: Floating Initiative Number Badge */}
       <div className="p-4 flex items-center justify-end relative z-10 pointer-events-none">
-        <span className="text-[11px] font-mono font-bold tracking-wider px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md text-amber-300 border border-white/15 shadow-sm">
+        <span className="text-[11px] font-mono font-bold tracking-wider px-2.5 py-1 rounded-full bg-[#071430]/90 text-amber-300 border border-white/15 shadow-sm">
           0{index + 1}
         </span>
       </div>
 
       {/* 3. Bottom Text Overlay */}
-      <div className="relative z-10 w-full min-h-[52%] sm:min-h-[55%] p-5 flex flex-col justify-between rounded-b-2xl bg-gradient-to-t from-[#071430]/95 via-[#071430]/85 to-[#071430]/65 backdrop-blur-md border-t border-white/15 shadow-2xl text-white">
+      <div className="relative z-10 w-full min-h-[52%] sm:min-h-[55%] p-5 flex flex-col justify-between rounded-b-2xl bg-gradient-to-t from-[#071430] via-[#071430]/92 to-[#071430]/75 border-t border-white/15 shadow-2xl text-white">
         <div>
           <h3 className="font-bold text-[17px] sm:text-[18px] leading-snug mb-2 text-white group-hover:text-amber-300 transition-colors drop-shadow-sm">
             {project.title}
@@ -69,7 +69,7 @@ function ServiceProjectCard({ project, index, onNavigate }) {
         {/* Goal Strip & View Gallery Action */}
         <div className="pt-2 flex flex-col gap-3">
           <div
-            className="bg-white/10 border-l-[3px] rounded-r-lg px-2.5 py-1.5 text-[11px] leading-snug text-white/90 backdrop-blur-sm"
+            className="bg-white/10 border-l-[3px] rounded-r-lg px-2.5 py-1.5 text-[11px] leading-snug text-white/90"
             style={{ borderLeftColor: colorBg }}
           >
             <span className="font-bold mr-1 text-amber-300">Our Goal:</span>

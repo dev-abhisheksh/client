@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import Header from './components/Header';
@@ -41,10 +41,8 @@ function AppContent() {
   // Initialize Lenis Smooth Scrolling
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 0.8,
       smoothWheel: true,
-      touchMultiplier: 2,
     });
 
     lenisRef.current = lenis;

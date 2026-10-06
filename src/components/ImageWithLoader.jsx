@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 
 /**
@@ -43,6 +43,7 @@ export default function ImageWithLoader({
           src={optimizedSrc}
           alt={alt}
           loading={loading}
+          decoding="async"
           onLoad={(e) => {
             // If already complete in cache or freshly loaded
             if (e.target.complete) {
