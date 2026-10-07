@@ -16,22 +16,7 @@ export default function SpecialProjectsPage({ onNavigate }) {
 
   return (
     <div className="special-projects-page">
-      {/* 1. Top Navigation Bar */}
-      <div className="bg-[var(--soft)]/70 border-b border-[var(--ln)] py-3 sm:py-4">
-        <div className="w flex items-center justify-between">
-          <Button
-            target="projects"
-            variant="outline"
-            onClick={(e) => handleNavClick(e, 'projects')}
-            className="text-xs font-bold"
-          >
-            ← Back to Projects
-          </Button>
-          <span className="text-xs text-[var(--mu)] font-mono font-bold tracking-wider uppercase">
-            Special Relief Initiatives
-          </span>
-        </div>
-      </div>
+      
 
       {/* 2. Special Projects Component (with all cards, images, and upload controls) */}
       <SpecialProjects
