@@ -16,13 +16,6 @@ export default function DonatePage({ onNavigate }) {
 
   const handleNavClick = (e, target) => {
     e.preventDefault();
-    if (target === 'give') {
-      const el = document.getElementById('give');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-        return;
-      }
-    }
     if (target === 'rcpt') {
       window.open(receiptWhatsappUrl, '_blank', 'noopener,noreferrer');
       return;
@@ -45,10 +38,10 @@ export default function DonatePage({ onNavigate }) {
         description={hero.description}
         actions={[
           {
-            label: 'Donate Now ↓',
-            target: 'give',
+            label: 'Donate Now →',
+            target: 'pay',
             variant: 'red',
-            onClick: (e) => handleNavClick(e, 'give'),
+            onClick: (e) => handleNavClick(e, 'pay'),
           },
           {
             label: 'Request a Receipt →',
@@ -88,7 +81,7 @@ export default function DonatePage({ onNavigate }) {
       />
 
       {/* 2. Bank Transfer & Scan to Donate Section */}
-      <section className="sec" id="give">
+      <section className="sec">
         <div className="w grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           {/* Column 1: Bank Transfer Card */}
           <div className="bank flex flex-col justify-between">

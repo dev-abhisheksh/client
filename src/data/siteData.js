@@ -770,7 +770,7 @@ export const donateContent = {
       'Your contribution helps provide education, meals, healthcare, skills and care to children, women and families. Give by bank transfer or UPI, then request your receipt in one tap.',
     avatar: '❤',
     actions: [
-      { label: 'Donate Now ↓', target: 'give', variant: 'red' },
+      { label: 'Donate Now →', target: 'pay', variant: 'red' },
       { label: 'Request a Receipt →', target: 'rcpt', variant: 'white-outline' },
     ],
   },

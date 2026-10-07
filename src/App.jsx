@@ -24,17 +24,20 @@ function AppContent() {
   const getInitialPage = () => {
     const hash = window.location.hash.replace('#', '');
     if (hash === 'login' || hash === 'admin') return 'home';
+    if (hash === 'give') return 'pay';
     return hash || 'home';
   };
 
   const [currentPage, setCurrentPage] = useState(getInitialPage);
 
-  // If page loads with #login or #admin, open the modal and set hash to home
+  // If page loads with #login or #admin, open the modal and set hash to home; if #give redirect to #pay
   useEffect(() => {
     const hash = window.location.hash.replace('#', '');
     if (hash === 'login' || hash === 'admin') {
       openLoginModal();
       window.history.replaceState(null, '', '#home');
+    } else if (hash === 'give') {
+      window.history.replaceState(null, '', '#pay');
     }
   }, [openLoginModal]);
 
@@ -72,6 +75,16 @@ function AppContent() {
         window.history.replaceState(null, '', `#${currentPage}`);
         return;
       }
+      if (page === 'give') {
+        window.history.replaceState(null, '', '#pay');
+        setCurrentPage('pay');
+        if (lenisRef.current) {
+          lenisRef.current.scrollTo(0, { immediate: true });
+        } else {
+          window.scrollTo(0, 0);
+        }
+        return;
+      }
       setCurrentPage(page);
       if (lenisRef.current) {
         lenisRef.current.scrollTo(0, { immediate: true });
@@ -89,8 +102,9 @@ function AppContent() {
       openLoginModal();
       return;
     }
-    window.location.hash = page;
-    setCurrentPage(page);
+    const targetPage = page === 'give' ? 'pay' : page;
+    window.location.hash = targetPage;
+    setCurrentPage(targetPage);
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
     } else {
