@@ -1,6 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getAllSpecialProjects,
+  createSpecialProject,
+  deleteSpecialProject,
   uploadSpecialProjectPhoto,
   deleteSpecialProjectPhoto,
 } from "../../api/specialProject.api";
@@ -11,6 +13,28 @@ export const useSpecialProjects = () => {
     queryFn: getAllSpecialProjects,
     staleTime: 10 * 1000,
     refetchOnWindowFocus: true,
+  });
+};
+
+export const useCreateSpecialProject = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (projectData) => createSpecialProject(projectData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["special-projects"] });
+    },
+  });
+};
+
+export const useDeleteSpecialProject = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id) => deleteSpecialProject(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["special-projects"] });
+    },
   });
 };
 

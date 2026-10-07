@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { specialProjectsContent } from '../data/siteData';
 import {
   useSpecialProjects,
+  useCreateSpecialProject,
+  useDeleteSpecialProject,
   useUploadSpecialProjectPhoto,
   useDeleteSpecialProjectPhoto,
 } from '../hooks';
@@ -11,7 +13,8 @@ import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 /**
  * Reusable Special Projects Component
  *
- * Connects with backend for uploading and deleting gallery photos via Cloudinary.
+ * Connects with backend for uploading and deleting gallery photos via Cloudinary,
+ * and creating/deleting new special projects dynamically.
  * Falls back to static data seamlessly if database is empty or offline.
  */
 
@@ -19,6 +22,7 @@ import { optimizeCloudinaryUrl } from '../utils/cloudinary';
 const defaultProjects = specialProjectsContent?.projects || [
   {
     id: 'manipur',
+    slug: 'manipur',
     title: 'Manipur',
     badge: 'Special Relief Project',
     description:
@@ -29,7 +33,7 @@ const defaultProjects = specialProjectsContent?.projects || [
 ];
 
 // Reusable card for a single special project
-export function SpecialProjectCard({ project }) {
+export function SpecialProjectCard({ project, onDeleteProject }) {
   const { isAdmin, openLoginModal } = useAuth();
   const [localImages, setLocalImages] = useState([]);
 
@@ -121,7 +125,7 @@ export function SpecialProjectCard({ project }) {
           </h3>
         </div>
 
-        <div className="flex items-center gap-2 self-start sm:self-center">
+        <div className="flex items-center gap-2 flex-wrap self-start sm:self-center">
           {isAdmin ? (
             <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
               Admin Mode (Uploads sync to cloud)
@@ -139,6 +143,18 @@ export function SpecialProjectCard({ project }) {
             <span className="text-xs font-semibold px-3 py-1 rounded-full bg-[var(--soft)] text-[var(--mu)]">
               {allPhotos.length} {allPhotos.length === 1 ? 'Photo' : 'Photos'}
             </span>
+          )}
+
+          {/* Delete Project Button (for admin or local session project) */}
+          {(isAdmin || project.isLocal) && onDeleteProject && (
+            <button
+              type="button"
+              onClick={() => onDeleteProject(project)}
+              title="Delete Project"
+              className="text-[11px] font-semibold text-red-500 hover:text-red-700 bg-red-500/10 hover:bg-red-500/20 px-2.5 py-1 rounded-full border border-red-500/25 transition-colors cursor-pointer"
+            >
+              🗑 Delete Project
+            </button>
           )}
         </div>
       </div>
@@ -265,34 +281,135 @@ export default function SpecialProjects({
   subtitle = 'Focused regional relief and targeted initiatives responding to urgent humanitarian needs.',
   projects = defaultProjects,
 }) {
+  const { isAdmin } = useAuth();
   const { data: dbData } = useSpecialProjects();
-  const dbProjects = dbData?.data?.projects;
+  const createProjectMutation = useCreateSpecialProject();
+  const deleteProjectMutation = useDeleteSpecialProject();
 
-  // Merge database values with canonical projects
-  const displayProjects = projects.map((fallback) => {
-    const matchingDb = dbProjects?.find(
-      (p) =>
-        p.slug === fallback.id ||
-        p.slug === fallback.slug ||
-        p.title?.toLowerCase() === fallback.title?.toLowerCase()
-    );
-    if (matchingDb) {
-      return { ...fallback, ...matchingDb };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [localProjects, setLocalProjects] = useState([]);
+
+  // Form states
+  const [newTitle, setNewTitle] = useState('');
+  const [newBadge, setNewBadge] = useState('Special Relief Project');
+  const [newDescription, setNewDescription] = useState('');
+
+  const dbProjects = dbData?.data?.projects || [];
+
+  // Merge canonical fallback projects with all database projects
+  const displayProjects = [...projects];
+
+  if (Array.isArray(dbProjects) && dbProjects.length > 0) {
+    dbProjects.forEach((dbProj) => {
+      const idx = displayProjects.findIndex(
+        (p) =>
+          p.id === dbProj.slug ||
+          p.slug === dbProj.slug ||
+          p.title?.toLowerCase() === dbProj.title?.toLowerCase() ||
+          p._id === dbProj._id
+      );
+      if (idx !== -1) {
+        displayProjects[idx] = { ...displayProjects[idx], ...dbProj };
+      } else {
+        displayProjects.push(dbProj);
+      }
+    });
+  }
+
+  // Also include any local projects created during current session
+  localProjects.forEach((lp) => {
+    if (!displayProjects.some((p) => p.slug === lp.slug || p.id === lp.id)) {
+      displayProjects.push(lp);
     }
-    return fallback;
   });
+
+  // Handle creating a new special project
+  const handleCreateProject = (e) => {
+    e.preventDefault();
+    if (!newTitle.trim()) return;
+
+    const slug = newTitle
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
+    const projectData = {
+      title: newTitle.trim(),
+      slug: slug || `project-${Date.now()}`,
+      badge: newBadge.trim() || 'Special Relief Project',
+      description: newDescription.trim(),
+      order: displayProjects.length,
+      photos: [],
+      images: [],
+      emptySlotsCount: 4,
+    };
+
+    if (isAdmin) {
+      createProjectMutation.mutate(projectData, {
+        onSuccess: () => {
+          setIsModalOpen(false);
+          setNewTitle('');
+          setNewBadge('Special Relief Project');
+          setNewDescription('');
+        },
+        onError: (err) => {
+          alert('Failed to save project to database: ' + (err.message || 'Error creating project'));
+        },
+      });
+    } else {
+      setLocalProjects((prev) => [...prev, { ...projectData, isLocal: true }]);
+      setIsModalOpen(false);
+      setNewTitle('');
+      setNewBadge('Special Relief Project');
+      setNewDescription('');
+    }
+  };
+
+  // Handle deleting a special project
+  const handleDeleteProject = (proj) => {
+    if (proj.isLocal) {
+      setLocalProjects((prev) => prev.filter((p) => p.slug !== proj.slug));
+      return;
+    }
+
+    const idToDelete = proj._id;
+    if (!idToDelete) {
+      alert('This is a static default project from siteData.js. To remove it permanently, edit siteData.js.');
+      return;
+    }
+
+    if (window.confirm(`Are you sure you want to delete "${proj.title}"?`)) {
+      deleteProjectMutation.mutate(idToDelete, {
+        onError: (err) => {
+          alert('Failed to delete project: ' + (err.message || 'Error deleting project'));
+        },
+      });
+    }
+  };
 
   return (
     <section className="sec">
       <div className="w">
-        {/* Section Heading */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <h2 className="c">{title}</h2>
-          {subtitle && (
-            <p className="text-[14px] sm:text-[15px] text-[var(--mu)] leading-relaxed mt-2">
-              {subtitle}
-            </p>
-          )}
+        {/* Section Heading & Add Button */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10 pb-6 border-b border-[var(--ln)]">
+          <div>
+            {title && <h2 className="c text-left sm:text-left text-2xl sm:text-3xl font-bold font-serif">{title}</h2>}
+            {subtitle && (
+              <p className="text-[14px] sm:text-[15px] text-[var(--mu)] leading-relaxed mt-1 max-w-2xl">
+                {subtitle}
+              </p>
+            )}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold text-sm shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer self-start sm:self-center shrink-0"
+          >
+            <span className="text-base leading-none font-black">+</span>
+            <span>Add Special Project</span>
+          </button>
         </div>
 
         {/* List of Special Projects */}
@@ -301,10 +418,97 @@ export default function SpecialProjects({
             <SpecialProjectCard
               key={project._id || project.slug || project.id || project.title}
               project={project}
+              onDeleteProject={handleDeleteProject}
             />
           ))}
         </div>
       </div>
+
+      {/* Modal: Add New Special Project */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-[var(--card)] border border-[var(--ln)] rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl text-[var(--tx)] relative">
+            <div className="flex items-center justify-between pb-3 mb-5 border-b border-[var(--ln)]">
+              <div>
+                <h3 className="text-xl font-bold font-serif text-[var(--tx)]">Add Special Project</h3>
+                <p className="text-xs text-[var(--mu)] mt-0.5">Create a new targeted relief initiative card</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(false)}
+                className="w-8 h-8 rounded-full bg-[var(--soft)] text-[var(--mu)] hover:text-[var(--tx)] flex items-center justify-center text-lg cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleCreateProject} className="flex flex-col gap-4">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider mb-1.5 text-[var(--tx)]">
+                  Project Title <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  placeholder="e.g. Assam Flood Relief, Winter Blanket Drive"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--ln)] bg-[var(--bg)] text-[var(--tx)] text-sm focus:outline-hidden focus:border-amber-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider mb-1.5 text-[var(--tx)]">
+                  Badge / Tag
+                </label>
+                <input
+                  type="text"
+                  value={newBadge}
+                  onChange={(e) => setNewBadge(e.target.value)}
+                  placeholder="e.g. Special Relief Project, Emergency Aid"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--ln)] bg-[var(--bg)] text-[var(--tx)] text-sm focus:outline-hidden focus:border-amber-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider mb-1.5 text-[var(--tx)]">
+                  Description
+                </label>
+                <textarea
+                  rows="3"
+                  value={newDescription}
+                  onChange={(e) => setNewDescription(e.target.value)}
+                  placeholder="Standing alongside vulnerable families and communities with essential supplies and support..."
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--ln)] bg-[var(--bg)] text-[var(--tx)] text-sm focus:outline-hidden focus:border-amber-400 resize-none"
+                />
+              </div>
+
+              {!isAdmin && (
+                <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-700 dark:text-amber-300">
+                  ℹ️ You are in visitor mode. The project will appear in your current session. Log in as Admin to save permanently to the database.
+                </div>
+              )}
+
+              <div className="flex justify-end gap-3 pt-3 border-t border-[var(--ln)] mt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 text-sm font-semibold rounded-xl border border-[var(--ln)] hover:bg-[var(--soft)] text-[var(--tx)] cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={createProjectMutation.isPending}
+                  className="px-5 py-2 text-sm font-bold rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-900 shadow-md transition-all cursor-pointer disabled:opacity-50"
+                >
+                  {createProjectMutation.isPending ? 'Saving...' : 'Create Project'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

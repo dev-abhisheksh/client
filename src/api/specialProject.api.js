@@ -25,9 +25,24 @@ export const uploadSpecialProjectPhoto = (id, files) => {
 };
 
 /**
+ * Create a new special project (Admin only)
+ * @param {object} projectData - { title, slug, badge, description, order }
+ */
+export const createSpecialProject = (projectData) =>
+  API.post("/special-projects", projectData);
+
+/**
  * Delete a photo from special project gallery (Admin only)
  * @param {string} id - Project ID or slug
  * @param {string} photoId - Photo subdocument ID
  */
 export const deleteSpecialProjectPhoto = (id, photoId) =>
   API.delete(`/special-projects/${id}/photos/${photoId}`);
+
+/**
+ * Delete a special project (Admin only)
+ * @param {string} id - Project ID
+ */
+export const deleteSpecialProject = (id) =>
+  API.delete(`/special-projects/${id}`);
+
