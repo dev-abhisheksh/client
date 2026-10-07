@@ -40,6 +40,14 @@ export const deleteSpecialProjectPhoto = (id, photoId) =>
   API.delete(`/special-projects/${id}/photos/${photoId}`);
 
 /**
+ * Update special project details (Admin only)
+ * @param {string} id - Project ID or slug
+ * @param {object} projectData - Updated fields
+ */
+export const updateSpecialProject = (id, projectData) =>
+  API.put(`/special-projects/${id}`, projectData);
+
+/**
  * Delete a special project (Admin only)
  * @param {string} id - Project ID
  */

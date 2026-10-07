@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getAllSpecialProjects,
   createSpecialProject,
+  updateSpecialProject,
   deleteSpecialProject,
   uploadSpecialProjectPhoto,
   deleteSpecialProjectPhoto,
@@ -21,6 +22,17 @@ export const useCreateSpecialProject = () => {
 
   return useMutation({
     mutationFn: (projectData) => createSpecialProject(projectData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["special-projects"] });
+    },
+  });
+};
+
+export const useUpdateSpecialProject = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, data }) => updateSpecialProject(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["special-projects"] });
     },

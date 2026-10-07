@@ -3,6 +3,7 @@ import { specialProjectsContent } from '../data/siteData';
 import {
   useSpecialProjects,
   useCreateSpecialProject,
+  useUpdateSpecialProject,
   useDeleteSpecialProject,
   useUploadSpecialProjectPhoto,
   useDeleteSpecialProjectPhoto,
@@ -14,7 +15,7 @@ import { optimizeCloudinaryUrl } from '../utils/cloudinary';
  * Reusable Special Projects Component
  *
  * Connects with backend for uploading and deleting gallery photos via Cloudinary,
- * and creating/deleting new special projects dynamically.
+ * as well as creating, editing, and deleting special projects dynamically.
  * Falls back to static data seamlessly if database is empty or offline.
  */
 
@@ -33,7 +34,7 @@ const defaultProjects = specialProjectsContent?.projects || [
 ];
 
 // Reusable card for a single special project
-export function SpecialProjectCard({ project, onDeleteProject }) {
+export function SpecialProjectCard({ project, onEditProject, onDeleteProject }) {
   const { isAdmin, openLoginModal } = useAuth();
   const [localImages, setLocalImages] = useState([]);
 
@@ -133,7 +134,7 @@ export function SpecialProjectCard({ project, onDeleteProject }) {
           ) : (
             <button
               onClick={openLoginModal}
-              className="text-[11px] text-[var(--mu)] hover:text-amber-500 underline transition-colors"
+              className="text-[11px] text-[var(--mu)] hover:text-amber-500 underline transition-colors cursor-pointer"
             >
               Admin login to save permanently
             </button>
@@ -145,6 +146,18 @@ export function SpecialProjectCard({ project, onDeleteProject }) {
             </span>
           )}
 
+          {/* Edit Project Button (for admin or local preview) */}
+          {(isAdmin || project.isLocal) && onEditProject && (
+            <button
+              type="button"
+              onClick={() => onEditProject(project)}
+              title="Edit Project Details"
+              className="text-[11px] font-semibold text-amber-500 hover:text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 px-2.5 py-1 rounded-full border border-amber-500/25 transition-colors cursor-pointer"
+            >
+              ✏️ Edit
+            </button>
+          )}
+
           {/* Delete Project Button (for admin or local session project) */}
           {(isAdmin || project.isLocal) && onDeleteProject && (
             <button
@@ -153,7 +166,7 @@ export function SpecialProjectCard({ project, onDeleteProject }) {
               title="Delete Project"
               className="text-[11px] font-semibold text-red-500 hover:text-red-700 bg-red-500/10 hover:bg-red-500/20 px-2.5 py-1 rounded-full border border-red-500/25 transition-colors cursor-pointer"
             >
-              🗑 Delete Project
+              🗑 Delete
             </button>
           )}
         </div>
@@ -201,7 +214,7 @@ export function SpecialProjectCard({ project, onDeleteProject }) {
                     handleDeletePhoto(photo);
                   }}
                   title="Delete Photo"
-                  className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-red-600/90 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-red-700"
+                  className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-red-600/90 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-red-700 cursor-pointer"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -284,15 +297,22 @@ export default function SpecialProjects({
   const { isAdmin } = useAuth();
   const { data: dbData } = useSpecialProjects();
   const createProjectMutation = useCreateSpecialProject();
+  const updateProjectMutation = useUpdateSpecialProject();
   const deleteProjectMutation = useDeleteSpecialProject();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingProject, setEditingProject] = useState(null);
   const [localProjects, setLocalProjects] = useState([]);
 
-  // Form states
+  // Create Form states
   const [newTitle, setNewTitle] = useState('');
   const [newBadge, setNewBadge] = useState('Special Relief Project');
   const [newDescription, setNewDescription] = useState('');
+
+  // Edit Form states
+  const [editTitle, setEditTitle] = useState('');
+  const [editBadge, setEditBadge] = useState('');
+  const [editDescription, setEditDescription] = useState('');
 
   const dbProjects = dbData?.data?.projects || [];
 
@@ -316,12 +336,65 @@ export default function SpecialProjects({
     });
   }
 
-  // Also include any local projects created during current session
+  // Also include any local projects created or modified during current session
   localProjects.forEach((lp) => {
-    if (!displayProjects.some((p) => p.slug === lp.slug || p.id === lp.id)) {
+    const idx = displayProjects.findIndex(
+      (p) => p.slug === lp.slug || p.id === lp.id || p._id === lp._id
+    );
+    if (idx !== -1) {
+      displayProjects[idx] = { ...displayProjects[idx], ...lp };
+    } else {
       displayProjects.push(lp);
     }
   });
+
+  // Open Edit Modal pre-filled
+  const handleOpenEdit = (project) => {
+    setEditingProject(project);
+    setEditTitle(project.title || '');
+    setEditBadge(project.badge || '');
+    setEditDescription(project.description || '');
+  };
+
+  // Handle saving edited special project
+  const handleSaveEdit = (e) => {
+    e.preventDefault();
+    if (!editTitle.trim() || !editingProject) return;
+
+    const updatedData = {
+      title: editTitle.trim(),
+      badge: editBadge.trim(),
+      description: editDescription.trim(),
+    };
+
+    if (isAdmin) {
+      const idToUpdate = editingProject._id || editingProject.slug || editingProject.id;
+      updateProjectMutation.mutate(
+        { id: idToUpdate, data: updatedData },
+        {
+          onSuccess: () => {
+            setEditingProject(null);
+          },
+          onError: (err) => {
+            alert('Failed to update project: ' + (err.message || 'Error updating project'));
+          },
+        }
+      );
+    } else {
+      // Update in local session state
+      setLocalProjects((prev) => {
+        const targetId = editingProject.slug || editingProject.id || editingProject._id;
+        const exists = prev.some((p) => (p.slug || p.id || p._id) === targetId);
+        if (exists) {
+          return prev.map((p) =>
+            (p.slug || p.id || p._id) === targetId ? { ...p, ...updatedData } : p
+          );
+        }
+        return [...prev, { ...editingProject, ...updatedData, isLocal: true }];
+      });
+      setEditingProject(null);
+    }
+  };
 
   // Handle creating a new special project
   const handleCreateProject = (e) => {
@@ -418,6 +491,7 @@ export default function SpecialProjects({
             <SpecialProjectCard
               key={project._id || project.slug || project.id || project.title}
               project={project}
+              onEditProject={handleOpenEdit}
               onDeleteProject={handleDeleteProject}
             />
           ))}
@@ -503,6 +577,90 @@ export default function SpecialProjects({
                   className="px-5 py-2 text-sm font-bold rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-900 shadow-md transition-all cursor-pointer disabled:opacity-50"
                 >
                   {createProjectMutation.isPending ? 'Saving...' : 'Create Project'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal: Edit Special Project */}
+      {editingProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="bg-[var(--card)] border border-[var(--ln)] rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl text-[var(--tx)] relative">
+            <div className="flex items-center justify-between pb-3 mb-5 border-b border-[var(--ln)]">
+              <div>
+                <h3 className="text-xl font-bold font-serif text-[var(--tx)]">Edit Special Project</h3>
+                <p className="text-xs text-[var(--mu)] mt-0.5">Update project title, badge, or description</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setEditingProject(null)}
+                className="w-8 h-8 rounded-full bg-[var(--soft)] text-[var(--mu)] hover:text-[var(--tx)] flex items-center justify-center text-lg cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEdit} className="flex flex-col gap-4">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider mb-1.5 text-[var(--tx)]">
+                  Project Title <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--ln)] bg-[var(--bg)] text-[var(--tx)] text-sm focus:outline-hidden focus:border-amber-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider mb-1.5 text-[var(--tx)]">
+                  Badge / Tag
+                </label>
+                <input
+                  type="text"
+                  value={editBadge}
+                  onChange={(e) => setEditBadge(e.target.value)}
+                  placeholder="e.g. Special Relief Project, Emergency Aid"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--ln)] bg-[var(--bg)] text-[var(--tx)] text-sm focus:outline-hidden focus:border-amber-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider mb-1.5 text-[var(--tx)]">
+                  Description
+                </label>
+                <textarea
+                  rows="3"
+                  value={editDescription}
+                  onChange={(e) => setEditDescription(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[var(--ln)] bg-[var(--bg)] text-[var(--tx)] text-sm focus:outline-hidden focus:border-amber-400 resize-none"
+                />
+              </div>
+
+              {!isAdmin && (
+                <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-700 dark:text-amber-300">
+                  ℹ️ You are in visitor mode. Changes will reflect in your current session. Log in as Admin to save permanently to the database.
+                </div>
+              )}
+
+              <div className="flex justify-end gap-3 pt-3 border-t border-[var(--ln)] mt-2">
+                <button
+                  type="button"
+                  onClick={() => setEditingProject(null)}
+                  className="px-4 py-2 text-sm font-semibold rounded-xl border border-[var(--ln)] hover:bg-[var(--soft)] text-[var(--tx)] cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={updateProjectMutation.isPending}
+                  className="px-5 py-2 text-sm font-bold rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-900 shadow-md transition-all cursor-pointer disabled:opacity-50"
+                >
+                  {updateProjectMutation.isPending ? 'Saving...' : 'Save Changes'}
                 </button>
               </div>
             </form>
