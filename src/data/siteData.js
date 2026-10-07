@@ -551,7 +551,7 @@ export const projectsContent = {
       photos: [],
     },
     {
-      id: 'pj2',
+      id: 'pj2',  
       icon: '🧒',
       color: 'gr',
       title: 'Morning Star Play School',

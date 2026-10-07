@@ -2,8 +2,7 @@ import Hero from '../components/Hero';
 import Button from '../components/Button';
 import ImpactStrip from '../components/ImpactStrip';
 import ImageWithLoader from '../components/ImageWithLoader';
-import SpecialProjects from '../components/SpecialProjects';
-import { projectsContent, specialProjectsContent, COLOR_MAP } from '../data/siteData';
+import { projectsContent, COLOR_MAP } from '../data/siteData';
 import { useProjects, usePageHero } from '../hooks';
 import { HeroBackground, HeroControls } from '../components/ProjectMediaViewer';
 import { optimizeCloudinaryUrl } from '../utils/cloudinary';
@@ -176,12 +175,27 @@ export default function ProjectsPage({ onNavigate }) {
         </div>
       </section>
 
-      {/* 3. Special Projects Section */}
-      <SpecialProjects
-        title={specialProjectsContent?.title}
-        subtitle={specialProjectsContent?.subtitle}
-        projects={specialProjectsContent?.projects}
-      />
+      {/* 3. Special Projects CTA */}
+      <section className="sec" style={{ padding: '40px 0 60px' }}>
+        <div className="w text-center max-w-xl mx-auto">
+          <div className="bg-[var(--card)] border border-[var(--ln)] rounded-3xl p-8 sm:p-10 shadow-sm flex flex-col items-center">
+            <h3 className="text-2xl sm:text-3xl font-bold font-serif mb-3 text-[var(--tx)]">
+              Special Projects
+            </h3>
+            <p className="text-[14px] sm:text-[15px] text-[var(--mu)] leading-relaxed mb-6">
+              Focused regional relief and targeted initiatives responding to urgent humanitarian needs.
+            </p>
+            <Button
+              target="special-projects"
+              variant="gold"
+              className="px-6 py-3 text-sm font-bold shadow-md hover:scale-105 transition-all"
+              onClick={(e) => handleNavClick(e, 'special-projects')}
+            >
+              Visit Our Special Projects →
+            </Button>
+          </div>
+        </div>
+      </section>
 
       {/* 4. Impact Strip Section */}
       <ImpactStrip />

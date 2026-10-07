@@ -79,7 +79,7 @@ export default function Header({ currentPage, onNavigate }) {
               const isActive =
                 currentPage === link.id ||
                 (currentPage === 'pay' && link.id === 'donate') ||
-                (currentPage.startsWith('pj') && link.id === 'projects');
+                ((currentPage.startsWith('pj') || currentPage === 'special-projects') && link.id === 'projects');
 
               if (link.id === 'donate') {
                 return (
@@ -215,7 +215,7 @@ export default function Header({ currentPage, onNavigate }) {
               const isActive =
                 currentPage === link.id ||
                 (currentPage === 'pay' && link.id === 'donate') ||
-                (currentPage.startsWith('pj') && link.id === 'projects');
+                ((currentPage.startsWith('pj') || currentPage === 'special-projects') && link.id === 'projects');
 
               if (link.id === 'donate') {
                 return (

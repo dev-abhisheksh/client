@@ -12,6 +12,7 @@ import InvolvedPage from './pages/InvolvedPage';
 import DonatePage from './pages/DonatePage';
 import PayPage from './pages/PayPage';
 import ContactPage from './pages/ContactPage';
+import SpecialProjectsPage from './pages/SpecialProjectsPage';
 import LoginPage from './pages/LoginPage';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -183,6 +184,8 @@ function AppContent() {
         return <PayPage onNavigate={navigateTo} />;
       case 'contact':
         return <ContactPage onNavigate={navigateTo} />;
+      case 'special-projects':
+        return <SpecialProjectsPage onNavigate={navigateTo} />;
       case 'login':
       case 'admin':
         return <LoginPage onNavigate={navigateTo} />;
