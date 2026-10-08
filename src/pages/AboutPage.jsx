@@ -235,23 +235,13 @@ export default function AboutPage({ onNavigate }) {
           </div>
 
           <div
-            className="cd h-[260px] sm:h-[300px] grid place-items-center text-white text-center p-6 shadow-xl"
-            style={{
-              background: 'linear-gradient(135deg, #8fc07a, #3b7a3b)',
-              fontFamily: "'Merriweather', Georgia, serif",
-              fontStyle: 'italic',
-              fontSize: 'clamp(22px, 3.5vw, 28px)',
-              lineHeight: 1.4,
-            }}
+            className="cd h-[260px] sm:h-[300px] overflow-hidden shadow-xl"
           >
-            <div>
-              <span className="text-4xl sm:text-5xl block mb-2 select-none">
-                {story.cardEmoji}
-              </span>
-              {story.cardWords.map((w, idx) => (
-                <div key={idx}>{w}</div>
-              ))}
-            </div>
+            <img
+              src="https://res.cloudinary.com/dhdegqchc/image/upload/v1791434243/greenbox.jpg"
+              alt="Our Story"
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       </section>
