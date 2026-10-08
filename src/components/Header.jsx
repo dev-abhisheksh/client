@@ -114,14 +114,20 @@ export default function Header({ currentPage, onNavigate }) {
           {/* Desktop Social Icons & Theme Toggle */}
           <div className="hidden lg:flex items-center gap-2 ml-6">
             {social.map((s, idx) => (
-              <i
+              <a
                 key={idx}
-                style={{ backgroundColor: s.bg }}
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 title={s.name}
-                className="w-7 h-7 rounded-full grid place-items-center text-white font-bold text-xs not-italic cursor-pointer"
               >
-                {s.letter}
-              </i>
+                <i
+                  style={{ backgroundColor: s.bg }}
+                  className="w-7 h-7 rounded-full grid place-items-center text-white font-bold text-xs not-italic cursor-pointer"
+                >
+                  {s.letter}
+                </i>
+              </a>
             ))}
             <ThemeToggle className="ml-2" />
           </div>
@@ -272,13 +278,19 @@ export default function Header({ currentPage, onNavigate }) {
           </small>
           <div className="flex items-center gap-2.5 mb-3 so">
             {social.map((s, idx) => (
-              <i
+              <a
                 key={idx}
-                style={{ backgroundColor: s.bg }}
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 title={s.name}
               >
-                {s.letter}
-              </i>
+                <i
+                  style={{ backgroundColor: s.bg }}
+                >
+                  {s.letter}
+                </i>
+              </a>
             ))}
           </div>
           <p className="text-[11px] text-[var(--mu)] m-0 leading-relaxed">

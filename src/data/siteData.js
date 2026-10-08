@@ -30,9 +30,9 @@ export const siteConfig = {
     volunteerFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSewhEf_xUlaq0HcB6YEZnrDLnW2lSJpSyr7Rxcl2Lh2I6KQRg/viewform?usp=header',
   },
   social: [
-    { name: 'Facebook', letter: 'f', bg: '#1877f2', url: '#' },
-    { name: 'Instagram', letter: '◎', bg: '#d6249f', url: '#' },
-    { name: 'YouTube', letter: '▶', bg: '#e0231f', url: '#' },
+    { name: 'Facebook', letter: 'f', bg: '#1877f2', url: 'https://www.facebook.com/share/1LVoQ5btav/' },
+    { name: 'Instagram', letter: '◎', bg: '#d6249f', url: 'https://www.instagram.com/bethesdatrust/' },
+    { name: 'YouTube', letter: '▶', bg: '#e0231f', url: 'https://www.youtube.com/@BethesdaCharitableTrust-Goa' },
   ],
   navLinks: [
     { id: 'home', label: 'Home' },
