@@ -22,8 +22,8 @@ export const siteConfig = {
   logo: '/logo.png',
   contact: {
     address: 'Valsao Pale, South Goa, India',
-    phone: '+91 8087772008',
-    whatsappHelp: '918623965098',
+    phone: '+91 80877 72008',
+    whatsappHelp: '918087772008',
     whatsappReceipt: '918087772008',
     email: 'bethesdatrust2009@gmail.com',
     mapsUrl: 'https://share.google/Y9UmIrC5cQf7vxMhg',
@@ -833,7 +833,7 @@ export const contactContent = {
       icon: '📞',
       color: 'gr',
       title: 'Call Us',
-      detail: '+91 8087772008',
+      detail: '+91 80877 72008',
       actionText: 'Call Now',
       actionType: 'external',
       href: 'tel:+918087772008',
@@ -851,7 +851,7 @@ export const contactContent = {
       icon: '💬',
       color: 'gr',
       title: 'WhatsApp',
-      detail: '+91 8087772008',
+      detail: '+91 80877 72008',
       actionText: 'Chat With Us',
       actionType: 'external',
       href: 'https://wa.me/918087772008?text=Hello%20Bethesda%20Charitable%20Trust',
@@ -929,7 +929,7 @@ export const contactContent = {
       'Have a quick question? Send us a WhatsApp message and our team can respond to your enquiry.',
     buttonText: 'CHAT ON WHATSAPP →',
     whatsappUrl:
-      'https://wa.me/918623965098?text=Hello%20Bethesda%20Charitable%20Trust,%20I%20would%20like%20to%20know%20more.',
+      'https://wa.me/918087772008?text=Hello%20Bethesda%20Charitable%20Trust,%20I%20would%20like%20to%20know%20more.',
   },
   location: {
     mapEmbedUrl:
