@@ -13,7 +13,7 @@ export default function NeedHelp() {
           />
 
           {/* Certificate Links — right side */}
-          <div className="flex flex-col gap-4 w-full lg:w-auto lg:min-w-[220px]">
+          <div className="flex flex-col items-center gap-4 w-auto lg:min-w-[220px]">
             <a
               href="https://drive.google.com/file/d/1_1bMqvDZRM6U__pCkXnNMSoleIsjKjzv/view?usp=drive_link"
               target="_blank"

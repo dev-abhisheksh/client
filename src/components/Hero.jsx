@@ -62,7 +62,7 @@ export default function Hero({
           )}
 
           {actions && actions.length > 0 && (
-            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 mt-5 w-full sm:w-auto">
+            <div className="flex flex-wrap gap-2.5 sm:gap-3 mt-5">
               {actions.map((btn, index) => (
                 <Button
                   key={index}
@@ -70,7 +70,7 @@ export default function Hero({
                   target={btn.target}
                   href={btn.href}
                   onClick={btn.onClick}
-                  className="w-full sm:w-auto text-center"
+                  className="text-center"
                 >
                   {btn.label || btn.text}
                 </Button>
