@@ -4,16 +4,16 @@ export default function NeedHelp() {
   return (
     <section className="sec" id="help">
       <div className="w">
-        <div className="hp flex-col lg:flex-row items-center p-5 sm:p-8 gap-6 transform-gpu">
+        <div className="hp flex-row flex-nowrap items-center p-5 sm:p-8 gap-6 transform-gpu">
           {/* Proof / Certificate Image */}
           <img
             src="https://res.cloudinary.com/dhdegqchc/image/upload/v1791467313/demo.jpg"
             alt="Government Proof Documents"
-            className="w-full lg:flex-1 max-h-[280px] sm:max-h-[320px] rounded-xl object-cover"
+            className="w-full flex-1 rounded-xl object-contain"
           />
 
           {/* Certificate Links — right side */}
-          <div className="flex flex-col items-center gap-4 w-auto lg:min-w-[220px]">
+          <div className="flex flex-col items-center gap-4 w-auto min-w-[220px] shrink-0">
             <a
               href="https://drive.google.com/file/d/1_1bMqvDZRM6U__pCkXnNMSoleIsjKjzv/view?usp=drive_link"
               target="_blank"
